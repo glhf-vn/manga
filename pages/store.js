@@ -38,8 +38,6 @@ export async function getStaticProps() {
 }
 
 export default function License({ online, offline, shopee }) {
-    console.log(online)
-
     const onlineTable = () => {
         var parsedHtml = '';
 
@@ -127,15 +125,15 @@ export default function License({ online, offline, shopee }) {
             <div className={`uk-container ${styles.main}`}>
                 <h1 className={`uk-heading-line ${styles.title}`}><span>Mua manga ở đâu?</span></h1>
                 <div uk-alert="true">
-                    <a class="uk-alert-close" uk-close="true"></a>
+                    <a className="uk-alert-close" uk-close="true"></a>
                     Bạn có thể đóng góp thêm địa điểm tại <a href="https://docs.google.com/spreadsheets/d/1PWLmQ9mk6miHx1EjEIorJCqnNszJsq_QP7KN-vMikQE/edit?usp=sharing" target="_blank">đây</a>.
                     Ngoài ra, ấn Ctrl+F (hoặc tìm kiếm trên trang) để tìm nhanh hơn.
                 </div>
                 <ul uk-accordion="multiple: true">
                     <li>
-                        <a class="uk-accordion-title" href="#">Trực tuyến</a>
-                        <div class="uk-accordion-content">
-                            <table class="uk-table uk-table-divider uk-table-responsive">
+                        <a className="uk-accordion-title" href="#">Trực tuyến</a>
+                        <div className="uk-accordion-content">
+                            <table className="uk-table uk-table-divider uk-table-responsive">
                                 <thead>
                                     <tr>
                                         <th>Cửa hàng</th>
@@ -149,9 +147,9 @@ export default function License({ online, offline, shopee }) {
                         </div>
                     </li>
                     <li>
-                        <a class="uk-accordion-title" href="#">Trực tuyến - Shopee</a>
-                        <div class="uk-accordion-content">
-                            <table class="uk-table uk-table-divider uk-table-responsive">
+                        <a className="uk-accordion-title" href="#">Trực tuyến - Shopee</a>
+                        <div className="uk-accordion-content">
+                            <table className="uk-table uk-table-divider uk-table-responsive">
                                 <thead>
                                     <tr>
                                         <th>Cửa hàng</th>
@@ -165,9 +163,9 @@ export default function License({ online, offline, shopee }) {
                         </div>
                     </li>
                     <li>
-                        <a class="uk-accordion-title" href="#">Các cửa hàng</a>
-                        <div class="uk-accordion-content">
-                            <table class="uk-table uk-table-divider uk-table-responsive">
+                        <a className="uk-accordion-title" href="#">Các cửa hàng</a>
+                        <div className="uk-accordion-content">
+                            <table className="uk-table uk-table-divider uk-table-responsive">
                                 <thead>
                                     <tr>
                                         <th>Cửa hàng</th>

@@ -95,11 +95,11 @@ export default function License({ licensed, paused, unknown }) {
         <Layout>
             <div className={`uk-container ${styles.main}`}>
                 <h1 className={`uk-heading-line ${styles.title}`}><span>Thông tin bản quyền</span></h1>
-                <div class="uk-grid-divider uk-grid-medium" uk-grid="true">
-                    <div class="uk-width-1-1 uk-width-1-2@m uk-width-2-3@l">
+                <div className="uk-grid-divider uk-grid-medium" uk-grid="true">
+                    <div className="uk-width-1-1 uk-width-1-2@m uk-width-2-3@l">
                         <span>Đã được xác nhận bản quyền <span uk-icon="icon: info; ratio: 0.8"
                             uk-tooltip="title: Tham khảo Vinh Miner - MangaHolic 2.0, page MangaHolic và các page nhà xuất bản."></span></span>
-                        <table class="uk-table uk-table-divider" >
+                        <table className="uk-table uk-table-divider" >
                             <thead>
                                 <tr>
                                     <th>Nhà xuất bản</th>
@@ -110,9 +110,9 @@ export default function License({ licensed, paused, unknown }) {
                             </tbody>
                         </table>
                     </div>
-                    <div class="uk-width-1-1 uk-width-1-2@m uk-width-1-3@l">
+                    <div className="uk-width-1-1 uk-width-1-2@m uk-width-1-3@l">
                         <span>Tạm dừng do lý do khác</span>
-                        <table class="uk-table uk-table-divider">
+                        <table className="uk-table uk-table-divider">
                             <thead>
                                 <tr>
                                     <th>Nhà xuất bản</th>
@@ -124,7 +124,7 @@ export default function License({ licensed, paused, unknown }) {
                         </table>
                         <span>Bản quyền?</span> <span uk-icon="icon: info; ratio: 0.8"
                             uk-tooltip="title: Là những bộ truyện đã được 'nhá' bản quyền nhưng tình trạng vẫn chưa rõ, hoặc chưa biết thuộc về nhà xuất bản nào."></span>
-                        <table class="uk-table uk-table-divider">
+                        <table className="uk-table uk-table-divider">
                             <thead>
                                 <tr>
                                     <th>Bộ truyện</th>
