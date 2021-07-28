@@ -47,7 +47,7 @@ export default function License({ online, offline, shopee }) {
                 "<tr>" +
                 "<td><a href='" +
                 url +
-                "' target='_blank'>" +
+                "' target='_blank' rel='noreferrer'>" +
                 store +
                 " <span uk-icon='link'></span></a></td>" +
                 "<td><a href='tel:" +
@@ -102,7 +102,7 @@ export default function License({ online, offline, shopee }) {
                 "<tr>" +
                 "<td><a href='" +
                 url +
-                "' target='_blank'>" +
+                "' target='_blank' rel='noreferrer'>" +
                 store +
                 " <span uk-icon='link'></span></a></td>" +
                 "<td><a href='tel:" +
@@ -126,7 +126,7 @@ export default function License({ online, offline, shopee }) {
                 <h1 className={`uk-heading-line ${styles.title}`}><span>Mua manga ở đâu?</span></h1>
                 <div uk-alert="true">
                     <a className="uk-alert-close" uk-close="true"></a>
-                    Bạn có thể đóng góp thêm địa điểm tại <a href="https://docs.google.com/spreadsheets/d/1PWLmQ9mk6miHx1EjEIorJCqnNszJsq_QP7KN-vMikQE/edit?usp=sharing" target="_blank">đây</a>.
+                    Bạn có thể đóng góp thêm địa điểm tại <a href="https://docs.google.com/spreadsheets/d/1PWLmQ9mk6miHx1EjEIorJCqnNszJsq_QP7KN-vMikQE/edit?usp=sharing" target="_blank" rel='noreferrer'>đây</a>.
                     Ngoài ra, ấn Ctrl+F (hoặc tìm kiếm trên trang) để tìm nhanh hơn.
                 </div>
                 <ul uk-accordion="multiple: true">

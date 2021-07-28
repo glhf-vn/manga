@@ -12,7 +12,6 @@
     "@fullcalendar/common": "^5.8.0",
     "@fullcalendar/daygrid": "^5.8.0",
     "@fullcalendar/google-calendar": "^5.8.0",
-    "@fullcalendar/icalendar": "^5.8.0",
     "@fullcalendar/list": "^5.8.0",
     "@fullcalendar/react": "^5.8.0",
     "babel-plugin-transform-require-ignore": "^0.1.1",

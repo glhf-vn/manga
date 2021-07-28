@@ -50,10 +50,10 @@ export default function License({ licensed, paused, unknown }) {
                 manga +
                 (anilist ? " <a href='//anilist.co/manga/" +
                 anilist +
-                "' target='_blank' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') + 
+                "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') + 
                 (source ? " <a href='" +
                 source +
-                "' target='_blank' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
+                "' target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
                 "</td></tr>";
         }
 
@@ -81,10 +81,10 @@ export default function License({ licensed, paused, unknown }) {
                 manga +
                 (anilist ? " <a href='//anilist.co/manga/" +
                 anilist +
-                "' target='_blank' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') + 
+                "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') + 
                 (source ? " <a href='" +
                 source +
-                "' target='_blank' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
+                "' target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
                 "</td></tr>";
         }
 
