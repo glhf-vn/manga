@@ -1,0 +1,27 @@
+.content {
+    color: #e6e6e6;
+    width: 40%;
+    margin-left: 15vw;
+    margin-right: 15vw;
+    padding: 3rem 0;
+
+    @media (max-width: 576px) {
+        width: 70%;
+    }
+
+    .helper {
+        font-size: 1.2rem;
+        font-weight: bold;
+        color: #e6e6e6;
+    }
+
+    .title {
+        margin-top: 0.75rem;
+        font-weight: 900;
+    }
+
+    .copyright {
+        font-weight: bold;
+        color: #808080;
+    }
+}

@@ -9,9 +9,20 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@fullcalendar/common": "^5.8.0",
+    "@fullcalendar/daygrid": "^5.8.0",
+    "@fullcalendar/google-calendar": "^5.8.0",
+    "@fullcalendar/icalendar": "^5.8.0",
+    "@fullcalendar/list": "^5.8.0",
+    "@fullcalendar/react": "^5.8.0",
+    "babel-plugin-transform-require-ignore": "^0.1.1",
+    "googleapis": "^82.0.0",
     "next": "11.0.1",
+    "next-transpile-modules": "^8.0.0",
     "react": "17.0.2",
-    "react-dom": "17.0.2"
+    "react-dom": "17.0.2",
+    "sass": "^1.36.0",
+    "xhr2": "^0.2.1"
   },
   "devDependencies": {
     "eslint": "7.31.0",

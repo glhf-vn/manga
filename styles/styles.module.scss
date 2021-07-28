@@ -1,0 +1,153 @@
+.main {
+    margin-top: 2rem;
+    background-image: url('/img/gksfd.png');
+    background-size: 200px;
+    background-repeat: no-repeat;
+    background-position: bottom right;
+    padding-bottom: 320px;
+
+    @media(max-width: 768px) {
+        padding-bottom: 300px;
+    }
+}
+
+.title {
+    font-weight: 900;
+    text-transform: capitalize;
+    margin-bottom: 2rem;
+}
+
+.flex {
+    display: flex;
+    @media (max-width: 768px) {
+      display: block;
+    }
+  
+    .flexBig {
+      flex: 2;
+    }
+  
+    .flexSmall {
+      flex: 1;
+      @media (min-width: 769px) {
+        margin-left: 50px;
+      }
+    }
+}
+
+.social {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.filter {
+    input[type="checkbox"] {
+      display: none;
+  
+      & + span {
+        transition: all 150ms ease;
+  
+        &.kim {
+          border: 1px solid #e00024;
+        }
+  
+        &.tre {
+          border: 1px solid #00aeef;
+        }
+  
+        &.ipm {
+          border: 1px solid #01a14b;
+        }
+  
+        &.sky {
+          border: 1px solid #545454;
+        }
+  
+        &.tsuki {
+          border: 1px solid #f8cb10;
+        }
+  
+        &.amak {
+          border: 1px solid #018763;
+        }
+  
+        &.uranix {
+          border: 1px solid #ED3822;
+        }
+  
+        &.wingsbooks {
+          border: 1px solid #00adef;
+        }
+      }
+  
+      &:not(:checked) + span {
+        background: unset;
+  
+        &.kim {
+          color: #e00024;
+        }
+  
+        &.tre {
+          color: #00aeef;
+        }
+  
+        &.ipm {
+          color: #01a14b;
+        }
+  
+        &.sky {
+          color: #545454;
+        }
+  
+        &.tsuki {
+          color: #f8cb10;
+        }
+  
+        &.amak {
+          color: #018763;
+        }
+  
+        &.uranix {
+          color: #ED3822;
+        }
+  
+        &.wingsbooks {
+          color: #00adef;
+        }
+      }
+  
+      &:checked + span {
+        &.kim {
+          background-color: #e00024;
+        }
+  
+        &.tre {
+          background-color: #00aeef;
+        }
+  
+        &.ipm {
+          background-color: #01a14b;
+        }
+  
+        &.sky {
+          background-color: #545454;
+        }
+  
+        &.tsuki {
+          background-color: #f8cb10;
+        }
+  
+        &.amak {
+          background-color: #018763;
+        }
+  
+        &.uranix {
+          background-color: #ED3822;
+        }
+  
+        &.wingsbooks {
+          background-color: #00adef;
+        }
+      }
+    }
+  }
