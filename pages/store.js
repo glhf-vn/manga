@@ -123,7 +123,7 @@ export default function License({ online, offline, shopee }) {
     return (
         <Layout>
             <div className={`uk-container ${styles.main}`}>
-                <h1 className={`uk-heading-line ${styles.title}`}><span>Mua manga ở đâu?</span></h1>
+                <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Mua manga ở đâu?</span></h1>
                 <div uk-alert="true">
                     <a className="uk-alert-close" uk-close="true"></a>
                     Bạn có thể đóng góp thêm địa điểm tại <a href="https://docs.google.com/spreadsheets/d/1PWLmQ9mk6miHx1EjEIorJCqnNszJsq_QP7KN-vMikQE/edit?usp=sharing" target="_blank" rel='noreferrer'>đây</a>.

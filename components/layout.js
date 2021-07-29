@@ -1,9 +1,15 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import { useRouter } from "next/router";
 import banner from './banner.module.scss'
 import footer from './footer.module.scss'
+import nav from './nav.module.scss'
 
 export default function Layout({ children }) {
+    const router = useRouter();
+
+    const currentYear = new Date().getFullYear();
+
     return (
         <div>
             <Head>
@@ -32,35 +38,39 @@ export default function Layout({ children }) {
                 <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="true" uk-slideshow-item="previous"></a>
                 <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="true" uk-slideshow-item="next"></a>
             </div>
-            <nav className="uk-navbar-container" uk-navbar="true">
-                <ul className="uk-navbar-nav c-navbar uk-margin-auto">
-                    <li className="uk-active">
-                        <Link href="/">
-                            <a>Lịch phát hành</a>
-                        </Link>
-                    </li>
-                    <li className="uk-active">
-                        <Link href="/license">
-                            <a>Thông tin bản quyền</a>
-                        </Link>
-                    </li>
-                    <li className="uk-active">
-                        <Link href="/store">
-                            <a>Mua manga ở đâu?</a>
-                        </Link>
-                    </li>
-                </ul>
-            </nav>
+            <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
+                <nav className="uk-navbar-container" uk-navbar="true">
+                    <ul className={`${nav.wrapper} uk-navbar-nav uk-margin-auto`}>
+                        <li className={router.pathname == "/" ? "uk-active" : ""}>
+                            <Link href="/" scroll={false}>
+                                <a>Lịch phát hành</a>
+                            </Link>
+                        </li>
+                        <li className={router.pathname == "/license" ? "uk-active" : ""}>
+                            <Link href="/license" scroll={false}>
+                                <a>Thông tin bản quyền</a>
+                            </Link>
+                        </li>
+                        <li className={router.pathname == "/store" ? "uk-active" : ""}>
+                            <Link href="/store" scroll={false}>
+                                <a>Mua manga ở đâu?</a>
+                            </Link>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
             <main>{children}</main>
             <footer className={footer.wrapper}>
                 <div className="uk-container">
                     <div className={footer.copyright}>
-                        <span><a href="//facebook.com/Catouberos" target="_blank" title="Đi đến Facebook">Catouberos</a> © 2021, sử
-                            dụng <a href="//getuikit.com/" target="_blank">UIKit</a> và <a href="//fullcalendar.io/"
-                                target="_blank">FullCalendar</a>.</span>
+                        <span><a href="//facebook.com/Catouberos" target="_blank" title="Đi đến Facebook" rel='noreferrer'>Catouberos</a> © {currentYear}, sử
+                            dụng <a href="//getuikit.com/" target="_blank" rel='noreferrer'>UIKit</a> và <a href="//fullcalendar.io/"
+                                target="_blank" rel='noreferrer'>FullCalendar</a>. Built on <a href="nextjs.org" target="_blank" rel='noreferrer'>Next.JS</a></span>
                     </div>
                     <div className={footer.contact}>
-                        <a title="Gửi e-mail" href="mailto:khoanguyen.do@outlook.com">Báo lỗi / Góp ý / Liên hệ</a>
+                        <a title="Gửi e-mail" href="mailto:khoanguyen.do@outlook.com">Liên hệ</a>
+                        <a className="uk-margin-left" title="GitHub" href="//github.com/catouberos/mangaGLHF" target="_blank" rel='noreferrer'>GitHub</a>
+                        <a className="uk-margin-left" title="Twitter" href="//twitter.com/catouberos" target="_blank" rel='noreferrer'>Twitter</a>
                     </div>
                 </div>
             </footer>

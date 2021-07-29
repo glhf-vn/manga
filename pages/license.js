@@ -42,11 +42,9 @@ export default function License({ licensed, paused, unknown }) {
         var parsedHtml = '';
 
         for (var i = 0; i < licensed.length; i++) {
-            const [publisher, manga, source, anilist] = licensed[i];
+            const [manga, source, anilist] = licensed[i];
             parsedHtml +=
                 "<tr><td>" +
-                publisher +
-                "</td><td>" +
                 manga +
                 (anilist ? " <a href='//anilist.co/manga/" +
                 anilist +
@@ -94,18 +92,12 @@ export default function License({ licensed, paused, unknown }) {
     return (
         <Layout>
             <div className={`uk-container ${styles.main}`}>
-                <h1 className={`uk-heading-line ${styles.title}`}><span>Thông tin bản quyền</span></h1>
+                <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Thông tin bản quyền</span></h1>
                 <div className="uk-grid-divider uk-grid-medium" uk-grid="true">
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-2-3@l">
                         <span>Đã được xác nhận bản quyền <span uk-icon="icon: info; ratio: 0.8"
                             uk-tooltip="title: Tham khảo Vinh Miner - MangaHolic 2.0, page MangaHolic và các page nhà xuất bản."></span></span>
                         <table className="uk-table uk-table-divider" >
-                            <thead>
-                                <tr>
-                                    <th>Nhà xuất bản</th>
-                                    <th>Bộ truyện</th>
-                                </tr>
-                            </thead>
                             <tbody dangerouslySetInnerHTML={{ __html: licensedTable() }}>
                             </tbody>
                         </table>

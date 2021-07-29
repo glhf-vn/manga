@@ -2,10 +2,44 @@ import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import listPlugin from '@fullcalendar/list'
 import googleCalendarPlugin from '@fullcalendar/google-calendar'
+import { google } from 'googleapis'
 import styles from '../styles/styles.module.scss'
 import Layout from '../components/layout'
 
-export default function Home() {
+export async function getStaticProps() {
+
+  // Auth
+  const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'] });
+
+  const sheets = google.sheets({ version: 'v4', auth });
+
+  // Query
+  async function getContent(content) {
+      const range = content == 'update' ? 'info!B2' : 'info!B3';
+
+      const response = await sheets.spreadsheets.values.get({
+          spreadsheetId: process.env.SHEET_ID,
+          range,
+      });
+
+      return response.data.values ?? false;
+  }
+
+  const update = await getContent('update');
+  const info = await getContent('info');
+
+  // Result
+
+  return {
+      props: {
+          update,
+          info
+      },
+      revalidate: 7200, //revalidate every 2 hour
+  }
+}
+
+export default function Home({ update, info }) {
   function shareModal() {
     if (navigator.share) {
       navigator.share({
@@ -40,12 +74,26 @@ export default function Home() {
 
   function toggleSources(e) {
     let targetVariable = "--" + e.target.dataset.selector + '-display';
+    let targetVariableList = "--" + e.target.dataset.selector + '-display-list';
     let root = document.querySelector(':root');
 
     if(e.target.checked == true) {
       root.style.setProperty(targetVariable, 'block');
+      root.style.setProperty(targetVariableList, 'table-row');
     } else {
       root.style.setProperty(targetVariable, 'none');
+      root.style.setProperty(targetVariableList, 'none');
+    }
+  }
+
+  function showAlert(content) {
+    if (content) {
+      return (
+        <div uk-alert="true">
+          <a className="uk-alert-close" uk-close="true"></a>
+          {content}
+        </div>
+      )
     }
   }
 
@@ -77,22 +125,23 @@ export default function Home() {
       </div>
 
       <div className={`uk-container ${styles.main}`}>
-        <h1 className={`uk-heading-line ${styles.title}`}><span>Lịch phát hành manga định kỳ</span></h1>
-        <div uk-alert="true">
-          <a className="uk-alert-close" uk-close="true"></a>
-          Bạn có thể ấn vào tên truyện để xem chi tiết, đầy đủ hơn. Bên cạnh đó, cũng có thể ấn vào tên NXB để lọc.{' '}
-          <b>Cập nhật: đã thêm nút phóng to/thu nhỏ.</b>
-        </div>
-
+        <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Lịch phát hành manga định kỳ</span></h1>
+        {showAlert(update)}
+        {showAlert(info)}
         <div className={styles.flex}>
           <div className={styles.flexBig}>
             <FullCalendar
               plugins={[dayGridPlugin, googleCalendarPlugin]}
               locale='vi'
               initialView='dayGridMonth'
+              titleFormat={{
+                year: 'numeric',
+                month: 'numeric'
+              }}
               dayHeaderFormat={{
                 weekday: 'long',
               }}
+              viewClassNames="uk-margin-bottom"
               eventSources={[
                 {
                   googleCalendarApiKey: 'AIzaSyAx2Q1ZwT5ujAiRRWmnZD_Ui-91-R-plAo',
@@ -152,7 +201,7 @@ export default function Home() {
               </label>
               <label>
                 <input type="checkbox" data-selector="wingsbooks" defaultChecked onChange={toggleSources} />
-                <span className={`uk-label ${styles.wingsbook}`}>KĐ - Wings Books</span>
+                <span className={`uk-label ${styles.wingsbooks}`}>KĐ - Wings Books</span>
               </label>
             </form>
             <FullCalendar
@@ -166,7 +215,7 @@ export default function Home() {
                   googleCalendarApiKey: 'AIzaSyAx2Q1ZwT5ujAiRRWmnZD_Ui-91-R-plAo',
                   googleCalendarId: '2ahhvdl7pi34oldst8vi5dl8g8@group.calendar.google.com',
                   id: 'nxbKimDong',
-                  className: 'kim',
+                  className: 'kim-table',
                   color: '#e00024',
                 },
               ]}
