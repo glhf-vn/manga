@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import Image from 'next/image'
 import { useRouter } from "next/router";
 import banner from './banner.module.scss'
 import footer from './footer.module.scss'
@@ -22,14 +23,12 @@ export default function Layout({ children }) {
                 <meta name="google" content="notranslate" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
+                <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin />
                 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
                 <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
                 <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
                 <link rel="manifest" href="/site.webmanifest" />
-                <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"></script>
             </Head>
-
             <div id="modal-report" uk-modal="true">
                 <div className="uk-modal-dialog uk-modal-body">
                     <button className="uk-modal-close-default" type="button" uk-close="true"></button>
@@ -41,7 +40,7 @@ export default function Layout({ children }) {
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 250; max-height: 280; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <img src="/img/banner2.jpg" alt="Vercel Logo" uk-cover="true" />
+                        <Image src="/img/banner2.jpg" layout="fill" objectFit="cover" alt="Thiên thần diệt thế" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-right uk-text-right uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản!</h2>
                             <h1 className={banner.title} style={{ color: '#2e8b57' }}>Thiên thần diệt thế</h1>
@@ -49,7 +48,7 @@ export default function Layout({ children }) {
                         </div>
                     </li>
                     <li>
-                        <img src="/img/banner4.jpg" alt="Vercel Logo" uk-cover="true" />
+                        <Image src="/img/banner4.jpg" layout="fill" objectFit="cover" alt="Nhà có 5 nàng dâu" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
                             <h1 className={banner.title} style={{ color: '#de1c4e' }}>Nhà có 5 nàng dâu</h1>
@@ -82,6 +81,9 @@ export default function Layout({ children }) {
                 </nav>
             </div>
             <main>{children}</main>
+            <div className={`${footer.gksfd} uk-container`}>
+                <Image src="/img/gksfd.png" width={200} height={277} />
+            </div>
             <footer className={footer.wrapper}>
                 <div className="uk-container">
                     <div className={footer.copyright}>
@@ -96,6 +98,8 @@ export default function Layout({ children }) {
                     </div>
                 </div>
             </footer>
+            <script defer={true} src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit.min.js"></script>
+            <script defer={true} src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"></script>
         </div>
     )
 }

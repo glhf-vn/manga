@@ -1,14 +1,6 @@
 .main {
     margin-top: 2rem;
-    background-image: url('/img/gksfd.png');
-    background-size: 200px;
-    background-repeat: no-repeat;
-    background-position: bottom right;
-    padding-bottom: 320px;
-
-    @media(max-width: 768px) {
-        padding-bottom: 300px;
-    }
+    margin-bottom: 2rem;
 }
 
 .title {
