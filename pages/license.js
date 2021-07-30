@@ -8,10 +8,10 @@ const pageDescription = "Xem thông tin manga được mua bản quyền, cập 
 
 export async function getStaticProps() {
 
-    // Auth
-    const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'] });
-
-    const sheets = google.sheets({ version: 'v4', auth });
+    const sheets = google.sheets({
+        version: 'v4',
+        auth: process.env.GOOGLE_API_KEY,
+    });
 
     // Query
     async function getSheetContent(sheetNumber) {
@@ -37,7 +37,7 @@ export async function getStaticProps() {
             paused,
             unknown
         },
-        revalidate: 900, //revalidate every 15 min
+        revalidate: 3600, //revalidate every 1 hour
     }
 }
 
@@ -52,11 +52,11 @@ export default function License({ licensed, paused, unknown }) {
                 manga +
                 "</span>" +
                 (anilist ? "<a href='//anilist.co/manga/" +
-                anilist +
-                "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') + 
+                    anilist +
+                    "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') +
                 (source ? " <a href='" +
-                source +
-                "' target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
+                    source +
+                    "' target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
                 "</td></tr>";
         }
 
@@ -83,11 +83,11 @@ export default function License({ licensed, paused, unknown }) {
                 "<tr><td>" +
                 manga +
                 (anilist ? " <a href='//anilist.co/manga/" +
-                anilist +
-                "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') + 
+                    anilist +
+                    "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') +
                 (source ? " <a href='" +
-                source +
-                "' target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
+                    source +
+                    "' target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
                 "</td></tr>";
         }
 
@@ -96,12 +96,12 @@ export default function License({ licensed, paused, unknown }) {
 
     return (
         <Layout>
-        <Head>
-          <title>{pageTitle + " / manga.GLHF.vn"}</title>
-          <meta property="og:title" content={pageTitle} />
-          <meta name="description" content={pageDescription} />
-          <meta property="og:description" content={pageDescription} />
-        </Head>
+            <Head>
+                <title>{pageTitle + " / manga.GLHF.vn"}</title>
+                <meta property="og:title" content={pageTitle} />
+                <meta name="description" content={pageDescription} />
+                <meta property="og:description" content={pageDescription} />
+            </Head>
             <div className={`uk-container ${styles.main}`}>
                 <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Thông tin bản quyền</span></h1>
                 <div className="uk-grid-divider uk-grid-medium" uk-grid="true">

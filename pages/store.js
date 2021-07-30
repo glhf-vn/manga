@@ -8,10 +8,10 @@ const pageDescription = "Tìm chỗ mua manga chưa bao giờ dễ hơn, đượ
 
 export async function getStaticProps() {
 
-    // Auth
-    const auth = await google.auth.getClient({ scopes: ['https://www.googleapis.com/auth/spreadsheets.readonly'] });
-
-    const sheets = google.sheets({ version: 'v4', auth });
+    const sheets = google.sheets({
+        version: 'v4',
+        auth: process.env.GOOGLE_API_KEY,
+    });
 
     // Query
     async function getSheetContent(sheetNumber) {
@@ -43,7 +43,7 @@ export async function getStaticProps() {
 
 export default function License({ online, offline, shopee }) {
     function openReportModal() {
-      UIkit.modal('#modal-report').show();
+        UIkit.modal('#modal-report').show();
     }
 
     const onlineTable = () => {
@@ -130,12 +130,12 @@ export default function License({ online, offline, shopee }) {
 
     return (
         <Layout>
-        <Head>
-          <title>{pageTitle + " / manga.GLHF.vn"}</title>
-          <meta property="og:title" content={pageTitle} />
-          <meta name="description" content={pageDescription} />
-          <meta property="og:description" content={pageDescription} />
-        </Head>
+            <Head>
+                <title>{pageTitle + " / manga.GLHF.vn"}</title>
+                <meta property="og:title" content={pageTitle} />
+                <meta name="description" content={pageDescription} />
+                <meta property="og:description" content={pageDescription} />
+            </Head>
             <div className={`uk-container ${styles.main}`}>
                 <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Mua manga ở đâu?</span></h1>
                 <div uk-alert="true">

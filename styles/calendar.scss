@@ -6,7 +6,7 @@
   --tsuki-display: block;
   --amak-display: block;
   --uranix-display: block;
-  --wingsbook-display: block;
+  --wingsbooks-display: block;
   --kim-display-list: table-row;
   --tre-display-list: table-row;
   --ipm-display-list: table-row;
@@ -14,7 +14,7 @@
   --tsuki-display-list: table-row;
   --amak-display-list: table-row;
   --uranix-display-list: table-row;
-  --wingsbook-display-list: table-row;
+  --wingsbooks-display-list: table-row;
 }
 
 .kim {
@@ -45,8 +45,8 @@
   display: var(--uranix-display);
 }
 
-.wingsbook {
-  display: var(--wingsbook-display);
+.wingsbooks {
+  display: var(--wingsbooks-display);
 }
 
 .kim-table {
@@ -77,8 +77,8 @@
   display: var(--uranix-display-list);
 }
 
-.wingsbook-table {
-  display: var(--wingsbook-display-list);
+.wingsbooks-table {
+  display: var(--wingsbooks-display-list);
 }
 
 .fc {

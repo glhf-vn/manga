@@ -1,7 +1,6 @@
 import '@fullcalendar/common/main.css'
 import '@fullcalendar/daygrid/main.css'
 import '@fullcalendar/list/main.css'
-import '../styles/globals.css'
 import '../styles/app.scss'
 
 // fix XMLHttpRequest error undefined of fullcalendar/google-calendar
