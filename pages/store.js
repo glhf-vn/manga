@@ -1,6 +1,10 @@
 import { google } from 'googleapis'
 import styles from '../styles/styles.module.scss'
 import Layout from '../components/layout'
+import Head from 'next/head'
+
+const pageTitle = "Mua Manga ở đâu?"
+const pageDescription = "Tìm chỗ mua manga chưa bao giờ dễ hơn, được tổng hợp và đóng góp bởi cộng đồng!"
 
 export async function getStaticProps() {
 
@@ -38,6 +42,10 @@ export async function getStaticProps() {
 }
 
 export default function License({ online, offline, shopee }) {
+    function openReportModal() {
+      UIkit.modal('#modal-report').show();
+    }
+
     const onlineTable = () => {
         var parsedHtml = '';
 
@@ -122,11 +130,17 @@ export default function License({ online, offline, shopee }) {
 
     return (
         <Layout>
+        <Head>
+          <title>{pageTitle + " / manga.GLHF.vn"}</title>
+          <meta property="og:title" content={pageTitle} />
+          <meta name="description" content={pageDescription} />
+          <meta property="og:description" content={pageDescription} />
+        </Head>
             <div className={`uk-container ${styles.main}`}>
                 <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Mua manga ở đâu?</span></h1>
                 <div uk-alert="true">
                     <a className="uk-alert-close" uk-close="true"></a>
-                    Bạn có thể đóng góp thêm địa điểm tại <a href="https://docs.google.com/spreadsheets/d/1PWLmQ9mk6miHx1EjEIorJCqnNszJsq_QP7KN-vMikQE/edit?usp=sharing" target="_blank" rel='noreferrer'>đây</a>.
+                    Bạn có thể đóng góp thêm địa điểm hoặc báo sai thông tin tại <a href="#" onClick={openReportModal}>đây</a>.
                     Ngoài ra, ấn Ctrl+F (hoặc tìm kiếm trên trang) để tìm nhanh hơn.
                 </div>
                 <ul uk-accordion="multiple: true">

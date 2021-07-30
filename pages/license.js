@@ -1,6 +1,10 @@
 import { google } from 'googleapis'
 import styles from '../styles/styles.module.scss'
 import Layout from '../components/layout'
+import Head from 'next/head'
+
+const pageTitle = "Thông tin bản quyền Manga"
+const pageDescription = "Xem thông tin manga được mua bản quyền, cập nhật thường xuyên!"
 
 export async function getStaticProps() {
 
@@ -33,7 +37,7 @@ export async function getStaticProps() {
             paused,
             unknown
         },
-        revalidate: 3600, //revalidate every 1 hour
+        revalidate: 900, //revalidate every 15 min
     }
 }
 
@@ -44,9 +48,10 @@ export default function License({ licensed, paused, unknown }) {
         for (var i = 0; i < licensed.length; i++) {
             const [manga, source, anilist] = licensed[i];
             parsedHtml +=
-                "<tr><td>" +
+                "<tr><td><span class='uk-margin-small-right'>" +
                 manga +
-                (anilist ? " <a href='//anilist.co/manga/" +
+                "</span>" +
+                (anilist ? "<a href='//anilist.co/manga/" +
                 anilist +
                 "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') + 
                 (source ? " <a href='" +
@@ -91,6 +96,12 @@ export default function License({ licensed, paused, unknown }) {
 
     return (
         <Layout>
+        <Head>
+          <title>{pageTitle + " / manga.GLHF.vn"}</title>
+          <meta property="og:title" content={pageTitle} />
+          <meta name="description" content={pageDescription} />
+          <meta property="og:description" content={pageDescription} />
+        </Head>
             <div className={`uk-container ${styles.main}`}>
                 <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Thông tin bản quyền</span></h1>
                 <div className="uk-grid-divider uk-grid-medium" uk-grid="true">
@@ -103,7 +114,7 @@ export default function License({ licensed, paused, unknown }) {
                         </table>
                     </div>
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-1-3@l">
-                        <span>Tạm dừng do lý do khác</span>
+                        <span>Hiện đang tạm dừng xuất bản</span>
                         <table className="uk-table uk-table-divider">
                             <thead>
                                 <tr>

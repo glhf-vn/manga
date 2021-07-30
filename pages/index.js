@@ -3,8 +3,12 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import listPlugin from '@fullcalendar/list'
 import googleCalendarPlugin from '@fullcalendar/google-calendar'
 import { google } from 'googleapis'
+import Head from 'next/head'
 import styles from '../styles/styles.module.scss'
 import Layout from '../components/layout'
+
+const pageTitle = "Lịch phát hành Manga"
+const pageDescription = "Xem lịch phát hành manga chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
 
 export async function getStaticProps() {
 
@@ -15,14 +19,14 @@ export async function getStaticProps() {
 
   // Query
   async function getContent(content) {
-      const range = content == 'update' ? 'info!B2' : 'info!B3';
+    const range = content == 'update' ? 'info!B2' : 'info!B3';
 
-      const response = await sheets.spreadsheets.values.get({
-          spreadsheetId: process.env.SHEET_ID,
-          range,
-      });
+    const response = await sheets.spreadsheets.values.get({
+      spreadsheetId: process.env.SHEET_ID,
+      range,
+    });
 
-      return response.data.values ?? false;
+    return response.data.values ?? false;
   }
 
   const update = await getContent('update');
@@ -31,11 +35,11 @@ export async function getStaticProps() {
   // Result
 
   return {
-      props: {
-          update,
-          info
-      },
-      revalidate: 7200, //revalidate every 2 hour
+    props: {
+      update,
+      info
+    },
+    revalidate: 7200, //revalidate every 2 hour
   }
 }
 
@@ -53,6 +57,10 @@ export default function Home({ update, info }) {
     }
   }
 
+  function openReportModal() {
+    UIkit.modal('#modal-report').show();
+  }
+
   function openDetailedModal(eventInfo) {
     // Prevent Google Calendar URL to open
     eventInfo.jsEvent.preventDefault();
@@ -66,10 +74,17 @@ export default function Home({ update, info }) {
     changeHTML('month', eventInfo.event.start.getMonth() + 1);
     changeHTML('year', eventInfo.event.start.getFullYear());
     changeHTML('description', eventInfo.event.extendedProps.description);
+    changeHref('fahasa', encodeURI('//www.fahasa.com/catalogsearch/result/?q=' + eventInfo.event.title));
+    changeHref('tiki', encodeURI('//tiki.vn/search?q=' + eventInfo.event.title + '&category=1084'));
+    changeHref('shopee', encodeURI('//shopee.vn/search?keyword=' + eventInfo.event.title))
   }
 
   function changeHTML(id, content) {
     document.getElementById(id).innerHTML = content;
+  }
+
+  function changeHref(id, url) {
+    document.getElementById(id).href = url;
   }
 
   function toggleSources(e) {
@@ -77,7 +92,7 @@ export default function Home({ update, info }) {
     let targetVariableList = "--" + e.target.dataset.selector + '-display-list';
     let root = document.querySelector(':root');
 
-    if(e.target.checked == true) {
+    if (e.target.checked == true) {
       root.style.setProperty(targetVariable, 'block');
       root.style.setProperty(targetVariableList, 'table-row');
     } else {
@@ -99,6 +114,12 @@ export default function Home({ update, info }) {
 
   return (
     <Layout>
+      <Head>
+        <title>{pageTitle + " / manga.GLHF.vn"}</title>
+        <meta property="og:title" content={pageTitle} />
+        <meta name="description" content={pageDescription} />
+        <meta property="og:description" content={pageDescription} />
+      </Head>
       <div id="modal-detailed" uk-modal="true">
         <div className="uk-modal-dialog uk-modal-body">
           <button className="uk-modal-close-default" type="button" uk-close="true"></button>
@@ -106,6 +127,7 @@ export default function Home({ update, info }) {
           <span><b>Phát hành</b> ngày <span id="date"></span> tháng <span id="month"></span> năm <span
             id="year"></span></span>
           <p id="description"></p>
+          <p><strong>Tìm nhanh</strong>: <a id="fahasa" target="_blank" rel='noreferrer'>FAHASA</a> / <a id="tiki" target="_blank" rel='noreferrer'>Tiki</a> / <a id="shopee" target="_blank" rel='noreferrer'>Shopee</a></p>
         </div>
       </div>
 
@@ -114,13 +136,13 @@ export default function Home({ update, info }) {
           <button className="uk-modal-close-default" type="button" uk-close="true"></button>
           <h2 className="uk-modal-title uk-text-bold">Chia sẻ</h2>
           <a id="facebook" href="https://www.facebook.com/sharer/sharer.php?u=https://manga.glhf.vn/" target="_parent"
-            className="uk-button uk-button-secondary" style={{ background: '#1877f2', border: 'none' }}><span uk-icon="facebook"></span> Facebook</a>
+            className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#1877f2', border: 'none' }}><span uk-icon="facebook"></span> Facebook</a>
           <a id="messenger" href="fb-messenger://share/?link=https%3A%2F%2Fmanga.glhf.vn" target="_parent"
-            className="uk-button uk-button-secondary" style={{ background: 'linear-gradient(45deg, rgb(10, 124, 255), rgb(161, 14, 235), rgb(255, 82, 151), rgb(255, 108, 92))', border: 'none' }}>Messenger</a>
+            className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: 'linear-gradient(45deg, rgb(10, 124, 255), rgb(161, 14, 235), rgb(255, 82, 151), rgb(255, 108, 92))', border: 'none' }}>Messenger</a>
           <a id="twitter" href="//www.twitter.com/share?url=https://manga.glhf.vn/" target="_parent"
-            className="uk-button uk-button-secondary" style={{ background: '#1da1f2', borderColor: '#1da1f2' }}><span uk-icon="twitter"></span> Twitter</a>
+            className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#1da1f2', borderColor: '#1da1f2' }}><span uk-icon="twitter"></span> Twitter</a>
           <button id="url"
-            className="uk-button uk-button-secondary"><span uk-icon="link"></span> Đường dẫn</button>
+            className="uk-button uk-button-secondary uk-margin-small-top"><span uk-icon="link"></span> Đường dẫn</button>
         </div>
       </div>
 
@@ -187,17 +209,13 @@ export default function Home({ update, info }) {
             <div className={styles.social}>
               <button uk-tooltip="Chia sẻ" onClick={shareModal} id="share"
                 className="uk-button uk-button-default uk-margin-small-right">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zM11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.499 2.499 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5zm-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3zm11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3z" />
-                </svg>
+                <span uk-icon="push"></span>
               </button>
-              <a uk-tooltip="Báo sai thông tin, web bị lỗi,..." href="mailto:khoanguyen.do@outlook.com"
+              <button uk-tooltip="Báo sai thông tin, web bị lỗi,..." onClick={openReportModal}
                 className="uk-button uk-button-default">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                  <path d="M14.778.085A.5.5 0 0 1 15 .5V8a.5.5 0 0 1-.314.464L14.5 8l.186.464-.003.001-.006.003-.023.009a12.435 12.435 0 0 1-.397.15c-.264.095-.631.223-1.047.35-.816.252-1.879.523-2.71.523-.847 0-1.548-.28-2.158-.525l-.028-.01C7.68 8.71 7.14 8.5 6.5 8.5c-.7 0-1.638.23-2.437.477A19.626 19.626 0 0 0 3 9.342V15.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 1 0v.282c.226-.079.496-.17.79-.26C4.606.272 5.67 0 6.5 0c.84 0 1.524.277 2.121.519l.043.018C9.286.788 9.828 1 10.5 1c.7 0 1.638-.23 2.437-.477a19.587 19.587 0 0 0 1.349-.476l.019-.007.004-.002h.001M14 1.221c-.22.078-.48.167-.766.255-.81.252-1.872.523-2.734.523-.886 0-1.592-.286-2.203-.534l-.008-.003C7.662 1.21 7.139 1 6.5 1c-.669 0-1.606.229-2.415.478A21.294 21.294 0 0 0 3 1.845v6.433c.22-.078.48-.167.766-.255C4.576 7.77 5.638 7.5 6.5 7.5c.847 0 1.548.28 2.158.525l.028.01C9.32 8.29 9.86 8.5 10.5 8.5c.668 0 1.606-.229 2.415-.478A21.317 21.317 0 0 0 14 7.655V1.222z" />
-                </svg>
+                <span uk-icon="warning"></span>{' '}
                 <span>Báo cáo</span>
-              </a>
+              </button>
             </div>
             <form className={styles.filter}>
               <label className={styles.checkbox}>
