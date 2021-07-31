@@ -234,7 +234,7 @@ export default function Home({ update, info }) {
                   color: '#00adef',
                 },
               ]}
-              // eventClick={openDetailedModal}
+              eventClick={openDetailedModal}
               viewDidMount={injectHeader}
             />
           </div>
