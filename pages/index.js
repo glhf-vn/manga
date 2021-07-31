@@ -113,6 +113,25 @@ export default function Home({ update, info }) {
     }
   }
 
+  // hot fix: the table head keeps making the content disappear
+  function injectHeader() {
+    var calendarTable = document.getElementsByClassName('fc-scrollgrid-sync-table')[0];
+
+    calendarTable.insertAdjacentHTML("afterbegin", `
+    <thead class="table-head-fix">
+      <tr>
+        <th>Thứ Hai</th>
+        <th>Thứ Ba</th>
+        <th>Thứ Tư</th>
+        <th>Thứ Năm</th>
+        <th>Thứ Sáu</th>
+        <th>Thứ Bảy</th>
+        <th>Chủ Nhật</th>
+      </tr>
+    </thead>
+    `);
+  }
+
   return (
     <Layout>
       <Head>
@@ -161,9 +180,9 @@ export default function Home({ update, info }) {
                 year: 'numeric',
                 month: 'numeric'
               }}
-              dayHeaderFormat={{
-                weekday: 'long',
-              }}
+              dayHeaders={false}
+              aspectRatio={1.2}
+              firstDay={1}
               viewClassNames="uk-margin-bottom"
               eventSources={[
                 {
@@ -215,7 +234,8 @@ export default function Home({ update, info }) {
                   color: '#00adef',
                 },
               ]}
-              eventClick={openDetailedModal}
+              // eventClick={openDetailedModal}
+              viewDidMount={injectHeader}
             />
           </div>
           <div className={styles.flexSmall} id="sidebar">
