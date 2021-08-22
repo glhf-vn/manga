@@ -340,8 +340,8 @@ export default function Home({ update, info }) {
               ]}
               eventClick={openDetailedModal}
             />
-            <div class="uk-margin-top" style={{ border: '1px solid #e5e5e5' }}>
-              <a class="twitter-timeline" data-height="400" data-dnt="true" href="https://twitter.com/mangaGLHF?ref_src=twsrc%5Etfw">Tweets by mangaGLHF</a>
+            <div className="uk-margin-top" style={{ border: '1px solid #e5e5e5' }}>
+              <a className="twitter-timeline" data-height="400" data-dnt="true" href="https://twitter.com/mangaGLHF?ref_src=twsrc%5Etfw">Tweets by mangaGLHF</a>
               <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
             </div>
           </div>

@@ -53,7 +53,7 @@ export default function Layout({ children }) {
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 250; max-height: 280; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <Image src="/img/covidbanner.jpg" layout="fill" objectFit="cover" alt="Nhà có 5 nàng dâu" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/covidbanner.jpg" layout="fill" objectFit="cover" alt="COVID-19 info" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content_nomargin} uk-position-center uk-text-center uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Bạn ơi...</h2>
                             <h1 className={banner.title} style={{ color: '#479cec' }}>Giữ gìn sức khỏe</h1>
@@ -85,7 +85,7 @@ export default function Layout({ children }) {
                     <ul className={`${nav.wrapper} uk-navbar-nav uk-margin-auto`}>
                         <li>
                             <Link href="/" scroll={false}>
-                                <a><Image layout="fixed" src="/img/logo.png" width="48" height="24" /></a>
+                                <a><Image layout="fixed" src="/img/logo.png" width="48" height="24" alt="GLHF logo" /></a>
                             </Link>
                         </li>
                         <li className={router.pathname == "/" ? "uk-active" : ""}>
@@ -108,7 +108,7 @@ export default function Layout({ children }) {
             </div>
             <main>{children}</main>
             <div className={`${footer.gksfd} uk-container`}>
-                <Image src="/img/gksfd.png" width={200} height={277} />
+                <Image src="/img/gksfd.png" alt="Gokushufudou" width={200} height={277} />
             </div>
             <footer className={footer.wrapper}>
                 <div className="uk-container">
