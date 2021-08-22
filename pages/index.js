@@ -102,15 +102,13 @@ export default function Home({ update, info }) {
     }
   }
 
-  function showAlert(content) {
-    if (content) {
-      return (
-        <div uk-alert="true">
-          <a className="uk-alert-close" uk-close="true"></a>
-          {content}
-        </div>
-      )
-    }
+  function showAlert(content, id) {
+    return (
+      <div uk-alert="true">
+        <a className="uk-alert-close" uk-close="true"></a>
+        {content}
+      </div>
+    )
   }
 
   // hot fix: the table head keeps making the content disappear
@@ -342,6 +340,10 @@ export default function Home({ update, info }) {
               ]}
               eventClick={openDetailedModal}
             />
+            <div class="uk-margin-top" style={{ border: '1px solid #e5e5e5' }}>
+              <a class="twitter-timeline" data-height="400" data-dnt="true" href="https://twitter.com/mangaGLHF?ref_src=twsrc%5Etfw">Tweets by mangaGLHF</a>
+              <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
           </div>
         </div>
       </div>

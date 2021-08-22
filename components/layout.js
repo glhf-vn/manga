@@ -53,6 +53,14 @@ export default function Layout({ children }) {
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 250; max-height: 280; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
+                        <Image src="/img/covidbanner.jpg" layout="fill" objectFit="cover" alt="Nhà có 5 nàng dâu" uk-img="target: !.uk-slideshow-items" />
+                        <div className={`${banner.content_nomargin} uk-position-center uk-text-center uk-light`}>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Bạn ơi...</h2>
+                            <h1 className={banner.title} style={{ color: '#479cec' }}>Giữ gìn sức khỏe</h1>
+                            <span className={banner.copyright}>Ở nhà, tranh thủ nhìn lại và đọc hết những bộ truyện đã mua và tuân thủ 5K!</span>
+                        </div>
+                    </li>
+                    <li>
                         <Image src="/img/banner2.jpg" layout="fill" objectFit="cover" alt="Thiên thần diệt thế" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-right uk-text-right uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản!</h2>
@@ -75,6 +83,11 @@ export default function Layout({ children }) {
             <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
                 <nav className="uk-navbar-container" uk-navbar="true">
                     <ul className={`${nav.wrapper} uk-navbar-nav uk-margin-auto`}>
+                        <li>
+                            <Link href="/" scroll={false}>
+                                <a><Image layout="fixed" src="/img/logo.png" width="48" height="24" /></a>
+                            </Link>
+                        </li>
                         <li className={router.pathname == "/" ? "uk-active" : ""}>
                             <Link href="/" scroll={false}>
                                 <a>Lịch phát hành</a>
@@ -107,7 +120,8 @@ export default function Layout({ children }) {
                     <div className={footer.contact}>
                         <a title="Gửi e-mail" href="mailto:khoanguyen.do@outlook.com">Liên hệ</a>
                         <a className="uk-margin-left" title="GitHub" href="//github.com/catouberos/mangaGLHF" target="_blank" rel='noreferrer'>GitHub</a>
-                        <a className="uk-margin-left" title="Twitter" href="//twitter.com/catouberos" target="_blank" rel='noreferrer'>Twitter</a>
+                        <a className="uk-margin-left" title="Facebook" href="//fb.com/mangaGLHF" target="_blank" rel='noreferrer'>Facebook</a>
+                        <a className="uk-margin-left" title="Twitter" href="//twitter.com/mangaGLHF" target="_blank" rel='noreferrer'>Twitter</a>
                     </div>
                 </div>
             </footer>
