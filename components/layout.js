@@ -42,13 +42,6 @@ export default function Layout({ children }) {
                 <meta name="msapplication-TileColor" content="#ffffff" />
                 <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
             </Head>
-            <div id="modal-report" uk-modal="true">
-                <div className="uk-modal-dialog uk-modal-body">
-                    <button className="uk-modal-close-default" type="button" uk-close="true"></button>
-                    <h2 className="uk-modal-title uk-text-bold">Đóng góp ý kiến</h2>
-                    <iframe width="640px" height="480px" src="https://forms.office.com/Pages/ResponsePage.aspx?id=DQSIkWdsW0yxEjajBLZtrQAAAAAAAAAAAAN__rUdnp9UMllGSUtJSUdKRVFOSlNUS0w2MkJNU1BPQS4u&embed=true" frameBorder="0" marginWidth="0" marginHeight="0" style={{ border: "none", maxWidth: "100%", maxHeight: "100vh" }} allowFullScreen={true}></iframe>
-                </div>
-            </div>
 
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 250; max-height: 280; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
@@ -113,12 +106,12 @@ export default function Layout({ children }) {
             <footer className={footer.wrapper}>
                 <div className="uk-container">
                     <div className={footer.copyright}>
-                        <span><a href="//facebook.com/Catouberos" target="_blank" title="Đi đến Facebook" rel='noreferrer'>Catouberos</a> © {currentYear}, sử
+                        <span><a href="//facebook.com/Catouberos" target="_blank" title="Đi đến Facebook" rel='noreferrer'>Catou</a> © {currentYear}, sử
                             dụng <a href="//getuikit.com/" target="_blank" rel='noreferrer'>UIKit</a> và <a href="//fullcalendar.io/"
                                 target="_blank" rel='noreferrer'>FullCalendar</a>. Built on <a href="//nextjs.org" target="_blank" rel='noreferrer'>Next.JS</a></span>
                     </div>
                     <div className={footer.contact}>
-                        <a title="Gửi e-mail" href="mailto:khoanguyen.do@outlook.com">Liên hệ</a>
+                        <a title="Gửi e-mail" href="mailto:catou@glhf.vn">Liên hệ</a>
                         <a className="uk-margin-left" title="GitHub" href="//github.com/catouberos/mangaGLHF" target="_blank" rel='noreferrer'>GitHub</a>
                         <a className="uk-margin-left" title="Facebook" href="//fb.com/mangaGLHF" target="_blank" rel='noreferrer'>Facebook</a>
                         <a className="uk-margin-left" title="Twitter" href="//twitter.com/mangaGLHF" target="_blank" rel='noreferrer'>Twitter</a>

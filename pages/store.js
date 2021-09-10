@@ -140,7 +140,7 @@ export default function License({ online, offline, shopee }) {
                 <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Mua manga ở đâu?</span></h1>
                 <div uk-alert="true">
                     <a className="uk-alert-close" uk-close="true"></a>
-                    Bạn có thể đóng góp thêm địa điểm hoặc báo sai thông tin tại <a href="#" onClick={openReportModal}>đây</a>.
+                    Bạn có thể đóng góp thêm địa điểm hoặc báo sai thông tin tại <a href="mailto:catou@glhf.vn">đây</a>.
                     Ngoài ra, ấn Ctrl+F (hoặc tìm kiếm trên trang) để tìm nhanh hơn.
                 </div>
                 <ul uk-accordion="multiple: true">

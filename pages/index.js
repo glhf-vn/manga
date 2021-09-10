@@ -58,10 +58,6 @@ export default function Home({ update, info }) {
     }
   }
 
-  function openReportModal() {
-    UIkit.modal('#modal-report').show();
-  }
-
   function openDetailedModal(eventInfo) {
     // Prevent Google Calendar URL to open
     eventInfo.jsEvent.preventDefault();
@@ -242,11 +238,11 @@ export default function Home({ update, info }) {
                 className="uk-button uk-button-default uk-margin-small-right">
                 <span uk-icon="push"></span>
               </button>
-              <button uk-tooltip="Báo sai thông tin, web bị lỗi,..." onClick={openReportModal}
+              <a uk-tooltip="Báo sai thông tin, web bị lỗi,..." href="mailto:catou@glhf.vn"
                 className="uk-button uk-button-default">
                 <span uk-icon="warning"></span>{' '}
                 <span>Báo cáo</span>
-              </button>
+              </a>
             </div>
             <form className={styles.filter}>
               <label className={styles.checkbox}>
