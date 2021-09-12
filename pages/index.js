@@ -44,7 +44,6 @@ export async function getStaticProps() {
 }
 
 export default function Home({ update, info }) {
-
   function shareModal() {
     if (navigator.share) {
       navigator.share({
@@ -59,6 +58,14 @@ export default function Home({ update, info }) {
   }
 
   function openDetailedModal(eventInfo) {
+    function changeHTML(id, content) {
+      document.getElementById(id).innerHTML = content;
+    }
+
+    function changeHref(id, url) {
+      document.getElementById(id).href = url;
+    }
+
     // Prevent Google Calendar URL to open
     eventInfo.jsEvent.preventDefault();
 
@@ -70,18 +77,10 @@ export default function Home({ update, info }) {
     changeHTML('date', eventInfo.event.start.getDate());
     changeHTML('month', eventInfo.event.start.getMonth() + 1);
     changeHTML('year', eventInfo.event.start.getFullYear());
-    changeHTML('description', eventInfo.event.extendedProps.description);
+    changeHTML('description', eventInfo.event.extendedProps.description ?? "");
     changeHref('fahasa', encodeURI('//www.fahasa.com/catalogsearch/result/?q=' + eventInfo.event.title));
     changeHref('tiki', encodeURI('//tiki.vn/search?q=' + eventInfo.event.title + '&category=1084'));
     changeHref('shopee', encodeURI('//shopee.vn/search?keyword=' + eventInfo.event.title))
-  }
-
-  function changeHTML(id, content) {
-    document.getElementById(id).innerHTML = content;
-  }
-
-  function changeHref(id, url) {
-    document.getElementById(id).href = url;
   }
 
   function toggleSources(e) {
@@ -96,15 +95,6 @@ export default function Home({ update, info }) {
       root.style.setProperty(targetVariable, 'none');
       root.style.setProperty(targetVariableList, 'none');
     }
-  }
-
-  function showAlert(content, id) {
-    return (
-      <div uk-alert="true">
-        <a className="uk-alert-close" uk-close="true"></a>
-        {content}
-      </div>
-    )
   }
 
   // hot fix: the table head keeps making the content disappear
@@ -162,8 +152,14 @@ export default function Home({ update, info }) {
 
       <div className={`uk-container ${styles.main}`}>
         <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Lịch phát hành manga định kỳ</span></h1>
-        {showAlert(update)}
-        {showAlert(info)}
+        <div uk-alert="true">
+          <a className="uk-alert-close" uk-close="true"></a>
+          {update}
+        </div>
+        <div uk-alert="true">
+          <a className="uk-alert-close" uk-close="true"></a>
+          {info}
+        </div>
         <div className={styles.flex}>
           <div className={styles.flexBig}>
             <FullCalendar
@@ -337,8 +333,7 @@ export default function Home({ update, info }) {
               eventClick={openDetailedModal}
             />
             <div className="uk-margin-top" style={{ border: '1px solid #e5e5e5' }}>
-              <a className="twitter-timeline" data-height="400" data-dnt="true" href="https://twitter.com/mangaGLHF?ref_src=twsrc%5Etfw">Tweets by mangaGLHF</a>
-              <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+              <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FmangaGLHF&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="500" style={{border: "none", overflow: "hidden"}} scrolling="no" frameBorder="0" allowFullScreen="true" allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
           </div>
         </div>
