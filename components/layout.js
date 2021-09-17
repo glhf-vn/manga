@@ -46,27 +46,35 @@ export default function Layout({ children }) {
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 250; max-height: 280; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <Image src="/img/covidbanner.jpg" layout="fill" objectFit="cover" alt="COVID-19 info" uk-img="target: !.uk-slideshow-items" />
-                        <div className={`${banner.content_nomargin} uk-position-center uk-text-center uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Bạn ơi...</h2>
-                            <h1 className={banner.title} style={{ color: '#479cec' }}>Giữ gìn sức khỏe</h1>
-                            <span className={banner.copyright}>Ở nhà, tranh thủ nhìn lại và đọc hết những bộ truyện đã mua và tuân thủ 5K!</span>
-                        </div>
-                    </li>
-                    <li>
-                        <Image src="/img/banner2.jpg" layout="fill" objectFit="cover" alt="Thiên thần diệt thế" uk-img="target: !.uk-slideshow-items" />
-                        <div className={`${banner.content} uk-position-right uk-text-right uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản!</h2>
-                            <h1 className={banner.title} style={{ color: '#2e8b57' }}>Thiên thần diệt thế</h1>
-                            <span className={banner.copyright}>Viz Media/Seraph of the End</span>
-                        </div>
-                    </li>
-                    <li>
-                        <Image src="/img/banner4.jpg" layout="fill" objectFit="cover" alt="Nhà có 5 nàng dâu" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/handa.png" layout="fill" objectFit="cover" alt="Handa" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#de1c4e' }}>Nhà có 5 nàng dâu</h1>
-                            <span className={banner.copyright}>ダ-ト(DAT)/五つ子の誕生日</span>
+                            <h1 className={banner.title} style={{ color: '#b7dc7c' }}>Handa</h1>
+                            <span className={banner.copyright}>Satsuki Yoshino</span>
+                        </div>
+                    </li>
+                    <li>
+                        <Image src="/img/witchhatatelier.png" layout="fill" objectFit="cover" alt="Xưởng phép thuật" uk-img="target: !.uk-slideshow-items" />
+                        <div className={`${banner.content} uk-position-right uk-text-right uk-light`}>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
+                            <h1 className={banner.title} style={{ color: '#de1c4e' }}>Xưởng phép thuật</h1>
+                            <span className={banner.copyright}>Kamome Shirahama</span>
+                        </div>
+                    </li>
+                    <li>
+                        <Image src="/img/deathnote.png" layout="fill" objectFit="cover" alt="Death Note" uk-img="target: !.uk-slideshow-items" />
+                        <div className={`${banner.content} uk-position-left uk-text-left uk-light`}>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản</h2>
+                            <h1 className={banner.title} style={{ color: '#e6e6e6' }}>Death Note</h1>
+                            <span className={banner.copyright}>Tsugumi Ohba, Takeshi Obata</span>
+                        </div>
+                    </li>
+                    <li>
+                        <Image src="/img/kindaichi.png" layout="fill" objectFit="cover" alt="Thám tử Kindaichi (Series kỷ niệm 20 năm)" uk-img="target: !.uk-slideshow-items" />
+                        <div className={`${banner.content} uk-position-left uk-text-left uk-light`}>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
+                            <h1 className={banner.title} style={{ color: '#ee7f00' }}>Thám tử Kindaichi</h1>
+                            <span className={banner.copyright}>Series kỷ niệm 20 năm</span>
                         </div>
                     </li>
                 </ul>
