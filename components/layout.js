@@ -86,7 +86,7 @@ export default function Layout({ children }) {
                     <ul className={`${nav.wrapper} uk-navbar-nav uk-margin-auto`}>
                         <li>
                             <Link href="/" scroll={false}>
-                                <a><Image layout="fixed" src="/img/logo.png" width="48" height="24" alt="GLHF logo" /></a>
+                                <a><Image layout="fixed" src="logo_doaoq7.webp" width="48" height="24" alt="GLHF logo" /></a>
                             </Link>
                         </li>
                         <li className={router.pathname == "/" ? "uk-active" : ""}>
