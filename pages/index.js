@@ -156,10 +156,10 @@ export default function Home({ update, info }) {
           <a className="uk-alert-close" uk-close="true"></a>
           {update}
         </div>
-        <div uk-alert="true">
+        {/* <div uk-alert="true">
           <a className="uk-alert-close" uk-close="true"></a>
           {info}
-        </div>
+        </div> */}
         <div className={styles.flex}>
           <div className={styles.flexBig}>
             <FullCalendar
@@ -235,10 +235,24 @@ export default function Home({ update, info }) {
                 <span uk-icon="push"></span>
               </button>
               <a uk-tooltip="Báo sai thông tin, web bị lỗi,..." href="mailto:catou@glhf.vn"
-                className="uk-button uk-button-default">
-                <span uk-icon="warning"></span>{' '}
-                <span>Báo cáo</span>
+                className="uk-button uk-button-default uk-margin-small-right">
+                <span uk-icon="warning"></span>
               </a>
+              <div class="uk-inline">
+                <button uk-tooltip="Thêm lịch vào máy" class="uk-button uk-button-default" type="button"><span uk-icon="download"></span></button>
+                <div uk-dropdown="mode: click">
+                  <ul class="uk-nav uk-dropdown-nav">
+                    <li><a href="https://calendar.google.com/calendar/ical/2ahhvdl7pi34oldst8vi5dl8g8%40group.calendar.google.com/public/basic.ics">NXB Kim Đồng</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/95o6f5p1pd6jofhului3is62t8%40group.calendar.google.com/public/basic.ics">NXB Trẻ</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/cgrvn8e7fplp686spfr5mgko8o%40group.calendar.google.com/public/basic.ics">IPM</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/k2nu1ihpbo8l17abfdakn8tkgg%40group.calendar.google.com/public/basic.ics">SkyComics</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/3bi08q64q89jujjq64fimfdpv0%40group.calendar.google.com/public/basic.ics">Tsuki LightNovel</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/bfm6ju43bch0jjkuuac0739f5c%40group.calendar.google.com/public/basic.ics">AMAK</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/654qd280st7bkeofugju8du9p8%40group.calendar.google.com/public/basic.ics">Uranix</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/iu1k210lirlffs3uesasnrkhcg%40group.calendar.google.com/public/basic.ics">KĐ - Wings Books</a></li>
+                  </ul>
+                </div>
+              </div>
             </div>
             <form className={styles.filter}>
               <label className={styles.checkbox}>
@@ -333,7 +347,7 @@ export default function Home({ update, info }) {
               eventClick={openDetailedModal}
             />
             <div className="uk-margin-top" style={{ border: '1px solid #e5e5e5' }}>
-              <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FmangaGLHF&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="500" style={{border: "none", overflow: "hidden"}} scrolling="no" frameBorder="0" allowFullScreen={true} allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
+              <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FmangaGLHF&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="500" style={{ border: "none", overflow: "hidden" }} scrolling="no" frameBorder="0" allowFullScreen={true} allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
           </div>
         </div>

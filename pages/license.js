@@ -26,7 +26,7 @@ export async function getStaticProps() {
     }
 
     const licensed = await getSheetContent('licensed');
-    const paused = await getSheetContent('paused');
+    const reprint = await getSheetContent('reprint');
     const unknown = await getSheetContent('unknown');
 
     // Result
@@ -34,14 +34,14 @@ export async function getStaticProps() {
     return {
         props: {
             licensed,
-            paused,
+            reprint,
             unknown
         },
         revalidate: 3600, //revalidate every 1 hour
     }
 }
 
-export default function License({ licensed, paused, unknown }) {
+export default function License({ licensed, reprint, unknown }) {
     const licensedTable = () => {
         var parsedHtml = '';
 
@@ -63,11 +63,11 @@ export default function License({ licensed, paused, unknown }) {
         return parsedHtml;
     }
 
-    const pausedTable = () => {
+    const reprintTable = () => {
         var parsedHtml = '';
 
-        for (var i = 0; i < paused.length; i++) {
-            const [publisher, manga] = paused[i];
+        for (var i = 0; i < reprint.length; i++) {
+            const [publisher, manga] = reprint[i];
             parsedHtml += "<tr><td>" + publisher + "</td><td>" + manga + "</td></tr>";
         }
 
@@ -114,7 +114,7 @@ export default function License({ licensed, paused, unknown }) {
                         </table>
                     </div>
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-1-3@l">
-                        <span>Hiện đang tạm dừng xuất bản</span>
+                        <span>Có kế hoạch tái bản</span>
                         <table className="uk-table uk-table-divider">
                             <thead>
                                 <tr>
@@ -122,7 +122,7 @@ export default function License({ licensed, paused, unknown }) {
                                     <th>Bộ truyện</th>
                                 </tr>
                             </thead>
-                            <tbody dangerouslySetInnerHTML={{ __html: pausedTable() }}>
+                            <tbody dangerouslySetInnerHTML={{ __html: reprintTable() }}>
                             </tbody>
                         </table>
                         <span>Bản quyền?</span> <span uk-icon="icon: info; ratio: 0.8"

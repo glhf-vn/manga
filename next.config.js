@@ -3,7 +3,7 @@ const withTM = require('next-transpile-modules')([
   '@fullcalendar/react',
   '@fullcalendar/daygrid',
   '@fullcalendar/list',
-  '@fullcalendar/google-calendar'
+  '@fullcalendar/google-calendar',
 ])
 
 module.exports = withTM({
