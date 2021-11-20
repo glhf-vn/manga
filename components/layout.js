@@ -46,7 +46,7 @@ export default function Layout({ children }) {
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: false;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <Image src="/img/yurucamp.jpg" layout="fill" objectFit="cover" alt="Dã ngoại thảnh thơi" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="yurucamp_hoedvv.jpg" layout="fill" objectFit="cover" alt="Dã ngoại thảnh thơi" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
                             <h1 className={banner.title} style={{ color: '#82cddc' }}>Dã ngoại thảnh thơi</h1>
@@ -54,7 +54,7 @@ export default function Layout({ children }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/komibanner.png" layout="fill" objectFit="cover" alt="Komi - Nữ thần sợ giao tiếp" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="komibanner_cq7l6z.png" layout="fill" objectFit="cover" alt="Komi - Nữ thần sợ giao tiếp" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-center uk-text-center uk-light`} style={{marginLeft: 0}}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
                             <h1 className={banner.title} style={{ color: '#9d7eeb' }}>Komi - Nữ thần sợ giao tiếp</h1>
@@ -62,7 +62,7 @@ export default function Layout({ children }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/dhta.jpg" layout="fill" objectFit="cover" alt="Dáng hình thanh âm" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="dhta_syniwn.jpg" layout="fill" objectFit="cover" alt="Dáng hình thanh âm" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản</h2>
                             <h1 className={banner.title} style={{ color: '#00b7ff' }}>Dáng hình thanh âm</h1>
@@ -70,7 +70,7 @@ export default function Layout({ children }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/roto.png" layout="fill" objectFit="cover" alt="Dragon Quest: Dấu ấn Roto" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="roto_onmhrk.png" layout="fill" objectFit="cover" alt="Dragon Quest: Dấu ấn Roto" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-top-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
                             <h1 className={banner.title} style={{ color: '#fe45a5' }}>Dragon Quest: Dấu ấn Roto</h1>
@@ -123,7 +123,7 @@ export default function Layout({ children }) {
             </div>
             <main>{children}</main>
             <div className={`${footer.gksfd} uk-container`}>
-                <Image src="/img/komi.png" alt="Komi Can't Communicate" width={200} height={277} />
+                <Image src="https://res.cloudinary.com/glhfvn/image/upload/v1637412365/komi_whacfy.png" alt="Komi Can't Communicate" width={200} height={277} />
             </div>
             <footer className={footer.wrapper}>
                 <div className="uk-container">

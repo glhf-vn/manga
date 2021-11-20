@@ -8,4 +8,8 @@ const withTM = require('next-transpile-modules')([
 
 module.exports = withTM({
   reactStrictMode: true,
+  images: {
+    loader: 'cloudinary',
+    path: 'https://res.cloudinary.com/glhfvn/image/upload/',
+  }
 })

@@ -238,10 +238,10 @@ export default function Home({ update, info }) {
                 className="uk-button uk-button-default uk-margin-small-right">
                 <span uk-icon="warning"></span>
               </a>
-              <div class="uk-inline">
-                <button uk-tooltip="Thêm lịch vào máy" class="uk-button uk-button-default" type="button"><span uk-icon="download"></span></button>
+              <div className="uk-inline">
+                <button uk-tooltip="Thêm lịch vào máy" className="uk-button uk-button-default" type="button"><span uk-icon="download"></span></button>
                 <div uk-dropdown="mode: click">
-                  <ul class="uk-nav uk-dropdown-nav">
+                  <ul className="uk-nav uk-dropdown-nav">
                     <li><a href="https://calendar.google.com/calendar/ical/2ahhvdl7pi34oldst8vi5dl8g8%40group.calendar.google.com/public/basic.ics">NXB Kim Đồng</a></li>
                     <li><a href="https://calendar.google.com/calendar/ical/95o6f5p1pd6jofhului3is62t8%40group.calendar.google.com/public/basic.ics">NXB Trẻ</a></li>
                     <li><a href="https://calendar.google.com/calendar/ical/cgrvn8e7fplp686spfr5mgko8o%40group.calendar.google.com/public/basic.ics">IPM</a></li>
