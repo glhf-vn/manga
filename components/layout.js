@@ -123,7 +123,7 @@ export default function Layout({ children }) {
             </div>
             <main>{children}</main>
             <div className={`${footer.gksfd} uk-container`}>
-                <Image src="https://res.cloudinary.com/glhfvn/image/upload/v1637412365/komi_whacfy.png" alt="Komi Can't Communicate" width={200} height={277} />
+                <Image src="komi_whacfy.png" alt="Komi Can't Communicate" width={200} height={277} />
             </div>
             <footer className={footer.wrapper}>
                 <div className="uk-container">
