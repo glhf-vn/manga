@@ -121,7 +121,7 @@ export default function Layout({ children }) {
                         <li className="uk-flex-none">
                             <a>
                                 Light Novel
-                                <span class="uk-icon uk-margin-small-left" uk-icon="icon: sign-out"></span>
+                                <span className="uk-icon uk-margin-small-left" uk-icon="icon: sign-out"></span>
                             </a>
                         </li>
                     </ul>
