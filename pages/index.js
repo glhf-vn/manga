@@ -74,12 +74,12 @@ export default function Home({ update, info }) {
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
           // Typical action to be performed when the document is ready:
-          document.getElementById(id).innerHTML = "<img src='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_300/" + src + "'/>"
+          document.getElementById(id).innerHTML = "<img src='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_250/covers/" + src + "' srcset='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_250/covers/" + src + " 250w, https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_400/covers/" + src + " 400w' />"
         } else {
           document.getElementById(id).innerHTML = ""
         }
       };
-      xhttp.open("GET", "https://res.cloudinary.com/glhfvn/image/upload/v1637412367/" + src, true)
+      xhttp.open("GET", "https://res.cloudinary.com/glhfvn/image/upload/covers/" + src, true)
       xhttp.send()
     }
 
