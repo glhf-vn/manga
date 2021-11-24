@@ -58,12 +58,29 @@ export default function Home({ update, info }) {
   }
 
   function openDetailedModal(eventInfo) {
+    const url = eventInfo.event.url
+    const eventId = url.slice(url.indexOf("eid=") + ("eid=").length)
+
     function changeHTML(id, content) {
-      document.getElementById(id).innerHTML = content;
+      document.getElementById(id).innerHTML = content
     }
 
     function changeHref(id, url) {
-      document.getElementById(id).href = url;
+      document.getElementById(id).href = url
+    }
+
+    function changeImage(id, src) {
+      var xhttp = new XMLHttpRequest()
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+          // Typical action to be performed when the document is ready:
+          document.getElementById(id).innerHTML = "<img src='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_300/" + src + "'/>"
+        } else {
+          document.getElementById(id).innerHTML = ""
+        }
+      };
+      xhttp.open("GET", "https://res.cloudinary.com/glhfvn/image/upload/v1637412367/" + src, true)
+      xhttp.send()
     }
 
     // Prevent Google Calendar URL to open
@@ -73,14 +90,15 @@ export default function Home({ update, info }) {
     UIkit.modal('#modal-detailed').show();
 
     // Change the content of the modal
-    changeHTML('title', eventInfo.event.title);
-    changeHTML('date', eventInfo.event.start.getDate());
-    changeHTML('month', eventInfo.event.start.getMonth() + 1);
-    changeHTML('year', eventInfo.event.start.getFullYear());
-    changeHTML('description', eventInfo.event.extendedProps.description ?? "");
-    changeHref('fahasa', encodeURI('//www.fahasa.com/catalogsearch/result/?q=' + eventInfo.event.title));
-    changeHref('tiki', encodeURI('//tiki.vn/search?q=' + eventInfo.event.title + '&category=1084'));
+    changeHTML('title', eventInfo.event.title)
+    changeHTML('date', eventInfo.event.start.getDate())
+    changeHTML('month', eventInfo.event.start.getMonth() + 1)
+    changeHTML('year', eventInfo.event.start.getFullYear())
+    changeHTML('description', eventInfo.event.extendedProps.description ?? "")
+    changeHref('fahasa', encodeURI('//www.fahasa.com/catalogsearch/result/?q=' + eventInfo.event.title))
+    changeHref('tiki', encodeURI('//tiki.vn/search?q=' + eventInfo.event.title + '&category=1084'))
     changeHref('shopee', encodeURI('//shopee.vn/search?keyword=' + eventInfo.event.title))
+    changeImage('modalImage', eventId)
   }
 
   function toggleSources(e) {
@@ -125,13 +143,18 @@ export default function Home({ update, info }) {
         <meta property="og:description" content={pageDescription} />
       </Head>
       <div id="modal-detailed" uk-modal="true">
-        <div className="uk-modal-dialog uk-modal-body">
+        <div className="uk-modal-dialog">
           <button className="uk-modal-close-default" type="button" uk-close="true"></button>
-          <h2 className="uk-modal-title uk-text-bold" id="title"></h2>
-          <span><b>Phát hành</b> ngày <span id="date"></span> tháng <span id="month"></span> năm <span
-            id="year"></span></span>
-          <p id="description"></p>
-          <p><strong>Tìm nhanh</strong>: <a id="fahasa" target="_blank" rel='noreferrer'>FAHASA</a> / <a id="tiki" target="_blank" rel='noreferrer'>Tiki</a> / <a id="shopee" target="_blank" rel='noreferrer'>Shopee</a></p>
+          <div className={styles.modal}>
+            <div className={styles.image} id="modalImage">
+            </div>
+            <div className="uk-flex-1 uk-padding">
+              <h3 className="uk-text-bold" id="title">Headline</h3>
+              <span><b>Phát hành</b> ngày <span id="date"></span>/<span id="month"></span>/<span id="year"></span></span>
+              <p id="description"></p>
+              <p className="uk-margin-remove-bottom"><a id="fahasa" target="_blank" rel='noreferrer'>FAHASA</a> / <a id="tiki" target="_blank" rel='noreferrer'>Tiki</a> / <a id="shopee" target="_blank" rel='noreferrer'>Shopee</a></p>
+            </div>
+          </div>
         </div>
       </div>
 
