@@ -37,21 +37,9 @@ export default function Home({ posts, paged, total }) {
     )
 }
 
-export async function getStaticPaths() {
-    const pages = Math.ceil(totalPosts / 10)
-
-    const paths = Array.from(Array(pages).keys()).map((paged) => ({
-        params: { paged: String(paged + 1) },
-    }))
-
-    // We'll pre-render only these paths at build time.
-    // { fallback: false } means other routes should 404.
-    return { paths, fallback: false }
-}
-
 export async function getStaticProps({ params }) {
-    const posts = await getPosts(10, params.paged)
-    const paged = Number(params.paged)
+    const posts = await getPosts(10, 1)
+    const paged = Number(1)
     const total = Math.ceil(totalPosts / 10)
 
     return {

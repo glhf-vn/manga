@@ -1,6 +1,7 @@
-import fs from 'fs';
+import fs from 'fs'
 import path from 'path'
-import grayMatter from 'gray-matter';
+import dayjs from 'dayjs'
+import grayMatter from 'gray-matter'
 
 export const POSTS_PATH = path.join(process.cwd(), '_posts')
 
@@ -26,12 +27,17 @@ export async function getPosts(posts_per_page, paged) {
         end: posts_per_page * paged
     }
 
-    const posts = files.slice(count.start, count.end).map(file => {
+    const allPosts = files.map(file => {
         return {
             path: `/posts/${file.filename.replace('.mdx', '')}`,
-            title: file.matter.data.title
+            title: file.matter.data.title,
+            date: file.matter.data.date
         }
     })
+
+    const posts = allPosts.sort((a, b) =>
+        dayjs(b.date).isAfter(a.date) ? 1 : -1
+    ).slice(count.start, count.end)
 
     return posts
 }

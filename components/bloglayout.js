@@ -60,6 +60,10 @@ export default function BlogLayout({ children, meta }) {
                 <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
             </Head>
 
+            <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`}>
+                <img src={meta.cover} className={banner.image} alt={meta.title} />
+            </div>
+
             <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
                 <nav className="uk-navbar-container" uk-navbar="true">
                     <ul className={`${nav.wrapper} uk-navbar-nav uk-margin-auto`}>
