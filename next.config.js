@@ -8,13 +8,8 @@ const withTM = require('next-transpile-modules')([
   '@fullcalendar/google-calendar',
 ])
 
-const withMDX = require('@next/mdx')({
-  remarkPlugins: [],
-  extension: /\.mdx?$/,
-})
-
 module.exports = withPlugins(
-  [withTM, withMDX],
+  [withTM],
   {
     reactStrictMode: true,
     pageExtensions: ['js', 'jsx', 'md', 'mdx'],

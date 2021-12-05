@@ -23,15 +23,15 @@ export default function Home({ posts, paged, total }) {
                     )
                 })}
                 {hasPreviousPage ? (
-                <Link href={`/blog/${paged - 1}`}>
+                    <Link href={`/blog/${paged - 1}`}>
                         <a>Prev</a>
                     </Link>
-                    ) : ''}
+                ) : ''}
                 {hasNextPage ? (
-                <Link href={`/blog/${paged + 1}`}>
+                    <Link href={`/blog/${paged + 1}`}>
                         <a>Next</a>
                     </Link>
-                    ) : ''}
+                ) : ''}
             </div>
         </Layout>
     )

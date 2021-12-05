@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path'
 import grayMatter from 'gray-matter';
 
-export const POSTS_PATH = path.join(process.cwd(), 'pages/posts')
+export const POSTS_PATH = path.join(process.cwd(), '_posts')
 
 export const getPostSlugs = fs.readdirSync(POSTS_PATH).map((file) => {
     return file.replace('/\.mdx?$/', '')

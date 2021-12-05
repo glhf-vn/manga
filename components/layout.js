@@ -16,9 +16,9 @@ export default function Layout({ children, title, description }) {
         <div>
             <Head>
                 <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-                <meta charset="utf-8" />
-                <meta http-equiv="content-language" content="vi" />
-                <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+                <meta charSet="utf-8" />
+                <meta httpEquiv="content-language" content="vi" />
+                <meta httpEquiv="Content-Type" content="text/html; charset=utf-8" />
 
                 {/* the title */}
                 <title>{title + " / manga.GLHF.vn"}</title>
