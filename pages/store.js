@@ -129,13 +129,7 @@ export default function License({ online, offline, shopee }) {
     }
 
     return (
-        <Layout>
-            <Head>
-                <title>{pageTitle + " / manga.GLHF.vn"}</title>
-                <meta property="og:title" content={pageTitle} />
-                <meta name="description" content={pageDescription} />
-                <meta property="og:description" content={pageDescription} />
-            </Head>
+        <Layout title={pageTitle} description={pageDescription}>
             <div className={`uk-container ${styles.main}`}>
                 <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Mua manga ở đâu?</span></h1>
                 <div uk-alert="true">

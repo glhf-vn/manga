@@ -95,13 +95,7 @@ export default function License({ licensed, reprint, unknown }) {
     }
 
     return (
-        <Layout>
-            <Head>
-                <title>{pageTitle + " / manga.GLHF.vn"}</title>
-                <meta property="og:title" content={pageTitle} />
-                <meta name="description" content={pageDescription} />
-                <meta property="og:description" content={pageDescription} />
-            </Head>
+        <Layout title={pageTitle} description={pageDescription}>
             <div className={`uk-container ${styles.main}`}>
                 <h1 className={`uk-heading-line uk-margin-medium ${styles.title}`}><span>Thông tin bản quyền</span></h1>
                 <div className="uk-grid-divider uk-grid-medium" uk-grid="true">

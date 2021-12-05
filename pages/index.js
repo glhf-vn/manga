@@ -135,13 +135,7 @@ export default function Home({ update, info }) {
   }
 
   return (
-    <Layout>
-      <Head>
-        <title>{pageTitle + " / manga.GLHF.vn"}</title>
-        <meta property="og:title" content={pageTitle} />
-        <meta name="description" content={pageDescription} />
-        <meta property="og:description" content={pageDescription} />
-      </Head>
+    <Layout title={pageTitle} description={pageDescription}>
       <div id="modal-detailed" uk-modal="true">
         <div className="uk-modal-dialog">
           <button className="uk-modal-close-default" type="button" uk-close="true"></button>
