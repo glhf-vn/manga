@@ -36,7 +36,7 @@ export default function BlogLayout({ children, meta }) {
                 <meta property="og:locale" content="vi_VN" />
                 <meta name="google" content="notranslate" />
                 <meta name="author" content={meta.author ?? 'mangaGLHF'} />
-                
+
                 <meta name="google" content="notranslate" />
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
@@ -61,7 +61,9 @@ export default function BlogLayout({ children, meta }) {
             </Head>
 
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`}>
+                <h4 className={banner.category} style={{ color: meta.category.color }}>{meta.category.name}</h4>
                 <img src={meta.cover} className={banner.image} alt={meta.title} />
+                <div className={banner.highlight} style={{ background: meta.category.color }}></div>
             </div>
 
             <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
@@ -77,6 +79,11 @@ export default function BlogLayout({ children, meta }) {
                                 <a>Lịch phát hành</a>
                             </Link>
                         </li>
+                        <li className={router.pathname.includes("/blog") || router.pathname.includes("/posts") ? "uk-active" : ""}>
+                            <Link href="/blog" scroll={false}>
+                                <a>Bài viết</a>
+                            </Link>
+                        </li>
                         <li className={router.pathname == "/license" ? "uk-active" : ""}>
                             <Link href="/license" scroll={false}>
                                 <a>Bản quyền</a>
@@ -85,11 +92,6 @@ export default function BlogLayout({ children, meta }) {
                         <li className={router.pathname == "/store" ? "uk-active" : ""}>
                             <Link href="/store" scroll={false}>
                                 <a>Cửa hàng</a>
-                            </Link>
-                        </li>
-                        <li className={router.pathname.includes("/blog") ? "uk-active" : ""}>
-                            <Link href="/blog" scroll={false}>
-                                <a>Bài viết</a>
                             </Link>
                         </li>
                     </ul>

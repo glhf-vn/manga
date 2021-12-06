@@ -109,6 +109,11 @@ export default function Layout({ children, title, description }) {
                                 <a>Lịch phát hành</a>
                             </Link>
                         </li>
+                        <li className={router.pathname.includes("/blog") || router.pathname.includes("/posts") ? "uk-active" : ""}>
+                            <Link href="/blog" scroll={false}>
+                                <a>Bài viết</a>
+                            </Link>
+                        </li>
                         <li className={router.pathname == "/license" ? "uk-active" : ""}>
                             <Link href="/license" scroll={false}>
                                 <a>Bản quyền</a>
@@ -117,11 +122,6 @@ export default function Layout({ children, title, description }) {
                         <li className={router.pathname == "/store" ? "uk-active" : ""}>
                             <Link href="/store" scroll={false}>
                                 <a>Cửa hàng</a>
-                            </Link>
-                        </li>
-                        <li className={router.pathname.includes("/blog") ? "uk-active" : ""}>
-                            <Link href="/blog" scroll={false}>
-                                <a>Bài viết</a>
                             </Link>
                         </li>
                     </ul>

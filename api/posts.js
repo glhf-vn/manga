@@ -31,7 +31,8 @@ export async function getPosts(posts_per_page, paged) {
         return {
             path: `/posts/${file.filename.replace('.mdx', '')}`,
             title: file.matter.data.title,
-            date: file.matter.data.date
+            date: file.matter.data.date,
+            meta: file.matter.data,
         }
     })
 
