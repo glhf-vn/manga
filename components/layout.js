@@ -35,7 +35,7 @@ export default function Layout({ children, title, description }) {
                 <meta property="og:image" content="/img/cover.jpg" />
                 <meta property="og:locale" content="vi_VN" />
                 <meta name="google" content="notranslate" />
-                
+
                 <link rel="preconnect" href="https://fonts.googleapis.com" />
                 <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="true" />
                 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossOrigin="true" />
@@ -58,38 +58,38 @@ export default function Layout({ children, title, description }) {
                 <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
             </Head>
 
-            <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: false;">
+            <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <Image src="/img/yurucamp.jpg" layout="fill" objectFit="cover" alt="Dã ngoại thảnh thơi" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/shamanking.jpg" layout="fill" objectFit="cover" alt="Dã ngoại thảnh thơi" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#82cddc' }}>Dã ngoại thảnh thơi</h1>
-                            <span className={banner.copyright}>Afro</span>
+                            <h1 className={banner.title} style={{ color: '#86f09e' }}>Shaman King</h1>
+                            <span className={banner.copyright}>Hiroyuki Takei</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/komibanner.png" layout="fill" objectFit="cover" alt="Komi - Nữ thần sợ giao tiếp" uk-img="target: !.uk-slideshow-items" />
-                        <div className={`${banner.content} uk-position-center uk-text-center uk-light`} style={{ marginLeft: 0 }}>
+                        <Image src="/img/50cm.jpg" layout="fill" objectFit="cover" alt="Komi - Nữ thần sợ giao tiếp" uk-img="target: !.uk-slideshow-items" />
+                        <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`} style={{ marginLeft: 0 }}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#9d7eeb' }}>Komi - Nữ thần sợ giao tiếp</h1>
-                            <span className={banner.copyright}>Tomohito Oda</span>
+                            <h1 className={banner.title} style={{ color: '#63cae1' }}>50cm một cuộc đời</h1>
+                            <span className={banner.copyright}>Gin Shirakawa</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/dhta.jpg" layout="fill" objectFit="cover" alt="Dáng hình thanh âm" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/assassinationclassroom.jpg" layout="fill" objectFit="cover" alt="Dáng hình thanh âm" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản</h2>
-                            <h1 className={banner.title} style={{ color: '#00b7ff' }}>Dáng hình thanh âm</h1>
-                            <span className={banner.copyright}>Yoshitoki Oima</span>
+                            <h1 className={banner.title} style={{ color: '#fedc3d' }}>Assassination Classroom</h1>
+                            <span className={banner.copyright}>Yuusei Matsui</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/roto.png" layout="fill" objectFit="cover" alt="Dragon Quest: Dấu ấn Roto" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/bakemonogatari.jpg" layout="fill" objectFit="cover" alt="Dragon Quest: Dấu ấn Roto" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-top-left uk-text-left uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#fe45a5' }}>Dragon Quest: Dấu ấn Roto</h1>
-                            <span className={banner.copyright}>Chiaki Kawamata, Junji Koyanagi</span>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Light-novel mới</h2>
+                            <h1 className={banner.title} style={{ color: '#e68873' }}>Bakemonogatari</h1>
+                            <span className={banner.copyright}>NISIOISIN, VOFAN</span>
                         </div>
                     </li>
                 </ul>

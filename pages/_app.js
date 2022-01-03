@@ -2,21 +2,38 @@ import '@fullcalendar/common/main.css'
 import '@fullcalendar/daygrid/main.css'
 import '@fullcalendar/list/main.css'
 import '../styles/app.scss'
-import ReactGA from 'react-ga'
+import '../styles/nprogress.css'
+import NProgress from 'nprogress'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 
 // fix XMLHttpRequest error undefined of fullcalendar/google-calendar
 global.XMLHttpRequest = require('xhr2');
 
-function MyApp({ Component, pageProps }) {
+export default function App({ Component, pageProps }) {
+  const router = useRouter()
+
   useEffect(() => {
-    if(process.env.GOOGLE_ANALYTICS_ID && process.env.NODE_ENV === "production") { // google analytics
-      ReactGA.initialize(process.env.GOOGLE_ANALYTICS_ID);
-      ReactGA.pageview(window.location.pathname + window.location.search);
+    const handleStart = (url) => {
+      console.log(`Loading: ${url}`)
+      NProgress.start()
     }
-  })
+    const handleStop = () => {
+      NProgress.done()
+    }
 
-  return <Component {...pageProps} />
+    router.events.on('routeChangeStart', handleStart)
+    router.events.on('routeChangeComplete', handleStop)
+    router.events.on('routeChangeError', handleStop)
+
+    return () => {
+      router.events.off('routeChangeStart', handleStart)
+      router.events.off('routeChangeComplete', handleStop)
+      router.events.off('routeChangeError', handleStop)
+    }
+  }, [router])
+
+  return (
+    <Component {...pageProps} />
+  )
 }
-
-export default MyApp
