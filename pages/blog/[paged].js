@@ -13,7 +13,7 @@ export default function Home({ posts, paged, total }) {
     return (
         <Layout title={pageTitle} description={pageDescription}>
             <div className="uk-container uk-margin-large-top uk-margin-large-bottom">
-                <div class="uk-child-width-1-3@m" uk-grid="true">
+                <div className="uk-child-width-1-3@m" uk-grid="true">
                     {posts.map(post => {
                         const { title, path, meta } = post;
                         return (
