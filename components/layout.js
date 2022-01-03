@@ -58,7 +58,7 @@ export default function Layout({ children, title, description }) {
                 <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
             </Head>
 
-            <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: false;">
+            <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
                         <Image src="/img/shamanking.jpg" layout="fill" objectFit="cover" alt="Shaman King" uk-img="target: !.uk-slideshow-items" />
