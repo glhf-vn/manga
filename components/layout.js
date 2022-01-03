@@ -58,10 +58,10 @@ export default function Layout({ children, title, description }) {
                 <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
             </Head>
 
-            <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;">
+            <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: false;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <Image src="/img/shamanking.jpg" layout="fill" objectFit="cover" alt="Dã ngoại thảnh thơi" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/shamanking.jpg" layout="fill" objectFit="cover" alt="Shaman King" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
                             <h1 className={banner.title} style={{ color: '#86f09e' }}>Shaman King</h1>
@@ -69,7 +69,7 @@ export default function Layout({ children, title, description }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/50cm.jpg" layout="fill" objectFit="cover" alt="Komi - Nữ thần sợ giao tiếp" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/50cm.jpg" layout="fill" objectFit="cover" alt="50cm một cuộc đời" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`} style={{ marginLeft: 0 }}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
                             <h1 className={banner.title} style={{ color: '#63cae1' }}>50cm một cuộc đời</h1>
@@ -77,7 +77,7 @@ export default function Layout({ children, title, description }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/assassinationclassroom.jpg" layout="fill" objectFit="cover" alt="Dáng hình thanh âm" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/assassinationclassroom.jpg" layout="fill" objectFit="cover" alt="Assassination Classroom" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản</h2>
                             <h1 className={banner.title} style={{ color: '#fedc3d' }}>Assassination Classroom</h1>
@@ -85,7 +85,7 @@ export default function Layout({ children, title, description }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/bakemonogatari.jpg" layout="fill" objectFit="cover" alt="Dragon Quest: Dấu ấn Roto" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/bakemonogatari.jpg" layout="fill" objectFit="cover" alt="Bakemonogatari" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-top-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Light-novel mới</h2>
                             <h1 className={banner.title} style={{ color: '#e68873' }}>Bakemonogatari</h1>
