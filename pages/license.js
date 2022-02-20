@@ -15,7 +15,7 @@ export async function getStaticProps() {
 
     // Query
     async function getSheetContent(sheetNumber) {
-        const range = sheetNumber + '!A2:D1000';
+        const range = sheetNumber + '!A2:E1000';
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: process.env.SHEET_ID,
@@ -46,18 +46,29 @@ export default function License({ licensed, reprint, unknown }) {
         var parsedHtml = '';
 
         for (var i = 0; i < licensed.length; i++) {
-            const [manga, source, anilist] = licensed[i];
-            parsedHtml +=
-                "<tr><td><span class='uk-margin-small-right'>" +
-                manga +
-                "</span>" +
-                (anilist ? "<a href='//anilist.co/manga/" +
-                    anilist +
-                    "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') +
-                (source ? " <a href='" +
-                    source +
-                    "' target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
-                "</td></tr>";
+            let [manga, source, anilist, image, publisher] = licensed[i];
+
+            if (publisher) {
+                parsedHtml += "<h3 class='uk-width-1-1'>" + manga + "</h3>"
+            } else {
+                parsedHtml += `<div class="uk-width-1-1@s uk-width-1-2@l">
+                <div class="uk-card uk-card-default uk-margin uk-grid-collapse " uk-grid>` +
+                    (image ? `
+                    <div class="uk-card-media-left uk-cover-container uk-width-1-3">
+                        <img loading="lazy" src="`+ image +`" alt="" class="uk-width-medium" uk-cover>
+                        <canvas width="200" height="310"></canvas>
+                    </div><div class="uk-width-2-3 uk-flex uk-flex-column">` : `<div class="uk-width-1-1 uk-flex uk-flex-column">`) + `
+                        <div class="uk-card-body uk-flex-1">
+                            <h3 class="uk-card-title">`+ manga +`</h3>
+                        </div>` +
+                        ((source || anilist) ? `<div class="uk-card-footer">` +
+                            (source ? `<a target="_blank" rel="noreferrer" href="` + source + `" class="uk-button uk-button-text uk-margin-right">Nguồn</a>` : '') +
+                            (anilist ? `<a target="_blank" rel="noreferrer" href="//anilist.co/manga/` + anilist + `" class="uk-button uk-button-text">AniList</a>` : '') +
+                        `</div>` : '') +
+                    `</div>
+                </div>
+                </div>`
+            }
         }
 
         return parsedHtml;
@@ -102,10 +113,8 @@ export default function License({ licensed, reprint, unknown }) {
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-2-3@l">
                         <span>Đã được xác nhận bản quyền <span uk-icon="icon: info; ratio: 0.8"
                             uk-tooltip="title: Tham khảo Vinh Miner - MangaHolic 2.0, page MangaHolic và các page nhà xuất bản."></span></span>
-                        <table className="uk-table uk-table-divider" >
-                            <tbody dangerouslySetInnerHTML={{ __html: licensedTable() }}>
-                            </tbody>
-                        </table>
+                        <div dangerouslySetInnerHTML={{ __html: licensedTable() }} className="uk-margin-top" uk-grid="true">
+                        </div>
                     </div>
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-1-3@l">
                         <span>Có kế hoạch tái bản</span>
