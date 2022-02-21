@@ -121,7 +121,7 @@ export default function Home({ update, info }) {
 
     calendarTable.insertAdjacentHTML("afterbegin", `
     <thead class="table-head-fix">
-      <tr>
+      <tr style="height: 1%">
         <th>Thứ Hai</th>
         <th>Thứ Ba</th>
         <th>Thứ Tư</th>
@@ -133,6 +133,8 @@ export default function Home({ update, info }) {
     </thead>
     `);
   }
+
+  let firstHour = new Date().getUTCHours() + 7
 
   return (
     <Layout title={pageTitle} description={pageDescription}>
@@ -188,8 +190,9 @@ export default function Home({ update, info }) {
                 month: 'numeric'
               }}
               dayHeaders={false}
-              aspectRatio={1.2}
+              aspectRatio={0}
               firstDay={1}
+              scrollTime='09:00:00'
               viewClassNames="uk-margin-bottom"
               eventSources={[
                 {

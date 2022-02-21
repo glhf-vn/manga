@@ -15,7 +15,7 @@ export async function getStaticProps() {
 
     // Query
     async function getSheetContent(sheetNumber) {
-        const range = sheetNumber + '!A2:E1000';
+        const range = sheetNumber + '!A2:F1000';
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: process.env.SHEET_ID,
@@ -46,7 +46,7 @@ export default function License({ licensed, reprint, unknown }) {
         var parsedHtml = '';
 
         for (var i = 0; i < licensed.length; i++) {
-            let [manga, source, anilist, image, publisher] = licensed[i];
+            let [manga, source, anilist, image, publisher, type] = licensed[i];
 
             if (publisher) {
                 parsedHtml += "<h3 class='uk-width-1-1'>" + manga + "</h3>"
@@ -58,7 +58,8 @@ export default function License({ licensed, reprint, unknown }) {
                         <img loading="lazy" src="`+ image +`" alt="" class="uk-width-medium" uk-cover>
                         <canvas width="200" height="310"></canvas>
                     </div><div class="uk-width-2-3 uk-flex uk-flex-column">` : `<div class="uk-width-1-1 uk-flex uk-flex-column">`) + `
-                        <div class="uk-card-body uk-flex-1">
+                        <div class="uk-card-body uk-flex-1">` +
+                            (type ? `<div class="uk-card-badge uk-label uk-text-small uk-text-capitalize">` + type + `</div>` : ``) + `
                             <h3 class="uk-card-title">`+ manga +`</h3>
                         </div>` +
                         ((source || anilist) ? `<div class="uk-card-footer">` +
