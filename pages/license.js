@@ -1,7 +1,6 @@
 import { google } from 'googleapis'
 import styles from '../styles/styles.module.scss'
 import Layout from '../components/layout'
-import Head from 'next/head'
 
 const pageTitle = "Thông tin bản quyền Manga"
 const pageDescription = "Xem thông tin manga được mua bản quyền, cập nhật thường xuyên!"
@@ -42,50 +41,6 @@ export async function getStaticProps() {
 }
 
 export default function License({ licensed, reprint, unknown }) {
-    const licensedTable = () => {
-        var parsedHtml = '';
-
-        for (var i = 0; i < licensed.length; i++) {
-            let [manga, source, anilist, image, publisher, type] = licensed[i];
-
-            if (publisher) {
-                parsedHtml += "<h3 class='uk-width-1-1'>" + manga + "</h3>"
-            } else {
-                parsedHtml += `<div class="uk-width-1-1@s uk-width-1-2@l">
-                <div class="uk-card uk-card-default uk-margin uk-grid-collapse " uk-grid>` +
-                    (image ? `
-                    <div class="uk-card-media-left uk-cover-container uk-width-1-3">
-                        <img loading="lazy" src="`+ image +`" alt="" class="uk-width-medium" uk-cover>
-                        <canvas width="200" height="310"></canvas>
-                    </div><div class="uk-width-2-3 uk-flex uk-flex-column">` : `<div class="uk-width-1-1 uk-flex uk-flex-column">`) + `
-                        <div class="uk-card-body uk-flex-1">` +
-                            (type ? `<div class="uk-card-badge uk-label uk-text-small uk-text-capitalize">` + type + `</div>` : ``) + `
-                            <h3 class="uk-card-title">`+ manga +`</h3>
-                        </div>` +
-                        ((source || anilist) ? `<div class="uk-card-footer">` +
-                            (source ? `<a target="_blank" rel="noreferrer" href="` + source + `" class="uk-button uk-button-text uk-margin-right">Nguồn</a>` : '') +
-                            (anilist ? `<a target="_blank" rel="noreferrer" href="//anilist.co/manga/` + anilist + `" class="uk-button uk-button-text">AniList</a>` : '') +
-                        `</div>` : '') +
-                    `</div>
-                </div>
-                </div>`
-            }
-        }
-
-        return parsedHtml;
-    }
-
-    const reprintTable = () => {
-        var parsedHtml = '';
-
-        for (var i = 0; i < reprint.length; i++) {
-            const [publisher, manga] = reprint[i];
-            parsedHtml += "<tr><td>" + publisher + "</td><td>" + manga + "</td></tr>";
-        }
-
-        return parsedHtml;
-    }
-
     const unknownTable = () => {
         var parsedHtml = '';
 
@@ -114,7 +69,79 @@ export default function License({ licensed, reprint, unknown }) {
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-2-3@l">
                         <span>Đã được xác nhận bản quyền <span uk-icon="icon: info; ratio: 0.8"
                             uk-tooltip="title: Tham khảo Vinh Miner - MangaHolic 2.0, page MangaHolic và các page nhà xuất bản."></span></span>
-                        <div dangerouslySetInnerHTML={{ __html: licensedTable() }} className="uk-margin-top" uk-grid="true">
+                        <div uk-filter="target: .manga-list">
+                            <div className="uk-margin-top">
+                                <ul className="uk-subnav uk-subnav-pill" uk-margin="true">
+                                    <li className="uk-active" uk-filter-control=''><a href="#">Tất cả</a></li>
+                                </ul>
+                                <ul className="uk-subnav uk-subnav-pill" uk-margin="true">
+                                    <li uk-filter-control="filter: [data-type='manga']; group: type"><a href="#">Manga</a></li>
+                                    <li uk-filter-control="filter: [data-type='light-novel']; group: type"><a href="#">Light-novel</a></li>
+                                    <li uk-filter-control="filter: [data-type='artbook']; group: type"><a href="#">Artbook</a></li>
+                                    <li uk-filter-control="filter: [data-type='fanbook']; group: type"><a href="#">Fanbook</a></li>
+                                    <li uk-filter-control="filter: [data-type='encyclopedia']; group: type"><a href="#">Encyclopedia</a></li>
+                                </ul>
+                                <ul className="uk-subnav uk-subnav-pill" uk-margin="true">
+                                    <li uk-filter-control="filter: [data-publisher='nhã nam']; group: publisher"><a href="#">Nhã Nam</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='skycomics']; group: publisher"><a href="#">SkyComics</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='daisy.comics']; group: publisher"><a href="#">Daisy.Comics</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='uranix']; group: publisher"><a href="#">Uranix</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='amak']; group: publisher"><a href="#">AMAK</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='hikari']; group: publisher"><a href="#">Hikari</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='ipm']; group: publisher"><a href="#">IPM</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='nxb trẻ']; group: publisher"><a href="#">NXB Trẻ</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='nxb kim đồng']; group: publisher"><a href="#">NXB Kim Đồng</a></li>
+                                </ul>
+                            </div>
+                            <div className="uk-margin-top manga-list" uk-grid="true">
+                                {licensed.map(manga => {
+                                    const [title, source, anilist, image, publisher, type] = manga
+                                    let typeColor
+                                    switch (type.toLowerCase()) {
+                                        case 'manga':
+                                            typeColor = "#29b6f6"
+                                            break
+                                        case 'artbook':
+                                            typeColor = "#ef5350"
+                                            break
+                                        case 'light-novel':
+                                            typeColor = "#ffca28"
+                                            break
+                                        case 'fanbook':
+                                            typeColor = "#ff7043"
+                                            break
+                                        case 'encyclopedia':
+                                            typeColor = "#66bb6a"
+                                            break
+                                    }
+
+                                    return (
+                                        <div className="uk-width-1-1@s uk-width-1-2@l" key={title.toLowerCase()} data-type={type.toLowerCase()} data-publisher={publisher.toLowerCase()}>
+                                            <div className="uk-card uk-card-default uk-margin uk-grid-collapse" uk-grid="true">
+                                                {image &&
+                                                    <div className="uk-card-media-left uk-cover-container uk-width-1-3">
+                                                        <img loading="lazy" src={image} alt={title} className="uk-width-medium" uk-cover="true" />
+                                                        <canvas width="200" height="310"></canvas>
+                                                    </div>
+                                                }
+                                                <div className={image ? "uk-width-2-3 uk-flex uk-flex-column" : 'uk-flex uk-flex-column'}>
+                                                    <div className="uk-card-body uk-flex-1">
+                                                        {type && <div className="uk-card-badge uk-label uk-text-small uk-text-capitalize uk-margin-remove" style={{ top: 0, right: 0, borderRadius: '0 0 0 0.5rem', backgroundColor: typeColor }}>{type}</div>}
+                                                        <span className='uk-text-meta'>{publisher}</span>
+                                                        <h3 className="uk-card-title uk-margin-remove">{title}</h3>
+                                                    </div>
+                                                    {(source || anilist) &&
+                                                        <div className="uk-card-footer">
+                                                            {source && <a target="_blank" rel="noreferrer" href={source} className="uk-button uk-button-text uk-margin-right">Nguồn</a>}
+                                                            {anilist && <a target="_blank" rel="noreferrer" href={"//anilist.co/manga/" + anilist} className="uk-button uk-button-text">AniList</a>}
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    )
+                                })}
+                            </div>
                         </div>
                     </div>
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-1-3@l">
@@ -126,7 +153,19 @@ export default function License({ licensed, reprint, unknown }) {
                                     <th>Bộ truyện</th>
                                 </tr>
                             </thead>
-                            <tbody dangerouslySetInnerHTML={{ __html: reprintTable() }}>
+                            <tbody>
+                                {reprint.map(manga => {
+                                    const [publisher, title] = manga
+
+                                    return (
+                                        <>
+                                            <tr>
+                                                <td>{publisher}</td>
+                                                <td>{title}</td>
+                                            </tr>
+                                        </>
+                                    )
+                                })}
                             </tbody>
                         </table>
                         <span>Bản quyền?</span> <span uk-icon="icon: info; ratio: 0.8"
@@ -137,7 +176,22 @@ export default function License({ licensed, reprint, unknown }) {
                                     <th>Bộ truyện</th>
                                 </tr>
                             </thead>
-                            <tbody dangerouslySetInnerHTML={{ __html: unknownTable() }}>
+                            <tbody>
+                                {unknown.map(manga => {
+                                    const [title, source, anilist] = manga
+
+                                    return (
+                                        <>
+                                            <tr>
+                                                <td>
+                                                    {title}{' '}
+                                                    {anilist && <a href={'//anilist.co/manga/' + anilist} target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>}{' '}
+                                                    {source && <a href={source} target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>}
+                                                </td>
+                                            </tr>
+                                        </>
+                                    )
+                                })}
                             </tbody>
                         </table>
                     </div>

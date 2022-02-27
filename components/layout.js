@@ -1,13 +1,12 @@
 import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
-import { useRouter } from "next/router";
+import { useRouter } from "next/router"
 import banner from './banner.module.scss'
 import footer from './footer.module.scss'
 import nav from './nav.module.scss'
 
 export default function Layout({ children, title, description }) {
-
     const router = useRouter();
 
     const currentYear = new Date().getFullYear();
@@ -61,7 +60,7 @@ export default function Layout({ children, title, description }) {
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <Image src="/img/shamanking.jpg" layout="fill" objectFit="cover" alt="Shaman King" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/shamanking.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Shaman King" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
                             <h1 className={banner.title} style={{ color: '#86f09e' }}>Shaman King</h1>
@@ -69,7 +68,7 @@ export default function Layout({ children, title, description }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/50cm.jpg" layout="fill" objectFit="cover" alt="50cm một cuộc đời" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/50cm.jpg" className={banner.image} layout="fill" objectFit="cover" alt="50cm một cuộc đời" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`} style={{ marginLeft: 0 }}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
                             <h1 className={banner.title} style={{ color: '#63cae1' }}>50cm một cuộc đời</h1>
@@ -77,7 +76,7 @@ export default function Layout({ children, title, description }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/assassinationclassroom.jpg" layout="fill" objectFit="cover" alt="Assassination Classroom" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/assassinationclassroom.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Assassination Classroom" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản</h2>
                             <h1 className={banner.title} style={{ color: '#fedc3d' }}>Assassination Classroom</h1>
@@ -85,7 +84,7 @@ export default function Layout({ children, title, description }) {
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/bakemonogatari.jpg" layout="fill" objectFit="cover" alt="Bakemonogatari" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/bakemonogatari.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Bakemonogatari" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-top-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Light-novel mới</h2>
                             <h1 className={banner.title} style={{ color: '#e68873' }}>Bakemonogatari</h1>
