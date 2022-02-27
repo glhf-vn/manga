@@ -17,12 +17,12 @@
     "babel-plugin-transform-require-ignore": "^0.1.1",
     "dayjs": "^1.10.7",
     "fs": "^0.0.1-security",
-    "googleapis": "^82.0.0",
+    "googleapis": "^95.0.0",
     "gray-matter": "^4.0.3",
     "next": "12",
     "next-compose-plugins": "^2.2.1",
-    "next-mdx-remote": "^3.0.8",
-    "next-transpile-modules": "^8.0.0",
+    "next-mdx-remote": "^4.0.0",
+    "next-transpile-modules": "^9.0.0",
     "nprogress": "^0.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -31,7 +31,7 @@
     "xhr2": "^0.2.1"
   },
   "devDependencies": {
-    "eslint": "7.31.0",
-    "eslint-config-next": "11.0.1"
+    "eslint": "8.10.0",
+    "eslint-config-next": "12.1.0"
   }
 }
