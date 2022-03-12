@@ -60,35 +60,35 @@ export default function Layout({ children, title, description }) {
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <Image src="/img/shamanking.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Shaman King" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/jujutsukaisen.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Chú thuật hồi chiến" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#86f09e' }}>Shaman King</h1>
-                            <span className={banner.copyright}>Hiroyuki Takei</span>
+                            <h1 className={banner.title} style={{ color: '#ff0000' }}>Chú thuật hồi chiến</h1>
+                            <span className={banner.copyright}>Gege Akutami</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/50cm.jpg" className={banner.image} layout="fill" objectFit="cover" alt="50cm một cuộc đời" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/kemonojihen.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Văn phòng thám tử quái vật" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`} style={{ marginLeft: 0 }}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#63cae1' }}>50cm một cuộc đời</h1>
-                            <span className={banner.copyright}>Gin Shirakawa</span>
+                            <h1 className={banner.title} style={{ color: '#c70008' }}>Văn phòng thám tử quái vật</h1>
+                            <span className={banner.copyright}>Sho Aimoto</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/assassinationclassroom.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Assassination Classroom" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/romanticaclock.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Romantica Clock" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Tái bản</h2>
-                            <h1 className={banner.title} style={{ color: '#fedc3d' }}>Assassination Classroom</h1>
-                            <span className={banner.copyright}>Yuusei Matsui</span>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
+                            <h1 className={banner.title} style={{ color: '#ffffd5' }}>Romantica Clock</h1>
+                            <span className={banner.copyright}>Maki Youko</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/bakemonogatari.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Bakemonogatari" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/magicknightreyearth.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Hiệp sĩ phép màu" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-top-left uk-text-left uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Light-novel mới</h2>
-                            <h1 className={banner.title} style={{ color: '#e68873' }}>Bakemonogatari</h1>
-                            <span className={banner.copyright}>NISIOISIN, VOFAN</span>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
+                            <h1 className={banner.title} style={{ color: '#db2d21' }}>Hiệp sĩ phép màu</h1>
+                            <span className={banner.copyright}>CLAMP</span>
                         </div>
                     </li>
                 </ul>
@@ -139,7 +139,7 @@ export default function Layout({ children, title, description }) {
                         </span>
                     </div>
                     <div className={footer.contact}>
-                        <a title="Gửi e-mail" href="mailto:catou@glhf.vn">Liên hệ</a>
+                        <a title="Gửi e-mail" href="mailto:konnichiwa@glhf.vn">Liên hệ</a>
                         <a className="uk-margin-left" title="GitHub" href="//github.com/catouberos/mangaGLHF" target="_blank" rel='noreferrer'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-github" viewBox="0 0 16 16">
                                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />

@@ -114,6 +114,14 @@
         &.wingsbooks {
           border: 1px solid #00adef;
         }
+
+        &.hikari {
+          border: 1px solid #f78027;
+        }
+  
+        &.ichi {
+          border: 1px solid #f14435;
+        }
       }
   
       &:not(:checked) + span {
@@ -150,6 +158,14 @@
         &.wingsbooks {
           color: #00adef;
         }
+
+        &.hikari {
+          color: #f78027;
+        }
+  
+        &.ichi {
+          color: #f14435;
+        }
       }
   
       &:checked + span {
@@ -183,6 +199,14 @@
   
         &.wingsbooks {
           background-color: #00adef;
+        }
+
+        &.hikari {
+          background-color: #f78027;
+        }
+  
+        &.ichi {
+          background-color: #f14435;
         }
       }
     }
