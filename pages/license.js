@@ -76,6 +76,8 @@ export default function License({ licensed, reprint, unknown }) {
                                 </ul>
                                 <ul className="uk-subnav uk-subnav-pill" uk-margin="true">
                                     <li uk-filter-control="filter: [data-type='manga']; group: type"><a href="#">Manga</a></li>
+                                    <li uk-filter-control="filter: [data-type='manhwa']; group: type"><a href="#">Manhwa</a></li>
+                                    <li uk-filter-control="filter: [data-type='manhua']; group: type"><a href="#">Manhua</a></li>
                                     <li uk-filter-control="filter: [data-type='light-novel']; group: type"><a href="#">Light-novel</a></li>
                                     <li uk-filter-control="filter: [data-type='artbook']; group: type"><a href="#">Artbook</a></li>
                                     <li uk-filter-control="filter: [data-type='fanbook']; group: type"><a href="#">Fanbook</a></li>
@@ -87,8 +89,10 @@ export default function License({ licensed, reprint, unknown }) {
                                     <li uk-filter-control="filter: [data-publisher='daisy.comics']; group: publisher"><a href="#">Daisy.Comics</a></li>
                                     <li uk-filter-control="filter: [data-publisher='uranix']; group: publisher"><a href="#">Uranix</a></li>
                                     <li uk-filter-control="filter: [data-publisher='amak']; group: publisher"><a href="#">AMAK</a></li>
-                                    <li uk-filter-control="filter: [data-publisher='hikari']; group: publisher"><a href="#">Hikari</a></li>
                                     <li uk-filter-control="filter: [data-publisher='ipm']; group: publisher"><a href="#">IPM</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='mori manga']; group: publisher"><a href="#">Mori Manga</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='ichi ln']; group: publisher"><a href="#">Ichi LN</a></li>
+                                    <li uk-filter-control="filter: [data-publisher='hikari']; group: publisher"><a href="#">Hikari</a></li>
                                     <li uk-filter-control="filter: [data-publisher='nxb trẻ']; group: publisher"><a href="#">NXB Trẻ</a></li>
                                     <li uk-filter-control="filter: [data-publisher='nxb kim đồng']; group: publisher"><a href="#">NXB Kim Đồng</a></li>
                                 </ul>
@@ -99,6 +103,12 @@ export default function License({ licensed, reprint, unknown }) {
                                     let typeColor
                                     switch (type.toLowerCase()) {
                                         case 'manga':
+                                            typeColor = "#29b6f6"
+                                            break
+                                        case 'manhwa':
+                                            typeColor = "#29b6f6"
+                                            break
+                                        case 'manhua':
                                             typeColor = "#29b6f6"
                                             break
                                         case 'artbook':
@@ -117,7 +127,7 @@ export default function License({ licensed, reprint, unknown }) {
 
                                     return (
                                         <div className="uk-width-1-1@s uk-width-1-2@l" key={title.toLowerCase()} data-type={type.toLowerCase()} data-publisher={publisher.toLowerCase()}>
-                                            <div className="uk-card uk-card-default uk-margin uk-grid-collapse" uk-grid="true">
+                                            <div className="uk-card uk-card-default uk-margin uk-grid-collapse uk-card-hover" uk-grid="true">
                                                 {image &&
                                                     <div className="uk-card-media-left uk-cover-container uk-width-1-3">
                                                         <img loading="lazy" src={image} alt={title} className="uk-width-medium" uk-cover="true" />

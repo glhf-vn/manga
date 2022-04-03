@@ -15,8 +15,9 @@ $inverse-navbar-nav-item-active-color: #0f6ecd;
 @mixin hook-base-link-hover() {
   text-decoration: none;
 }
-@mixin hook-modal-body() {
-  border-radius: 1rem;
+@mixin hook-modal-dialog() {
+  border-radius: 0.8rem;
+  overflow: hidden;
 }
 @mixin hook-button() {
   border-radius: 999px;
@@ -33,6 +34,21 @@ $inverse-navbar-nav-item-active-color: #0f6ecd;
     filter: brightness(0.35);
   }
 }
+@mixin hook-card() {
+  border-radius: 0.8rem;
+  overflow: hidden;
+  transition: all 300ms ease;
+}
+@mixin hook-alert() {
+  border-radius: 0.8rem;
+  overflow: hidden;
+}
+  .uk-subnav-pill > .uk-active > a,
+  .uk-subnav-pill > * > a,
+  .uk-subnav-pill > * > a:hover,
+  .uk-subnav-pill > * > a:focus  {
+    border-radius: 0.8rem;
+  }
 
 // 4. Import UIkit.
 @import "uikit/uikit-theme";
