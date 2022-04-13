@@ -53,5 +53,8 @@ $inverse-navbar-nav-item-active-color: #0f6ecd;
 // 4. Import UIkit.
 @import "uikit/uikit-theme";
 
+// 4.5. Import dark-mode.
+@import "dark";
+
 // 5. Import custom FullCalendar styles
 @import "calendar";
