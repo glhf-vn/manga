@@ -174,11 +174,15 @@
 
 .fc-event-title {
   font-weight: 500;
-  overflow: unset;
+  @media (min-width: 769px) {
+    overflow: unset;
+  }
 }
 
 .fc-daygrid-event {
-  white-space: break-spaces;
+  @media (min-width: 769px) {
+    white-space: break-spaces;
+  }
 }
 
 .fc-list-event {

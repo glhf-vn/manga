@@ -11,7 +11,7 @@
 .flex {
     display: flex;
     @media (max-width: 768px) {
-      display: block;
+      flex-direction: column-reverse;
     }
   
     .flexBig {
@@ -23,6 +23,7 @@
       @media (min-width: 769px) {
         margin-left: 50px;
       }
+      margin-bottom: 2rem;
     }
 }
 
@@ -77,137 +78,145 @@
 }
 
 .filter {
-    input[type="checkbox"] {
-      display: none;
-  
-      & + span {
-        transition: all 150ms ease;
-  
-        &.kim {
-          border: 1px solid #e00024;
-        }
-  
-        &.tre {
-          border: 1px solid #00aeef;
-        }
-  
-        &.ipm {
-          border: 1px solid #01a14b;
-        }
-  
-        &.sky {
-          border: 1px solid #545454;
-        }
-  
-        &.tsuki {
-          border: 1px solid #f8cb10;
-        }
-  
-        &.amak {
-          border: 1px solid #018763;
-        }
-  
-        &.uranix {
-          border: 1px solid #ED3822;
-        }
-  
-        &.wingsbooks {
-          border: 1px solid #00adef;
-        }
+  margin-bottom: 1rem;
 
-        &.hikari {
-          border: 1px solid #f78027;
-        }
-  
-        &.ichi {
-          border: 1px solid #f14435;
-        }
+  input[type="checkbox"] {
+    display: none;
+
+    & + span {
+      transition: all 150ms ease;
+
+      &.kim {
+        border: 1px solid #e00024;
       }
-  
-      &:not(:checked) + span {
-        background: unset;
-  
-        &.kim {
-          color: #e00024;
-        }
-  
-        &.tre {
-          color: #00aeef;
-        }
-  
-        &.ipm {
-          color: #01a14b;
-        }
-  
-        &.sky {
-          color: #545454;
-        }
-  
-        &.tsuki {
-          color: #f8cb10;
-        }
-  
-        &.amak {
-          color: #018763;
-        }
-  
-        &.uranix {
-          color: #ED3822;
-        }
-  
-        &.wingsbooks {
-          color: #00adef;
-        }
 
-        &.hikari {
-          color: #f78027;
-        }
-  
-        &.ichi {
-          color: #f14435;
-        }
+      &.tre {
+        border: 1px solid #00aeef;
       }
-  
-      &:checked + span {
-        &.kim {
-          background-color: #e00024;
-        }
-  
-        &.tre {
-          background-color: #00aeef;
-        }
-  
-        &.ipm {
-          background-color: #01a14b;
-        }
-  
-        &.sky {
-          background-color: #545454;
-        }
-  
-        &.tsuki {
-          background-color: #f8cb10;
-        }
-  
-        &.amak {
-          background-color: #018763;
-        }
-  
-        &.uranix {
-          background-color: #ED3822;
-        }
-  
-        &.wingsbooks {
-          background-color: #00adef;
-        }
 
-        &.hikari {
-          background-color: #f78027;
-        }
-  
-        &.ichi {
-          background-color: #f14435;
-        }
+      &.ipm {
+        border: 1px solid #01a14b;
+      }
+
+      &.sky {
+        border: 1px solid #545454;
+      }
+
+      &.tsuki {
+        border: 1px solid #f8cb10;
+      }
+
+      &.amak {
+        border: 1px solid #018763;
+      }
+
+      &.uranix {
+        border: 1px solid #ED3822;
+      }
+
+      &.wingsbooks {
+        border: 1px solid #00adef;
+      }
+
+      &.hikari {
+        border: 1px solid #f78027;
+      }
+
+      &.ichi {
+        border: 1px solid #f14435;
+      }
+    }
+
+    &:not(:checked) + span {
+      background: unset;
+
+      &.kim {
+        color: #e00024;
+      }
+
+      &.tre {
+        color: #00aeef;
+      }
+
+      &.ipm {
+        color: #01a14b;
+      }
+
+      &.sky {
+        color: #545454;
+      }
+
+      &.tsuki {
+        color: #f8cb10;
+      }
+
+      &.amak {
+        color: #018763;
+      }
+
+      &.uranix {
+        color: #ED3822;
+      }
+
+      &.wingsbooks {
+        color: #00adef;
+      }
+
+      &.hikari {
+        color: #f78027;
+      }
+
+      &.ichi {
+        color: #f14435;
+      }
+    }
+
+    &:checked + span {
+      &.kim {
+        background-color: #e00024;
+      }
+
+      &.tre {
+        background-color: #00aeef;
+      }
+
+      &.ipm {
+        background-color: #01a14b;
+      }
+
+      &.sky {
+        background-color: #545454;
+      }
+
+      &.tsuki {
+        background-color: #f8cb10;
+      }
+
+      &.amak {
+        background-color: #018763;
+      }
+
+      &.uranix {
+        background-color: #ED3822;
+      }
+
+      &.wingsbooks {
+        background-color: #00adef;
+      }
+
+      &.hikari {
+        background-color: #f78027;
+      }
+
+      &.ichi {
+        background-color: #f14435;
       }
     }
   }
+}
+
+@media (max-width: 768px) {
+  .hideOnMobile {
+    display: none;
+  }
+}
