@@ -169,11 +169,16 @@
 }
 
 .fc-event-main {
-  padding-left: 0.5rem;
+  padding: 0.1rem 0.4rem;
 }
 
 .fc-event-title {
   font-weight: 500;
+  overflow: unset;
+}
+
+.fc-daygrid-event {
+  white-space: break-spaces;
 }
 
 .fc-list-event {
