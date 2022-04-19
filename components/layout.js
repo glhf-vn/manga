@@ -123,12 +123,25 @@ export default function Layout({ children, title, description }) {
                                 <a>Cửa hàng</a>
                             </Link>
                         </li>
+                        <li>
+                            <a uk-toggle="target: #modal-donate">Donate</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
+            <div id="modal-donate" uk-modal="true">
+                <div className="uk-modal-dialog uk-modal-body">
+                    <button className="uk-modal-close-default" type="button" uk-close="true"></button>
+                    <h2 className="uk-modal-title uk-text-bold">Donate</h2>
+                    <a id="momo" href="https://me.momo.vn/mangaglhf" target="_parent"
+                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</a>
+                    <a id="paypal" href="https://paypal.me/tottidkn" target="_parent"
+                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0070ba', border: 'none' }}>PayPal</a>
+                </div>
+            </div>
             <main>{children}</main>
-            <div className={`${footer.gksfd} uk-container`}>
-                <Image src="/img/komi.png" alt="Komi Can't Communicate" width={200} height={277} />
+            <div className={`${footer.artwork}`}>
+                <Image src="/img/glhfoverlay.png" alt="mangaGLHF" width={382} height={229} />
             </div>
             <footer className={footer.wrapper}>
                 <div className="uk-container">
