@@ -15,13 +15,14 @@ export default function Licenses() {
                     <ol>
                         <li><a href="https://anilist.co/" target="_blank">AniList</a> API (Terms of Use can be found <a href="https://anilist.gitbook.io/anilist-apiv2-docs/" target="_blank">here</a>)</li>
                         <li><a href="https://fullcalendar.io/" target="_blank">FullCalendar</a> (under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT license</a>)</li>
-                        <li><a href="https://getuikit.com/" target="_blank">UIkit</a></li>
+                        <li><a href="https://getuikit.com/" target="_blank">UIkit</a> (under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT license</a>)</li>
+                        <li><a href="https://icons.getbootstrap.com/" target="_blank">Bootstrap Icons</a> (under <a href="https://opensource.org/licenses/MIT" target="_blank">MIT license</a>)</li>
                         <li><a href="https://calendar.google.com/" target="_blank">Google Calendar</a> & <a href="https://sheets.google.com/" target="_blank">Google Sheets</a> API (Terms of Service can be found <a href="https://developers.google.com/workspace/terms" target="_blank">here</a>)</li>
                     </ol>
                     <br></br>
-                    This webpage was made to be totally free-of-charge, and totally respect your privacy. No ads were placed, no tracking scripts were add (with exclusion of ones included in Facebook's Page iframe), with the source code being made publicly on <a href="http://github.com/catouberos/mangaGLHF" target="_blank">GitHub</a>.
+                    This webpage was made to be totally free-of-charge, and totally respect your privacy. No ads were placed, no tracking scripts were add (with exclusion of ones included in Facebook{'\''}s Page iframe), with the source code being made publicly on <a href="http://github.com/catouberos/mangaGLHF" target="_blank">GitHub</a>.
                     <br></br><br></br>
-                    Any inqueries please contact <a href="mailto:konnichiwa@glhf.vn">konnichiwa@glhf.vn</a> or GLHF's Facebook page.
+                    Any inqueries please contact <a href="mailto:konnichiwa@glhf.vn">konnichiwa@glhf.vn</a> or GLHF{'\''}s Facebook page.
                 </div>
             </div>
         </Layout >
