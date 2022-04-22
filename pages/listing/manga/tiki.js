@@ -17,7 +17,8 @@ function Tiki({ index }) {
         headers: {
             'User-Agent': "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"
         },
-        method: "GET"
+        method: "GET",
+        host: "tiki.vn",
     }))
 
     if (error) return <div>Error</div>
@@ -31,7 +32,6 @@ function Tiki({ index }) {
         <>
             {data.data.map(product => {
                 return (
-                    console.log(product),
                     <div className="uk-width-1-2@s uk-width-1-3@m uk-width-1-4@l">
                         <a href={'https://tiki.vn/' + product.url_key + ".html"} target="_blank">
                             <div className="uk-card uk-card-small uk-card-default uk-margin uk-card-hover">
