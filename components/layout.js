@@ -120,9 +120,9 @@ export default function Layout({ children, title, description }) {
                         </li>
                         <li className={router.pathname.includes("listing") ? "uk-active" : ""}>
                             <a href="#">Truyện mới</a>
-                            <div class="uk-navbar-dropdown">
-                                <ul class="uk-nav uk-navbar-dropdown-nav">
-                                    <li class="uk-nav-header">Manga</li>
+                            <div className="uk-navbar-dropdown">
+                                <ul className="uk-nav uk-navbar-dropdown-nav">
+                                    <li className="uk-nav-header">Manga</li>
                                     <li className={router.pathname == '/listing/manga/tiki' ? "uk-active" : ""}>
                                         <Link href="/listing/manga/tiki" scroll={false}>
                                             <a>Tiki Trading</a>
@@ -133,7 +133,7 @@ export default function Layout({ children, title, description }) {
                                             <a>Fahasa</a>
                                         </Link>
                                     </li>
-                                    <li class="uk-nav-header">Light-novel</li>
+                                    <li className="uk-nav-header">Light-novel</li>
                                     <li className={router.pathname == '/listing/light-novel/tiki' ? "uk-active" : ""}>
                                         <Link href="/listing/light-novel/tiki" scroll={false}>
                                             <a>Tiki Trading</a>

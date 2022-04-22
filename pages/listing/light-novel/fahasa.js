@@ -71,7 +71,7 @@ export default function FahasaLightNovelListing() {
                     <Fahasa index={pageIndex} />
                     <div style={{ display: 'none' }}><Fahasa index={pageIndex + 1} /></div>
                 </div>
-                <ul class="uk-pagination">
+                <ul className="uk-pagination">
                     {pageIndex > 1 ? <li className="uk-margin-small-right"><a onClick={() => setPageIndex(pageIndex - 1)}><span className="uk-margin-small-right" uk-pagination-previous="true"></span> Trước</a></li> : ''}
                     <li className="uk-margin-auto-left"><a onClick={() => setPageIndex(pageIndex + 1)}>Sau <span className="uk-margin-small-left" uk-pagination-next="true"></span></a></li>
                 </ul>

@@ -401,7 +401,7 @@ export default function Home({ update, info }) {
               <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2FmangaGLHF&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=false&appId" width="340" height="500" style={{ border: "none", overflow: "hidden" }} scrolling="no" frameBorder="0" allowFullScreen={true} allow="autoplay; clipboard-write; encrypted-media; picture-in-picture; web-share"></iframe>
             </div>
             <div className={`uk-margin-top ${styles.hideOnMobile} ${styles.iframe}`}>
-              <iframe src="https://discord.com/widget?id=966279292877168650&theme=dark" width="350" height="500" allowTransparency={true} frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+              <iframe src="https://discord.com/widget?id=966279292877168650&theme=dark" width="350" height="500" allowTransparency={true} frameBorder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
             </div>
           </div>
         </div>
