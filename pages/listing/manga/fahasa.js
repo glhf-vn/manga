@@ -33,7 +33,7 @@ function Fahasa({ index }) {
         <>
             {data.product_list.map(product => {
                 return (
-                    <div className={`uk-width-1-2@s uk-width-1-3@m uk-width-1-4@l`}>
+                    <div className="uk-width-1-2@s uk-width-1-3@m uk-width-1-4@l">
                         <a href={product.product_url} target="_blank">
                             <div className="uk-card uk-card-small uk-card-default uk-margin uk-card-hover">
                                 <div className="uk-card-media-top">
