@@ -19,6 +19,7 @@ function Tiki({ index }) {
         },
         method: "GET",
         host: "tiki.vn",
+        origin: "tiki.vn",
     }))
 
     if (error) return <div>Error</div>
