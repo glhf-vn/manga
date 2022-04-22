@@ -118,10 +118,34 @@ export default function Layout({ children, title, description }) {
                                 <a>Bản quyền</a>
                             </Link>
                         </li>
-                        <li className={router.pathname == "/store" ? "uk-active" : ""}>
-                            <Link href="/store" scroll={false}>
-                                <a>Cửa hàng</a>
-                            </Link>
+                        <li className={router.pathname.includes("listing") ? "uk-active" : ""}>
+                            <a href="#">Truyện mới</a>
+                            <div class="uk-navbar-dropdown">
+                                <ul class="uk-nav uk-navbar-dropdown-nav">
+                                    <li class="uk-nav-header">Manga</li>
+                                    <li className={router.pathname == '/listing/manga/tiki' ? "uk-active" : ""}>
+                                        <Link href="/listing/manga/tiki" scroll={false}>
+                                            <a>Tiki Trading</a>
+                                        </Link>
+                                    </li>
+                                    <li className={router.pathname == '/listing/manga/fahasa' ? "uk-active" : ""}>
+                                        <Link href="/listing/manga/fahasa" scroll={false}>
+                                            <a>Fahasa</a>
+                                        </Link>
+                                    </li>
+                                    <li class="uk-nav-header">Light-novel</li>
+                                    <li className={router.pathname == '/listing/light-novel/tiki' ? "uk-active" : ""}>
+                                        <Link href="/listing/light-novel/tiki" scroll={false}>
+                                            <a>Tiki Trading</a>
+                                        </Link>
+                                    </li>
+                                    <li className={router.pathname == '/listing/light-novel/fahasa' ? "uk-active" : ""}>
+                                        <Link href="/listing/light-novel/fahasa" scroll={false}>
+                                            <a>Fahasa</a>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li>
                             <a uk-toggle="target: #modal-donate">Donate</a>
@@ -133,7 +157,11 @@ export default function Layout({ children, title, description }) {
                 <div className="uk-modal-dialog uk-modal-body">
                     <button className="uk-modal-close-default" type="button" uk-close="true"></button>
                     <h2 className="uk-modal-title uk-text-bold">Donate</h2>
-                    <a id="momo" href="https://me.momo.vn/mangaglhf" target="_parent"
+                    <a uk-tooltip="title: <img src='/img/vietcombank.jpg'/>; pos: bottom" id="vietcombank"
+                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#81BC41', border: 'none' }}>Chuyển khoản</a>
+                        <a uk-tooltip="title: <img src='/img/zalopay.jpg'/>; pos: bottom" id="zalopay"
+                            className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0068ff', border: 'none' }}>ZaloPay</a>
+                    <a uk-tooltip="title: <img src='/img/momo.png'/>; pos: bottom" id="momo" href="https://me.momo.vn/catouberos" target="_parent"
                         className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</a>
                     <a id="paypal" href="https://paypal.me/tottidkn" target="_parent"
                         className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0070ba', border: 'none' }}>PayPal</a>

@@ -23,4 +23,17 @@
         background: #333 !important;
         color: #e6e6e6 !important;
     }
+
+    .fc .fc-list-event:hover td {
+        background-color: unset !important;
+    }
+
+    .fc .fc-button-primary:hover {
+        background-color: #444;
+        border-color: #444;
+    }
+
+    .fc .fc-button {
+        color: #e6e6e6 !important;
+    }
 }
