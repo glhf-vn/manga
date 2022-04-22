@@ -123,8 +123,8 @@ export default function Layout({ children, title, description }) {
                             <div className="uk-navbar-dropdown">
                                 <ul className="uk-nav uk-navbar-dropdown-nav">
                                     <li className="uk-nav-header">Manga</li>
-                                    <li className={router.pathname == '/listing/manga/tiki' ? "uk-active" : ""}>
-                                        <Link href="/listing/manga/tiki" scroll={false}>
+                                    <li className={router.pathname.includes('/listing/manga/tiki') ? "uk-active" : ""}>
+                                        <Link href="/listing/manga/tiki/1" scroll={false}>
                                             <a>Tiki Trading</a>
                                         </Link>
                                     </li>
@@ -134,8 +134,8 @@ export default function Layout({ children, title, description }) {
                                         </Link>
                                     </li>
                                     <li className="uk-nav-header">Light-novel</li>
-                                    <li className={router.pathname == '/listing/light-novel/tiki' ? "uk-active" : ""}>
-                                        <Link href="/listing/light-novel/tiki" scroll={false}>
+                                    <li className={router.pathname.includes('/listing/light-novel/tiki') ? "uk-active" : ""}>
+                                        <Link href="/listing/light-novel/tiki/1" scroll={false}>
                                             <a>Tiki Trading</a>
                                         </Link>
                                     </li>
