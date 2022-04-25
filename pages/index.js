@@ -3,7 +3,6 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import listPlugin from '@fullcalendar/list'
 import googleCalendarPlugin from '@fullcalendar/google-calendar'
 import { google } from 'googleapis'
-import Head from 'next/head'
 import styles from '../styles/styles.module.scss'
 import Layout from '../components/layout'
 
@@ -11,10 +10,11 @@ const pageTitle = "Lịch phát hành Manga"
 const pageDescription = "Xem lịch phát hành manga chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
 
 export async function getStaticProps() {
+  const googleApiKey = process.env.GOOGLE_API_KEY
 
   const sheets = google.sheets({
     version: 'v4',
-    auth: process.env.GOOGLE_API_KEY,
+    auth: googleApiKey,
   });
 
   // Query
@@ -37,13 +37,14 @@ export async function getStaticProps() {
   return {
     props: {
       update,
-      info
+      info,
+      googleApiKey
     },
     revalidate: 7200, //revalidate every 2 hour
   }
 }
 
-export default function Home({ update, info }) {
+export default function Home({ update, info, googleApiKey }) {
   function shareModal() {
     if (navigator.share) {
       navigator.share({
@@ -192,61 +193,61 @@ export default function Home({ update, info }) {
               viewClassNames="uk-margin-bottom"
               eventSources={[
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 'kim0qh2rt2k3pts7mhs9pdf84s@group.calendar.google.com',
                   className: 'kim',
                   color: '#e00024',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '55vfna92d05k21up0brcmsbq0o@group.calendar.google.com',
                   className: 'tre',
                   color: '#00aeef',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '7ht69okrmeph6snctucjn77vt0@group.calendar.google.com',
                   className: 'ipm',
                   color: '#01a14b',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 'fjevdjbpr2m9r5gooaigs3595s@group.calendar.google.com',
                   className: 'amak',
                   color: '#018763',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 'aammvnpdffcsq4oen8er6e6v10@group.calendar.google.com',
                   className: 'sky',
                   color: '#545454',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '5kjai0tie7kubu4nqls4j8e3uk@group.calendar.google.com',
                   className: 'tsuki',
                   color: '#f8cb10',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '5756jhpd8sj8doer4j39tsopl0@group.calendar.google.com',
                   className: 'uranix',
                   color: '#ED3822',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '1eajtmaus1kib4s8mgd3cp82ho@group.calendar.google.com',
                   className: 'wingsbooks',
                   color: '#00adef',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 'd4oi2g1csqm6d2a0e71j6fpjuo@group.calendar.google.com',
                   className: 'hikari',
                   color: '#f78027',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 's4m05q1nrpuq7p40ml2ct30jh8@group.calendar.google.com',
                   className: 'ichi',
                   color: '#F14435',
@@ -335,61 +336,61 @@ export default function Home({ update, info }) {
               }}
               eventSources={[
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 'kim0qh2rt2k3pts7mhs9pdf84s@group.calendar.google.com',
                   className: 'kim-table',
                   color: '#e00024',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '55vfna92d05k21up0brcmsbq0o@group.calendar.google.com',
                   className: 'tre-table',
                   color: '#00aeef',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '7ht69okrmeph6snctucjn77vt0@group.calendar.google.com',
                   className: 'ipm-table',
                   color: '#01a14b',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 'fjevdjbpr2m9r5gooaigs3595s@group.calendar.google.com',
                   className: 'amak-table',
                   color: '#018763',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 'aammvnpdffcsq4oen8er6e6v10@group.calendar.google.com',
                   className: 'sky-table',
                   color: '#545454',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '5kjai0tie7kubu4nqls4j8e3uk@group.calendar.google.com',
                   className: 'tsuki-table',
                   color: '#f8cb10',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '5756jhpd8sj8doer4j39tsopl0@group.calendar.google.com',
                   className: 'uranix-table',
                   color: '#ED3822',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: '1eajtmaus1kib4s8mgd3cp82ho@group.calendar.google.com',
                   className: 'wingsbooks-table',
                   color: '#00adef',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 'd4oi2g1csqm6d2a0e71j6fpjuo@group.calendar.google.com',
                   className: 'hikari-table',
                   color: '#f78027',
                 },
                 {
-                  googleCalendarApiKey: "AIzaSyAtPydnw-YFTWrtRdh7xY04UQK2XFQpoUk",
+                  googleCalendarApiKey: googleApiKey,
                   googleCalendarId: 's4m05q1nrpuq7p40ml2ct30jh8@group.calendar.google.com',
                   className: 'ichi-table',
                   color: '#f14435',

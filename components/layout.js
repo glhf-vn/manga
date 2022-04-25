@@ -60,35 +60,35 @@ export default function Layout({ children, title, description }) {
             <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;">
                 <ul className="uk-slideshow-items">
                     <li>
-                        <Image src="/img/jujutsukaisen.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Chú thuật hồi chiến" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/ikigami.png" className={banner.image} layout="fill" objectFit="cover" alt="Ikigami" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#ff0000' }}>Chú thuật hồi chiến</h1>
-                            <span className={banner.copyright}>Gege Akutami</span>
+                            <h1 className={banner.title} style={{ color: '#3a3a3a' }}>Ikigami</h1>
+                            <span className={banner.copyright}>Motoro Mase</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/kemonojihen.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Văn phòng thám tử quái vật" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/ajin.png" className={banner.image} layout="fill" objectFit="cover" alt="Ajin - Boxset 1-6" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`} style={{ marginLeft: 0 }}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#c70008' }}>Văn phòng thám tử quái vật</h1>
-                            <span className={banner.copyright}>Sho Aimoto</span>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Trở lại!</h2>
+                            <h1 className={banner.title} style={{ color: '#bd2902' }}>Ajin - Boxset 1-6</h1>
+                            <span className={banner.copyright}>Gamon Sakurai, Tsuina Miura</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/romanticaclock.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Romantica Clock" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/kiseijuu.png" className={banner.image} layout="fill" objectFit="cover" alt="Ký Sinh Thú 10" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#ffffd5' }}>Romantica Clock</h1>
-                            <span className={banner.copyright}>Maki Youko</span>
+                            <h2 className={`${banner.helper} uk-margin-remove`}>Trở lại!</h2>
+                            <h1 className={banner.title} style={{ color: '#d3a549' }}>Ký Sinh Thú 10</h1>
+                            <span className={banner.copyright}>Hitoshi Iwaaki</span>
                         </div>
                     </li>
                     <li>
-                        <Image src="/img/magicknightreyearth.jpg" className={banner.image} layout="fill" objectFit="cover" alt="Hiệp sĩ phép màu" uk-img="target: !.uk-slideshow-items" />
+                        <Image src="/img/usemonoyado.png" className={banner.image} layout="fill" objectFit="cover" alt="Nhà trọ của những điều đã mất" uk-img="target: !.uk-slideshow-items" />
                         <div className={`${banner.content} uk-position-top-left uk-text-left uk-light`}>
                             <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#db2d21' }}>Hiệp sĩ phép màu</h1>
-                            <span className={banner.copyright}>CLAMP</span>
+                            <h1 className={banner.title} style={{ color: '#e2a795' }}>Nhà trọ của những điều đã mất</h1>
+                            <span className={banner.copyright}>Hozumi</span>
                         </div>
                     </li>
                 </ul>
@@ -159,8 +159,8 @@ export default function Layout({ children, title, description }) {
                     <h2 className="uk-modal-title uk-text-bold">Donate</h2>
                     <a uk-tooltip="title: <img src='/img/vietcombank.jpg'/>; pos: bottom" id="vietcombank"
                         className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#81BC41', border: 'none' }}>Chuyển khoản</a>
-                        <a uk-tooltip="title: <img src='/img/zalopay.jpg'/>; pos: bottom" id="zalopay"
-                            className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0068ff', border: 'none' }}>ZaloPay</a>
+                    <a uk-tooltip="title: <img src='/img/zalopay.jpg'/>; pos: bottom" id="zalopay"
+                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0068ff', border: 'none' }}>ZaloPay</a>
                     <a uk-tooltip="title: <img src='/img/momo.png'/>; pos: bottom" id="momo" href="https://me.momo.vn/catouberos" target="_parent"
                         className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</a>
                     <a id="paypal" href="https://paypal.me/tottidkn" target="_parent"

@@ -60,7 +60,7 @@ export default function TikiMangaListing({ params, posts }) {
                     {posts.data.map(product => {
                         return (
                             <div className="uk-width-1-2@s uk-width-1-3@m uk-width-1-4@l">
-                                <a href={'https://tiki.vn/' + product.url_key + ".html"} target="_blank">
+                                <a href={'https://tiki.vn/' + product.url_key + ".html"} target="_blank" key={product.id}>
                                     <div className="uk-card uk-card-small uk-card-default uk-margin uk-card-hover">
                                         <div className="uk-card-media-top">
                                             <img loading="lazy" src={product.thumbnail_url} alt={product.name} className="uk-width-medium" />

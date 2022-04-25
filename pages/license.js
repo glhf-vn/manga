@@ -6,7 +6,6 @@ const pageTitle = "Thông tin bản quyền Manga"
 const pageDescription = "Xem thông tin manga được mua bản quyền, cập nhật thường xuyên!"
 
 export async function getStaticProps() {
-
     const sheets = google.sheets({
         version: 'v4',
         auth: process.env.GOOGLE_API_KEY,
@@ -14,19 +13,19 @@ export async function getStaticProps() {
 
     // Query
     async function getSheetContent(sheetNumber) {
-        const range = sheetNumber + '!A2:F1000';
+        const range = sheetNumber + '!A2:F1000'
 
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: process.env.SHEET_ID,
             range,
         });
 
-        return response.data.values;
+        return response.data.values
     }
 
-    const licensed = await getSheetContent('licensed');
-    const reprint = await getSheetContent('reprint');
-    const unknown = await getSheetContent('unknown');
+    const licensed = await getSheetContent('licensed')
+    const reprint = await getSheetContent('reprint')
+    const unknown = await getSheetContent('unknown')
 
     // Result
 
