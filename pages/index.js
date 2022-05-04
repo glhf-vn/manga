@@ -271,14 +271,16 @@ export default function Home({ update, info, googleApiKey }) {
                 <button uk-tooltip="Thêm lịch vào máy" className="uk-button uk-button-default" type="button"><span uk-icon="download"></span></button>
                 <div uk-dropdown="mode: click">
                   <ul className="uk-nav uk-dropdown-nav">
-                    <li><a href="https://calendar.google.com/calendar/ical/2ahhvdl7pi34oldst8vi5dl8g8%40group.calendar.google.com/public/basic.ics">NXB Kim Đồng</a></li>
-                    <li><a href="https://calendar.google.com/calendar/ical/95o6f5p1pd6jofhului3is62t8%40group.calendar.google.com/public/basic.ics">NXB Trẻ</a></li>
-                    <li><a href="https://calendar.google.com/calendar/ical/cgrvn8e7fplp686spfr5mgko8o%40group.calendar.google.com/public/basic.ics">IPM</a></li>
-                    <li><a href="https://calendar.google.com/calendar/ical/k2nu1ihpbo8l17abfdakn8tkgg%40group.calendar.google.com/public/basic.ics">SkyComics</a></li>
-                    <li><a href="https://calendar.google.com/calendar/ical/3bi08q64q89jujjq64fimfdpv0%40group.calendar.google.com/public/basic.ics">Tsuki LightNovel</a></li>
-                    <li><a href="https://calendar.google.com/calendar/ical/bfm6ju43bch0jjkuuac0739f5c%40group.calendar.google.com/public/basic.ics">AMAK</a></li>
-                    <li><a href="https://calendar.google.com/calendar/ical/654qd280st7bkeofugju8du9p8%40group.calendar.google.com/public/basic.ics">Uranix</a></li>
-                    <li><a href="https://calendar.google.com/calendar/ical/iu1k210lirlffs3uesasnrkhcg%40group.calendar.google.com/public/basic.ics">KĐ - Wings Books</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/kim0qh2rt2k3pts7mhs9pdf84s%40group.calendar.google.com/public/basic.ics">NXB Kim Đồng</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/55vfna92d05k21up0brcmsbq0o%40group.calendar.google.com/public/basic.ics">NXB Trẻ</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/7ht69okrmeph6snctucjn77vt0%40group.calendar.google.com/public/basic.ics">IPM</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/aammvnpdffcsq4oen8er6e6v10%40group.calendar.google.com/public/basic.ics">SkyComics</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/5kjai0tie7kubu4nqls4j8e3uk%40group.calendar.google.com/public/basic.ics">Tsuki LightNovel</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/fjevdjbpr2m9r5gooaigs3595s%40group.calendar.google.com/public/basic.ics">AMAK</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/d4oi2g1csqm6d2a0e71j6fpjuo%40group.calendar.google.com/public/basic.ics">Hikari</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/s4m05q1nrpuq7p40ml2ct30jh8%40group.calendar.google.com/public/basic.ics">Ichi Light Novel</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/5756jhpd8sj8doer4j39tsopl0%40group.calendar.google.com/public/basic.ics">Uranix</a></li>
+                    <li><a href="https://calendar.google.com/calendar/ical/1eajtmaus1kib4s8mgd3cp82ho%40group.calendar.google.com/public/basic.ics">KĐ - Wings Books</a></li>
                   </ul>
                 </div>
               </div>
