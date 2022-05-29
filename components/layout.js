@@ -152,19 +152,19 @@ export default function Layout({ children, title, description }) {
                 <div className="uk-modal-dialog uk-modal-body" style={{ overflow: 'initial' }}>
                     <button className="uk-modal-close-default" type="button" uk-close="true"></button>
                     <h2 className="uk-modal-title uk-text-bold">Donate</h2>
-                    <div class="uk-inline">
+                    <div className="uk-inline">
                         <button type="button" id="vietcombank"
                             className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#81BC41', border: 'none' }}>Chuyển khoản</button>
                         <div uk-drop="mode: hover; delay-hide: 0">
                             <Image width={660} height={993} layout="responsive" alt="Chuyển khoản (Vietcombank)" src='/img/vietcombank.jpg' />
                         </div>
                     </div>
-                    <div class="uk-inline">
+                    <div className="uk-inline">
                         <button type="button" id="zalopay"
                             className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0068ff', border: 'none' }}>ZaloPay</button>
                         <div uk-drop="mode: hover; delay-hide: 0"><img src='/img/zalopay.jpg' /></div>
                     </div>
-                    <div class="uk-inline">
+                    <div className="uk-inline">
                         <button type="button" id="momo"
                             className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</button>
                         <div uk-drop="mode: hover; delay-hide: 0"><img src='/img/momo.png' /></div>
