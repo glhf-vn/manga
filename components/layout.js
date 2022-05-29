@@ -108,11 +108,6 @@ export default function Layout({ children, title, description }) {
                                 <a>Lịch phát hành</a>
                             </Link>
                         </li>
-                        {/* <li className={router.pathname.includes("/blog") || router.pathname.includes("/posts") ? "uk-active" : ""}>
-                            <Link href="/blog" scroll={false}>
-                                <a>Bài viết</a>
-                            </Link>
-                        </li> */}
                         <li className={router.pathname == "/license" ? "uk-active" : ""}>
                             <Link href="/license" scroll={false}>
                                 <a>Bản quyền</a>
@@ -154,17 +149,30 @@ export default function Layout({ children, title, description }) {
                 </nav>
             </div>
             <div id="modal-donate" uk-modal="true">
-                <div className="uk-modal-dialog uk-modal-body">
+                <div className="uk-modal-dialog uk-modal-body" style={{ overflow: 'initial' }}>
                     <button className="uk-modal-close-default" type="button" uk-close="true"></button>
                     <h2 className="uk-modal-title uk-text-bold">Donate</h2>
-                    <a uk-tooltip="title: <img src='/img/vietcombank.jpg'/>; pos: bottom" id="vietcombank"
-                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#81BC41', border: 'none' }}>Chuyển khoản</a>
-                    <a uk-tooltip="title: <img src='/img/zalopay.jpg'/>; pos: bottom" id="zalopay"
-                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0068ff', border: 'none' }}>ZaloPay</a>
-                    <a uk-tooltip="title: <img src='/img/momo.png'/>; pos: bottom" id="momo" href="https://me.momo.vn/catouberos" target="_parent"
-                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</a>
-                    <a id="paypal" href="https://paypal.me/tottidkn" target="_parent"
-                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0070ba', border: 'none' }}>PayPal</a>
+                    <div class="uk-inline">
+                        <button type="button" id="vietcombank"
+                            className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#81BC41', border: 'none' }}>Chuyển khoản</button>
+                        <div uk-drop="mode: hover; delay-hide: 0">
+                            <Image width={660} height={993} layout="responsive" alt="Chuyển khoản (Vietcombank)" src='/img/vietcombank.jpg' />
+                        </div>
+                    </div>
+                    <div class="uk-inline">
+                        <button type="button" id="zalopay"
+                            className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0068ff', border: 'none' }}>ZaloPay</button>
+                        <div uk-drop="mode: hover; delay-hide: 0"><img src='/img/zalopay.jpg' /></div>
+                    </div>
+                    <div class="uk-inline">
+                        <button type="button" id="momo"
+                            className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</button>
+                        <div uk-drop="mode: hover; delay-hide: 0"><img src='/img/momo.png' /></div>
+                    </div>
+                    <button uk-tooltip="title: <img src='/img/momo.png'/>; pos: bottom" id="momo" href="https://me.momo.vn/catouberos" target="_parent"
+                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</button>
+                    <button id="paypal" href="https://paypal.me/tottidkn" target="_parent"
+                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0070ba', border: 'none' }}>PayPal</button>
                 </div>
             </div>
             <main>{children}</main>

@@ -128,9 +128,11 @@ export default function License({ licensed, reprint, unknown }) {
                                         <div className="uk-width-1-1@s uk-width-1-2@l" key={title.toLowerCase()} data-type={type.toLowerCase()} data-publisher={publisher.toLowerCase()}>
                                             <div className="uk-card uk-card-default uk-margin uk-grid-collapse uk-card-hover" uk-grid="true">
                                                 {image &&
-                                                    <div className="uk-card-media-left uk-cover-container uk-width-1-3">
-                                                        <img loading="lazy" src={image} alt={title} className="uk-width-medium" uk-cover="true" />
-                                                        <canvas width="200" height="310"></canvas>
+                                                    <div className="uk-card-media-left uk-cover-container uk-width-1-3" uk-lightbox="true">
+                                                        <a href={image}>
+                                                            <img loading="lazy" src={image} alt={title} className="uk-width-medium" uk-cover="true" />
+                                                            <canvas width="200" height="310"></canvas>
+                                                        </a>
                                                     </div>
                                                 }
                                                 <div className={image ? "uk-width-2-3 uk-flex uk-flex-column" : 'uk-flex uk-flex-column'}>

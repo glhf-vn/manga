@@ -75,7 +75,7 @@ export default function Home({ update, info, googleApiKey }) {
       xhttp.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
           // Typical action to be performed when the document is ready:
-          document.getElementById(id).innerHTML = "<img loading='lazy' src='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_250/covers/" + src + "' srcset='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_250/covers/" + src + " 250w, https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_400/covers/" + src + " 400w' />"
+          document.getElementById(id).innerHTML = "<a href='https://res.cloudinary.com/glhfvn/image/upload/covers/" + src + ".jpeg'><img loading='lazy' src='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_250/covers/" + src + "' srcset='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_250/covers/" + src + " 250w, https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_400/covers/" + src + " 400w' /></a>"
         } else {
           document.getElementById(id).innerHTML = ""
         }
@@ -143,7 +143,7 @@ export default function Home({ update, info, googleApiKey }) {
         <div className="uk-modal-dialog">
           <button className="uk-modal-close-default" type="button" uk-close="true"></button>
           <div className={styles.modal}>
-            <div className={styles.image} id="modalImage">
+            <div className={styles.image} id="modalImage" uk-lightbox="true">
             </div>
             <div className="uk-flex-1 uk-padding">
               <h3 className="uk-text-bold" id="title">Headline</h3>
