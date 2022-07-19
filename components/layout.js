@@ -2,7 +2,6 @@ import Head from 'next/head'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useRouter } from "next/router"
-import banner from './banner.module.scss'
 import footer from './footer.module.scss'
 import nav from './nav.module.scss'
 
@@ -57,44 +56,6 @@ export default function Layout({ children, title, description }) {
                 <meta name="msapplication-TileImage" content="/favicon/ms-icon-144x144.png" />
             </Head>
 
-            <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;">
-                <ul className="uk-slideshow-items">
-                    <li>
-                        <Image src="/img/ikigami.png" className={banner.image} layout="fill" objectFit="cover" alt="Ikigami" uk-img="target: !.uk-slideshow-items" />
-                        <div className={`${banner.content} uk-position-bottom-left uk-text-left uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#3a3a3a' }}>Ikigami</h1>
-                            <span className={banner.copyright}>Motoro Mase</span>
-                        </div>
-                    </li>
-                    <li>
-                        <Image src="/img/ajin.png" className={banner.image} layout="fill" objectFit="cover" alt="Ajin - Boxset 1-6" uk-img="target: !.uk-slideshow-items" />
-                        <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`} style={{ marginLeft: 0 }}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Trở lại!</h2>
-                            <h1 className={banner.title} style={{ color: '#bd2902' }}>Ajin - Boxset 1-6</h1>
-                            <span className={banner.copyright}>Gamon Sakurai, Tsuina Miura</span>
-                        </div>
-                    </li>
-                    <li>
-                        <Image src="/img/kiseijuu.png" className={banner.image} layout="fill" objectFit="cover" alt="Ký Sinh Thú 10" uk-img="target: !.uk-slideshow-items" />
-                        <div className={`${banner.content} uk-position-bottom-right uk-text-right uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Trở lại!</h2>
-                            <h1 className={banner.title} style={{ color: '#d3a549' }}>Ký Sinh Thú 10</h1>
-                            <span className={banner.copyright}>Hitoshi Iwaaki</span>
-                        </div>
-                    </li>
-                    <li>
-                        <Image src="/img/usemonoyado.png" className={banner.image} layout="fill" objectFit="cover" alt="Nhà trọ của những điều đã mất" uk-img="target: !.uk-slideshow-items" />
-                        <div className={`${banner.content} uk-position-top-left uk-text-left uk-light`}>
-                            <h2 className={`${banner.helper} uk-margin-remove`}>Manga mới</h2>
-                            <h1 className={banner.title} style={{ color: '#e2a795' }}>Nhà trọ của những điều đã mất</h1>
-                            <span className={banner.copyright}>Hozumi</span>
-                        </div>
-                    </li>
-                </ul>
-                <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="true" uk-slideshow-item="previous"></a>
-                <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="true" uk-slideshow-item="next"></a>
-            </div>
             <div uk-sticky="sel-target: .uk-navbar-container; cls-active: uk-navbar-sticky">
                 <nav className="uk-navbar-container" uk-navbar="true">
                     <ul className={`${nav.wrapper} uk-navbar-nav uk-margin-auto`}>
@@ -162,12 +123,12 @@ export default function Layout({ children, title, description }) {
                     <div className="uk-inline">
                         <button type="button" id="zalopay"
                             className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0068ff', border: 'none' }}>ZaloPay</button>
-                        <div uk-drop="mode: hover; delay-hide: 0"><img src='/img/zalopay.jpg' /></div>
+                        <div uk-drop="mode: hover; delay-hide: 0"><img alt="ZaloPay" src='/img/zalopay.jpg' /></div>
                     </div>
                     <div className="uk-inline">
                         <button type="button" id="momo"
                             className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</button>
-                        <div uk-drop="mode: hover; delay-hide: 0"><img src='/img/momo.png' /></div>
+                        <div uk-drop="mode: hover; delay-hide: 0"><img alt="MoMo" src='/img/momo.png' /></div>
                     </div>
                     <button uk-tooltip="title: <img src='/img/momo.png'/>; pos: bottom" id="momo" href="https://me.momo.vn/catouberos" target="_parent"
                         className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</button>
@@ -189,7 +150,7 @@ export default function Layout({ children, title, description }) {
                     </div>
                     <div className={footer.contact}>
                         <a title="Gửi e-mail" href="mailto:konnichiwa@glhf.vn">Liên hệ</a>
-                        <Link href="/licenses" scroll={false}><a className="uk-margin-left">Licenses</a></Link>
+                        <Link href="/oss" scroll={false}><a className="uk-margin-left">OSS Licenses</a></Link>
                         <a className="uk-margin-left" title="GitHub" href="//github.com/catouberos/mangaGLHF" target="_blank" rel='noreferrer'>
                             <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" className="bi bi-github" viewBox="0 0 16 16">
                                 <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />

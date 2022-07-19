@@ -6,9 +6,11 @@ const pageTitle = "Thông tin bản quyền Manga"
 const pageDescription = "Xem thông tin manga được mua bản quyền, cập nhật thường xuyên!"
 
 export async function getStaticProps() {
+    const googleApiKey = process.env.GOOGLE_API_KEY
+
     const sheets = google.sheets({
         version: 'v4',
-        auth: process.env.GOOGLE_API_KEY,
+        auth: googleApiKey,
     });
 
     // Query
@@ -18,13 +20,12 @@ export async function getStaticProps() {
         const response = await sheets.spreadsheets.values.get({
             spreadsheetId: process.env.SHEET_ID,
             range,
-        });
+        })
 
         return response.data.values
     }
 
     const licensed = await getSheetContent('licensed')
-    const reprint = await getSheetContent('reprint')
     const unknown = await getSheetContent('unknown')
 
     // Result
@@ -32,33 +33,13 @@ export async function getStaticProps() {
     return {
         props: {
             licensed,
-            reprint,
             unknown
         },
         revalidate: 3600, //revalidate every 1 hour
     }
 }
 
-export default function License({ licensed, reprint, unknown }) {
-    const unknownTable = () => {
-        var parsedHtml = '';
-
-        for (var i = 0; i < unknown.length; i++) {
-            const [manga, source, anilist] = unknown[i];
-            parsedHtml +=
-                "<tr><td>" +
-                manga +
-                (anilist ? " <a href='//anilist.co/manga/" +
-                    anilist +
-                    "' target='_blank' rel='noreferrer' uk-tooltip='Xem trên AniList'><span uk-icon='icon: info; ratio: 0.8'></span></a>" : '') +
-                (source ? " <a href='" +
-                    source +
-                    "' target='_blank' rel='noreferrer' uk-tooltip='Nguồn'><span uk-icon='icon: question; ratio: 0.8'></span></a>" : '') +
-                "</td></tr>";
-        }
-
-        return parsedHtml;
-    }
+export default function License({ licensed, unknown }) {
 
     return (
         <Layout title={pageTitle} description={pageDescription}>
@@ -156,29 +137,6 @@ export default function License({ licensed, reprint, unknown }) {
                         </div>
                     </div>
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-1-3@l">
-                        <span>Có kế hoạch tái bản</span>
-                        <table className="uk-table uk-table-divider">
-                            <thead>
-                                <tr>
-                                    <th>Nhà xuất bản</th>
-                                    <th>Bộ truyện</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {reprint.map(manga => {
-                                    const [publisher, title] = manga
-
-                                    return (
-                                        <>
-                                            <tr>
-                                                <td>{publisher}</td>
-                                                <td>{title}</td>
-                                            </tr>
-                                        </>
-                                    )
-                                })}
-                            </tbody>
-                        </table>
                         <span>Bản quyền?</span> <span uk-icon="icon: info; ratio: 0.8"
                             uk-tooltip="title: Là những bộ truyện đã được 'nhá' bản quyền nhưng tình trạng vẫn chưa rõ, hoặc chưa biết thuộc về nhà xuất bản nào."></span>
                         <table className="uk-table uk-table-divider">
