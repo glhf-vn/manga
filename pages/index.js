@@ -5,8 +5,8 @@ import googleCalendarPlugin from '@fullcalendar/google-calendar'
 import { google } from 'googleapis'
 import styles from '../styles/styles.module.scss'
 import banner from '../styles/banner.module.scss'
-import Image from 'next/image'
 import Layout from '../components/layout'
+import calendarsData from '../calendar.config'
 
 const pageTitle = "Lịch phát hành Manga"
 const pageDescription = "Xem lịch phát hành manga chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
@@ -59,6 +59,8 @@ export async function getStaticProps() {
 }
 
 export default function Home({ info, covers, googleApiKey }) {
+  console.log()
+
   function shareModal() {
     if (navigator.share) {
       navigator.share({
@@ -227,68 +229,14 @@ export default function Home({ info, covers, googleApiKey }) {
                 firstDay={1}
                 scrollTime='09:00:00'
                 viewClassNames="uk-margin-bottom"
-                eventSources={[
-                  {
+                eventSources={calendarsData.map(publisher => {
+                  return {
                     googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 'kim0qh2rt2k3pts7mhs9pdf84s@group.calendar.google.com',
-                    className: 'kim',
-                    color: '#e00024',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '55vfna92d05k21up0brcmsbq0o@group.calendar.google.com',
-                    className: 'tre',
-                    color: '#00aeef',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '7ht69okrmeph6snctucjn77vt0@group.calendar.google.com',
-                    className: 'ipm',
-                    color: '#01a14b',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 'fjevdjbpr2m9r5gooaigs3595s@group.calendar.google.com',
-                    className: 'amak',
-                    color: '#018763',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 'aammvnpdffcsq4oen8er6e6v10@group.calendar.google.com',
-                    className: 'sky',
-                    color: '#545454',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '5kjai0tie7kubu4nqls4j8e3uk@group.calendar.google.com',
-                    className: 'tsuki',
-                    color: '#f8cb10',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '5756jhpd8sj8doer4j39tsopl0@group.calendar.google.com',
-                    className: 'uranix',
-                    color: '#ED3822',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '1eajtmaus1kib4s8mgd3cp82ho@group.calendar.google.com',
-                    className: 'wingsbooks',
-                    color: '#00adef',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 'd4oi2g1csqm6d2a0e71j6fpjuo@group.calendar.google.com',
-                    className: 'hikari',
-                    color: '#f78027',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 's4m05q1nrpuq7p40ml2ct30jh8@group.calendar.google.com',
-                    className: 'ichi',
-                    color: '#F14435',
-                  },
-                ]}
+                    googleCalendarId: publisher.id,
+                    className: publisher.class,
+                    color: publisher.color,
+                  }
+                })}
                 eventClick={openDetailedModal}
                 viewDidMount={injectHeader}
               />
@@ -307,61 +255,26 @@ export default function Home({ info, covers, googleApiKey }) {
                   <button uk-tooltip="Thêm lịch vào máy" className="uk-button uk-button-default" type="button"><span uk-icon="download"></span></button>
                   <div uk-dropdown="mode: click">
                     <ul className="uk-nav uk-dropdown-nav">
-                      <li><a href="https://calendar.google.com/calendar/ical/kim0qh2rt2k3pts7mhs9pdf84s%40group.calendar.google.com/public/basic.ics">NXB Kim Đồng</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/55vfna92d05k21up0brcmsbq0o%40group.calendar.google.com/public/basic.ics">NXB Trẻ</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/7ht69okrmeph6snctucjn77vt0%40group.calendar.google.com/public/basic.ics">IPM</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/aammvnpdffcsq4oen8er6e6v10%40group.calendar.google.com/public/basic.ics">SkyComics</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/5kjai0tie7kubu4nqls4j8e3uk%40group.calendar.google.com/public/basic.ics">Tsuki LightNovel</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/fjevdjbpr2m9r5gooaigs3595s%40group.calendar.google.com/public/basic.ics">AMAK</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/d4oi2g1csqm6d2a0e71j6fpjuo%40group.calendar.google.com/public/basic.ics">Hikari</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/s4m05q1nrpuq7p40ml2ct30jh8%40group.calendar.google.com/public/basic.ics">Ichi Light Novel</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/5756jhpd8sj8doer4j39tsopl0%40group.calendar.google.com/public/basic.ics">Uranix</a></li>
-                      <li><a href="https://calendar.google.com/calendar/ical/1eajtmaus1kib4s8mgd3cp82ho%40group.calendar.google.com/public/basic.ics">KĐ - Wings Books</a></li>
+                      {calendarsData.map(publisher => {
+                        return <>
+                          <li>
+                            <a href={`https://calendar.google.com/calendar/ical/${encodeURI(publisher.id)}/public/basic.ics`}>{publisher.name}</a>
+                          </li>
+                        </>
+                      })}
                     </ul>
                   </div>
                 </div>
               </div>
               <form className={styles.filter}>
-                <label className={styles.checkbox}>
-                  <input type="checkbox" data-selector="kim" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.kim}`}>NXB Kim Đồng</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="tre" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.tre}`}>NXB Trẻ</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="ipm" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.ipm}`}>IPM</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="sky" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.sky}`}>SkyComics</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="tsuki" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.tsuki}`}>Tsuki LightNovel</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="amak" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.amak}`}>AMAK</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="uranix" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.uranix}`}>Uranix</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="wingsbooks" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.wingsbooks}`}>KĐ - Wings Books</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="hikari" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.hikari}`}>Hikari LightNovel</span>
-                </label>
-                <label>
-                  <input type="checkbox" data-selector="ichi" defaultChecked onChange={toggleSources} />
-                  <span className={`uk-label ${styles.ichi}`}>Ichi Light Novel</span>
-                </label>
+                {calendarsData.map(publisher => {
+                  return <>
+                    <label className={styles.checkbox}>
+                      <input type="checkbox" data-selector={publisher.class} defaultChecked onChange={toggleSources} />
+                      <span style={{ backgroundColor: publisher.color, border: '1px solid ' + publisher.color }} className={`uk-label`}>{publisher.name}</span>
+                    </label>
+                  </>
+                })}
               </form>
               <FullCalendar
                 plugins={[listPlugin, googleCalendarPlugin]}
@@ -372,68 +285,14 @@ export default function Home({ info, covers, googleApiKey }) {
                   year: 'numeric',
                   month: 'numeric'
                 }}
-                eventSources={[
-                  {
+                eventSources={calendarsData.map(publisher => {
+                  return {
                     googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 'kim0qh2rt2k3pts7mhs9pdf84s@group.calendar.google.com',
-                    className: 'kim-table',
-                    color: '#e00024',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '55vfna92d05k21up0brcmsbq0o@group.calendar.google.com',
-                    className: 'tre-table',
-                    color: '#00aeef',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '7ht69okrmeph6snctucjn77vt0@group.calendar.google.com',
-                    className: 'ipm-table',
-                    color: '#01a14b',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 'fjevdjbpr2m9r5gooaigs3595s@group.calendar.google.com',
-                    className: 'amak-table',
-                    color: '#018763',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 'aammvnpdffcsq4oen8er6e6v10@group.calendar.google.com',
-                    className: 'sky-table',
-                    color: '#545454',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '5kjai0tie7kubu4nqls4j8e3uk@group.calendar.google.com',
-                    className: 'tsuki-table',
-                    color: '#f8cb10',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '5756jhpd8sj8doer4j39tsopl0@group.calendar.google.com',
-                    className: 'uranix-table',
-                    color: '#ED3822',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: '1eajtmaus1kib4s8mgd3cp82ho@group.calendar.google.com',
-                    className: 'wingsbooks-table',
-                    color: '#00adef',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 'd4oi2g1csqm6d2a0e71j6fpjuo@group.calendar.google.com',
-                    className: 'hikari-table',
-                    color: '#f78027',
-                  },
-                  {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: 's4m05q1nrpuq7p40ml2ct30jh8@group.calendar.google.com',
-                    className: 'ichi-table',
-                    color: '#f14435',
-                  },
-                ]}
+                    googleCalendarId: publisher.id,
+                    className: publisher.class + '-table',
+                    color: publisher.color,
+                  }
+                })}
                 eventClick={openDetailedModal}
               />
               <div className={`uk-margin-top ${styles.hideOnMobile} ${styles.iframe}`}>
