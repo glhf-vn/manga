@@ -1,6 +1,7 @@
 import { google } from 'googleapis'
 import styles from '../styles/styles.module.scss'
 import Layout from '../components/layout'
+import { getCover } from '../lib/anilist'
 
 const pageTitle = "Thông tin bản quyền Manga"
 const pageDescription = "Xem thông tin manga được mua bản quyền, cập nhật thường xuyên!"
@@ -25,10 +26,34 @@ export async function getStaticProps() {
         return response.data.values
     }
 
-    const licensed = await getSheetContent('licensed')
-    const unknown = await getSheetContent('unknown')
+    let data = await getSheetContent('licensed')
+    let unknown = await getSheetContent('unknown')
 
     // Result
+
+    const pillColors = {
+        'manga': "#29b6f6",
+        'manhwa': "#29b6f6",
+        'manhua': "#29b6f6",
+        'artbook': "#ef5350",
+        'light-novel': "#ffca28",
+        'fanbook': "#ff7043",
+        'encyclopedia': "#66bb6a"
+    }
+
+    let licensed = await Promise.all(data.map(
+        async ([name, source, anilist, image, publisher, type]) => {
+            return {
+                name,
+                source,
+                anilist,
+                image,
+                publisher,
+                type,
+                color: pillColors[type.toLowerCase()],
+            }
+        }
+    ))
 
     return {
         props: {
@@ -40,7 +65,6 @@ export async function getStaticProps() {
 }
 
 export default function License({ licensed, unknown }) {
-
     return (
         <Layout title={pageTitle} description={pageDescription}>
             <div className={`uk-container ${styles.main}`}>
@@ -77,63 +101,37 @@ export default function License({ licensed, unknown }) {
                                     <li uk-filter-control="filter: [data-publisher='nxb kim đồng']; group: publisher"><a href="#">NXB Kim Đồng</a></li>
                                 </ul>
                             </div>
-                            <div className="uk-margin-top manga-list" uk-grid="true">
-                                {licensed.map(manga => {
-                                    const [title, source, anilist, image, publisher, type] = manga
-                                    let typeColor
-                                    switch (type.toLowerCase()) {
-                                        case 'manga':
-                                            typeColor = "#29b6f6"
-                                            break
-                                        case 'manhwa':
-                                            typeColor = "#29b6f6"
-                                            break
-                                        case 'manhua':
-                                            typeColor = "#29b6f6"
-                                            break
-                                        case 'artbook':
-                                            typeColor = "#ef5350"
-                                            break
-                                        case 'light-novel':
-                                            typeColor = "#ffca28"
-                                            break
-                                        case 'fanbook':
-                                            typeColor = "#ff7043"
-                                            break
-                                        case 'encyclopedia':
-                                            typeColor = "#66bb6a"
-                                            break
-                                    }
-
+                            <ul className="uk-margin-top manga-list" uk-grid="true">
+                                {licensed.map((manga) => {
                                     return (
-                                        <div className="uk-width-1-1@s uk-width-1-2@l" key={title.toLowerCase()} data-type={type.toLowerCase()} data-publisher={publisher.toLowerCase()}>
+                                        <li className="uk-width-1-1@s uk-width-1-2@l" key={manga.name} data-type={manga.type.toLowerCase()} data-publisher={manga.publisher.toLowerCase()}>
                                             <div className="uk-card uk-card-default uk-margin uk-grid-collapse uk-card-hover" uk-grid="true">
-                                                {image &&
+                                                {manga.image &&
                                                     <div className="uk-card-media-left uk-cover-container uk-width-1-3" uk-lightbox="true">
-                                                        <a href={image}>
-                                                            <img loading="lazy" src={image} alt={title} className="uk-width-medium" uk-cover="true" />
+                                                        <a href={manga.image}>
+                                                            <img loading="lazy" src={manga.image} alt={manga.name} className="uk-width-medium" uk-cover="true" />
                                                             <canvas width="200" height="310"></canvas>
                                                         </a>
                                                     </div>
                                                 }
-                                                <div className={image ? "uk-width-2-3 uk-flex uk-flex-column" : 'uk-flex uk-flex-column'}>
+                                                <div className={manga.image ? "uk-width-2-3 uk-flex uk-flex-column" : 'uk-flex uk-flex-column'}>
                                                     <div className="uk-card-body uk-flex-1">
-                                                        {type && <div className="uk-card-badge uk-label uk-text-small uk-text-capitalize uk-margin-remove" style={{ top: 0, right: 0, borderRadius: '0 0 0 0.5rem', backgroundColor: typeColor }}>{type}</div>}
-                                                        <span className='uk-text-meta'>{publisher}</span>
-                                                        <h3 className="uk-card-title uk-margin-remove">{title}</h3>
+                                                        {manga.type && <div className="uk-card-badge uk-label uk-text-small uk-text-capitalize uk-margin-remove" style={{ top: 0, right: 0, borderRadius: '0 0 0 0.5rem', backgroundColor: manga.color }}>{manga.type}</div>}
+                                                        <span className='uk-text-meta'>{manga.publisher}</span>
+                                                        <h3 className="uk-card-title uk-margin-remove">{manga.name}</h3>
                                                     </div>
-                                                    {(source || anilist) &&
+                                                    {(manga.source || manga.anilist) &&
                                                         <div className="uk-card-footer">
-                                                            {source && <a target="_blank" rel="noreferrer" href={source} className="uk-button uk-button-text uk-margin-right">Nguồn</a>}
-                                                            {anilist && <a target="_blank" rel="noreferrer" href={"//anilist.co/manga/" + anilist} className="uk-button uk-button-text">AniList</a>}
+                                                            {manga.source && <a target="_blank" rel="noreferrer" href={manga.source} className="uk-button uk-button-text uk-margin-right">Nguồn</a>}
+                                                            {manga.anilist && <a target="_blank" rel="noreferrer" href={"//anilist.co/manga/" + manga.anilist} className="uk-button uk-button-text">AniList</a>}
                                                         </div>
                                                     }
                                                 </div>
                                             </div>
-                                        </div>
+                                        </li>
                                     )
                                 })}
-                            </div>
+                            </ul>
                         </div>
                     </div>
                     <div className="uk-width-1-1 uk-width-1-2@m uk-width-1-3@l">
