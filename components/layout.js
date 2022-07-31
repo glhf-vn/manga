@@ -104,7 +104,7 @@ export default function Layout({ children, title, description }) {
                             </div>
                         </li>
                         <li>
-                            <a uk-toggle="target: #modal-donate">Donate</a>
+                            <a uk-toggle="target: #modal-donate">{'Ủng hộ <3'}</a>
                         </li>
                     </ul>
                 </nav>
@@ -112,7 +112,7 @@ export default function Layout({ children, title, description }) {
             <div id="modal-donate" uk-modal="true">
                 <div className="uk-modal-dialog uk-modal-body" style={{ overflow: 'initial' }}>
                     <button className="uk-modal-close-default" type="button" uk-close="true"></button>
-                    <h2 className="uk-modal-title uk-text-bold">Donate</h2>
+                    <h2 className="uk-modal-title uk-text-bold">{'Ủng hộ <3'}</h2>
                     <div className="uk-inline">
                         <button type="button" id="vietcombank"
                             className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#81BC41', border: 'none' }}>Chuyển khoản</button>
@@ -123,15 +123,17 @@ export default function Layout({ children, title, description }) {
                     <div className="uk-inline">
                         <button type="button" id="zalopay"
                             className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0068ff', border: 'none' }}>ZaloPay</button>
-                        <div uk-drop="mode: hover; delay-hide: 0"><img alt="ZaloPay" src='/img/zalopay.jpg' /></div>
+                        <div uk-drop="mode: hover; delay-hide: 0">
+                            <Image width={480} height={660} layout="responsive" alt="ZaloPay" src='/img/zalopay.jpg' />
+                        </div>
                     </div>
                     <div className="uk-inline">
                         <button type="button" id="momo"
                             className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</button>
-                        <div uk-drop="mode: hover; delay-hide: 0"><img alt="MoMo" src='/img/momo.png' /></div>
+                        <div uk-drop="mode: hover; delay-hide: 0">
+                            <Image width={259} height={259} layout="responsive" alt="MoMo" src='/img/momo.png' />
+                        </div>
                     </div>
-                    <button uk-tooltip="title: <img src='/img/momo.png'/>; pos: bottom" id="momo" href="https://me.momo.vn/catouberos" target="_parent"
-                        className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#a50064', border: 'none' }}>MoMo</button>
                     <button id="paypal" href="https://paypal.me/tottidkn" target="_parent"
                         className="uk-button uk-button-secondary uk-margin-small-top uk-margin-small-right" style={{ background: '#0070ba', border: 'none' }}>PayPal</button>
                 </div>

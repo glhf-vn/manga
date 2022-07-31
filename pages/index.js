@@ -7,6 +7,7 @@ import styles from '../styles/styles.module.scss'
 import banner from '../styles/banner.module.scss'
 import Layout from '../components/layout'
 import calendarsData from '../calendar.config'
+import { useState } from 'react'
 
 const pageTitle = "Lịch phát hành Manga"
 const pageDescription = "Xem lịch phát hành manga chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
@@ -59,7 +60,7 @@ export async function getStaticProps() {
 }
 
 export default function Home({ info, covers, googleApiKey }) {
-  console.log()
+  const [ currentManga, changeCurrentManga ] = useState({})
 
   function shareModal() {
     if (navigator.share) {
@@ -74,48 +75,30 @@ export default function Home({ info, covers, googleApiKey }) {
     }
   }
 
+  function scrollToToday() {
+    document.querySelector('.fc-day-today').scrollIntoView({
+      behavior: 'smooth',
+        block: 'end',
+        inline: 'nearest',
+    })
+  }
+
   function openDetailedModal(eventInfo) {
     const url = eventInfo.event.url
     const eventId = url.slice(url.indexOf("eid=") + ("eid=").length)
 
-    function changeHTML(id, content) {
-      document.getElementById(id).innerHTML = content
-    }
-
-    function changeHref(id, url) {
-      document.getElementById(id).href = url
-    }
-
-    function changeImage(id, src) {
-      var xhttp = new XMLHttpRequest()
-      xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200) {
-          // Typical action to be performed when the document is ready:
-          document.getElementById(id).innerHTML = "<a href='https://res.cloudinary.com/glhfvn/image/upload/covers/" + src + ".jpeg'><img loading='lazy' src='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_250/covers/" + src + "' srcset='https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_250/covers/" + src + " 250w, https://res.cloudinary.com/glhfvn/image/upload/c_scale,f_auto,q_90,w_400/covers/" + src + " 400w' /></a>"
-        } else {
-          document.getElementById(id).innerHTML = ""
-        }
-      };
-      xhttp.open("GET", "https://res.cloudinary.com/glhfvn/image/upload/covers/" + src, true)
-      xhttp.send()
-    }
+    changeCurrentManga({
+      id: eventId,
+      name: eventInfo.event.title,
+      date: eventInfo.event.start.toLocaleDateString('vi-VN'),
+      description: eventInfo.event.extendedProps.description ?? "",
+    })
 
     // Prevent Google Calendar URL to open
-    eventInfo.jsEvent.preventDefault();
+    eventInfo.jsEvent.preventDefault()
 
     // Open the modal
-    UIkit.modal('#modal-detailed').show();
-
-    // Change the content of the modal
-    changeHTML('title', eventInfo.event.title)
-    changeHTML('date', eventInfo.event.start.getDate())
-    changeHTML('month', eventInfo.event.start.getMonth() + 1)
-    changeHTML('year', eventInfo.event.start.getFullYear())
-    changeHTML('description', eventInfo.event.extendedProps.description ?? "")
-    changeHref('fahasa', encodeURI('//www.fahasa.com/catalogsearch/result/?q=' + eventInfo.event.title))
-    changeHref('tiki', encodeURI('//tiki.vn/search?q=' + eventInfo.event.title + '&category=1084'))
-    changeHref('shopee', encodeURI('//shopee.vn/search?keyword=' + eventInfo.event.title))
-    changeImage('modalImage', eventId)
+    UIkit.modal('#modal-detailed').show()
   }
 
   function toggleSources(e) {
@@ -161,7 +144,7 @@ export default function Home({ info, covers, googleApiKey }) {
             return (
               <>
                 <li>
-                  <img src={image} className={banner.image} objectFit="cover" alt={title} uk-img="target: !.uk-slideshow-items" />
+                  <img src={image} className={banner.image} objectfit="cover" alt={title} uk-img="target: !.uk-slideshow-items" />
                   <div className={`${banner.content} ${classname}`}>
                     <h2 className={`${banner.helper} uk-margin-remove`}>{helper}</h2>
                     <h1 className={banner.title} style={{ color: textColor }}>{title}</h1>
@@ -176,18 +159,26 @@ export default function Home({ info, covers, googleApiKey }) {
         <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="true" uk-slideshow-item="next"></a>
       </div>
 
+      <a uk-tooltip="Xem lịch hôm nay" onClick={() => scrollToToday()} className={`${styles.today} uk-icon-button`} uk-icon="icon: location; ratio: 1.5"></a>
+
       <Layout title={pageTitle} description={pageDescription}>
         <div id="modal-detailed" uk-modal="true">
           <div className="uk-modal-dialog">
             <button className="uk-modal-close-default" type="button" uk-close="true"></button>
             <div className={styles.modal}>
               <div className={styles.image} id="modalImage" uk-lightbox="true">
+                <object data={`https://res.cloudinary.com/glhfvn/image/upload/covers/${currentManga.id}.jpeg`} type="image/jpeg"></object>
               </div>
               <div className="uk-flex-1 uk-padding">
-                <h3 className="uk-text-bold" id="title">Headline</h3>
-                <span><b>Phát hành</b> ngày <span id="date"></span>/<span id="month"></span>/<span id="year"></span></span>
-                <p id="description"></p>
-                <p className="uk-margin-remove-bottom"><a id="fahasa" target="_blank" rel='noreferrer'>FAHASA</a> / <a id="tiki" target="_blank" rel='noreferrer'>Tiki</a> / <a id="shopee" target="_blank" rel='noreferrer'>Shopee</a></p>
+                <h3 className="uk-text-bold" id="title">{currentManga.name}</h3>
+                <span><b>Phát hành</b> ngày {currentManga.date}</span>
+                <p id="description" dangerouslySetInnerHTML={{ __html: currentManga.description }}></p>
+                <p className="uk-margin-remove-bottom">
+                  <span>Tìm kiếm nhanh:</span>{' '}
+                  <a id="fahasa" href={`//www.fahasa.com/catalogsearch/result/?q=${currentManga.name}`} target="_blank" rel='noreferrer'>FAHASA</a>{' / '}
+                  <a id="tiki" href={`//tiki.vn/search?q=${currentManga.name}`} target="_blank" rel='noreferrer'>Tiki</a>{' / '}
+                  <a id="shopee" href={`//shopee.vn/search?keyword=${currentManga.name}`} target="_blank" rel='noreferrer'>Shopee</a>
+                  </p>
               </div>
             </div>
           </div>

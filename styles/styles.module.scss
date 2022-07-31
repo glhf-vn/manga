@@ -8,6 +8,17 @@
     text-transform: capitalize;
 }
 
+.today {
+  width: 3rem;
+  height: 3rem;
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 9999;
+  background-color: #fbea11;
+  color: #000;
+}
+
 .flex {
     display: flex;
     @media (max-width: 768px) {
@@ -55,7 +66,7 @@
       max-width: unset;
     }
 
-    img {
+    object {
       width: 250px;
       height: 100%;
       animation-duration: 1.25s;
@@ -67,6 +78,7 @@
       background: linear-gradient(to right, #eeeeee 10%, #dddddd 18%, #eeeeee 33%);
       background-size: 800px 104px;
       position: relative;
+      object-fit: cover;
 
       @media (max-width: 768px) {
         width: 100%;
