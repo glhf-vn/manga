@@ -69,10 +69,22 @@ export default function Layout({ children, title, description }) {
                                 <a>Lịch phát hành</a>
                             </Link>
                         </li>
-                        <li className={router.pathname == "/license" ? "uk-active" : ""}>
-                            <Link href="/license" scroll={false}>
-                                <a>Bản quyền</a>
-                            </Link>
+                        <li className={router.pathname == ("/license" || "/vote") ? "uk-active" : ""}>
+                            <a href="#">Bản quyền</a>
+                            <div className="uk-navbar-dropdown">
+                                <ul className="uk-nav uk-navbar-dropdown-nav">
+                                    <li className={router.pathname == "/license" ? "uk-active" : ""}>
+                                        <Link href="/license" scroll={false}>
+                                            <a>Thông tin bản quyền</a>
+                                        </Link>
+                                    </li>
+                                    <li className={router.pathname == '/vote' ? "uk-active" : ""}>
+                                        <Link href="/vote" scroll={false}>
+                                            <a>Đề cử bản quyền</a>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            </div>
                         </li>
                         <li className={router.pathname.includes("listing") ? "uk-active" : ""}>
                             <a href="#">Truyện mới</a>
