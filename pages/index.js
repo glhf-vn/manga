@@ -205,10 +205,6 @@ export default function Home({ info, covers, googleApiKey }) {
             <a className="uk-alert-close" uk-close="true"></a>
             {info}
           </div>
-          {/* <div uk-alert="true">
-          <a className="uk-alert-close" uk-close="true"></a>
-          {info}
-        </div> */}
           <div className={styles.flex}>
             <div className={styles.flexBig}>
               <FullCalendar
