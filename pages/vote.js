@@ -70,7 +70,7 @@ function ListingApp() {
             <>
                 <UserInfo /><br />
                 <div uk-alert="true">
-                    Số lượng đề cử sẽ được cập nhật sau mỗi phút.
+                    Số lượng đề cử sẽ được cập nhật sau mỗi <strong>5</strong> phút.
                 </div>
                 <Listing />
                 <div uk-alert="true">
@@ -86,10 +86,7 @@ function ListingApp() {
             <>
                 <SignIn />
                 <div uk-alert="true">
-                    Bạn vui lòng đăng nhập để có thể bắt đầu đề cử! ╰(*°▽°*)╯
-                </div>
-                <div uk-alert="true">
-                    Số lượng đề cử sẽ được cập nhật sau mỗi phút.
+                    Bạn vui lòng đăng nhập để có thể bắt đầu đề cử! ╰(*°▽°*)╯ Khách chỉ có thể xem TOP 10 đề cử và không được cập nhật tự động.
                 </div>
                 <GuestListing />
                 <div uk-alert="true">
@@ -228,6 +225,7 @@ function Listing() {
                                             <div className="uk-card-badge uk-label uk-text-small uk-text-capitalize uk-margin-remove" style={{ top: 0, right: 0, borderRadius: '0 0 0 0.5rem' }}>{entry.format}</div>
                                             <h3 className="uk-card-title">{entry.name}</h3>
                                             <p className="uk-invisible@s uk-visible@m" dangerouslySetInnerHTML={{ __html: entry.description }}></p>
+                                            {entry.anilist && <a href={`//anilist.co/manga/${entry.anilist}`} target="_blank">AniList</a>}
                                         </div>
                                     </div>
                                 </div>
@@ -278,6 +276,7 @@ function GuestListing() {
                                     <div className="uk-card-body">
                                         <h3 className="uk-card-title">{entry.name}</h3>
                                         <p className="uk-invisible@s uk-visible@m" dangerouslySetInnerHTML={{ __html: entry.description }}></p>
+                                        {entry.anilist && <a href={`//anilist.co/manga/${entry.anilist}`} target="_blank">AniList</a>}
                                     </div>
                                 </div>
                             </div>
