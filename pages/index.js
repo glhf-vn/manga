@@ -7,7 +7,7 @@ import styles from '../styles/styles.module.scss'
 import banner from '../styles/banner.module.scss'
 import Layout from '../components/layout'
 import calendarsData from '../calendar.config'
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
 
 const pageTitle = "Lịch phát hành Manga"
 const pageDescription = "Xem lịch phát hành manga chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
@@ -60,7 +60,23 @@ export async function getStaticProps() {
 }
 
 export default function Home({ info, covers, googleApiKey }) {
+  // get entry info for modal
   const [ currentManga, changeCurrentManga ] = useState({})
+
+  const calendarSources = useMemo(() => {
+    let sources = []
+
+    sources = (calendarsData.map(publisher => {
+      return {
+        googleCalendarApiKey: googleApiKey,
+        googleCalendarId: publisher.id,
+        className: publisher.class,
+        color: publisher.color,
+      }
+    }))
+
+    return sources
+  }, [googleApiKey])
 
   function shareModal() {
     if (navigator.share) {
@@ -216,14 +232,7 @@ export default function Home({ info, covers, googleApiKey }) {
                 firstDay={1}
                 scrollTime='09:00:00'
                 viewClassNames="uk-margin-bottom"
-                eventSources={calendarsData.map(publisher => {
-                  return {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: publisher.id,
-                    className: publisher.class,
-                    color: publisher.color,
-                  }
-                })}
+                eventSources={calendarSources}
                 eventClick={openDetailedModal}
                 viewDidMount={injectHeader}
               />
@@ -272,14 +281,7 @@ export default function Home({ info, covers, googleApiKey }) {
                   year: 'numeric',
                   month: 'numeric'
                 }}
-                eventSources={calendarsData.map(publisher => {
-                  return {
-                    googleCalendarApiKey: googleApiKey,
-                    googleCalendarId: publisher.id,
-                    className: publisher.class + '-table',
-                    color: publisher.color,
-                  }
-                })}
+                eventSources={calendarSources}
                 eventClick={openDetailedModal}
               />
               <div className={`uk-margin-top ${styles.hideOnMobile} ${styles.iframe}`}>

@@ -9,16 +9,7 @@
   --wingsbooks-display: block;
   --hikari-display: block;
   --ichi-display: block;
-  --kim-display-list: table-row;
-  --tre-display-list: table-row;
-  --ipm-display-list: table-row;
-  --sky-display-list: table-row;
-  --tsuki-display-list: table-row;
-  --amak-display-list: table-row;
-  --uranix-display-list: table-row;
-  --wingsbooks-display-list: table-row;
-  --hikari-display-list: table-row;
-  --ichi-display-list: table-row;
+  --mori-display: block;
 }
 
 .kim {
@@ -61,44 +52,8 @@
   display: var(--ichi-display);
 }
 
-.kim-table {
-  display: var(--kim-display-list);
-}
-
-.tre-table {
-  display: var(--tre-display-list);
-}
-
-.ipm-table {
-  display: var(--ipm-display-list);
-}
-
-.sky-table {
-  display: var(--sky-display-list);
-}
-
-.tsuki-table {
-  display: var(--tsuki-display-list);
-}
-
-.amak-table {
-  display: var(--amak-display-list);
-}
-
-.uranix-table {
-  display: var(--uranix-display-list);
-}
-
-.wingsbooks-table {
-  display: var(--wingsbooks-display-list);
-}
-
-.hikari-table {
-  display: var(--hikari-display-list);
-}
-
-.ichi-table {
-  display: var(--ichi-display-list);
+.mori {
+  display: var(--mori-display);
 }
 
 .fc {
@@ -189,6 +144,10 @@
   &.hide {
     display: none;
   }
+}
+
+.fc-list-event-title {
+  width: 100%;
 }
 
 .fc-list-event-time {
