@@ -64,6 +64,18 @@ const calendarsData = [
     id: 'nnpmlfvmla0ph8r3udq168611g@group.calendar.google.com',
     class: 'mori',
     color: '#80cd29',
+  },
+  {
+    name: 'Nhã Nam',
+    id: 'q4pjmj9q1v7rs1vvge97jsunv8@group.calendar.google.com',
+    class: 'nhanam',
+    color: '#016600',
+  },
+  {
+    name: 'USAGI LIGHT NOVEL',
+    id: 'sna9noebgc1caiv8iqv4cdsvec@group.calendar.google.com',
+    class: 'usagi',
+    color: '#ce4251',
   }
 ]
 

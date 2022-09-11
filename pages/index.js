@@ -4,10 +4,12 @@ import listPlugin from '@fullcalendar/list'
 import googleCalendarPlugin from '@fullcalendar/google-calendar'
 import { google } from 'googleapis'
 import styles from '../styles/styles.module.scss'
-import banner from '../styles/banner.module.scss'
-import Layout from '../components/layout'
 import calendarsData from '../calendar.config'
 import { useState, useMemo } from 'react'
+
+import Layout from '../components/layout'
+import HeroBanner from '../components/Banner/Banner'
+import ScrollToToday from '../components/ScrollToToday/ScrollToToday'
 
 const pageTitle = "Lịch phát hành Manga"
 const pageDescription = "Xem lịch phát hành manga chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
@@ -61,45 +63,40 @@ export async function getStaticProps() {
 
 export default function Home({ info, covers, googleApiKey }) {
   // get entry info for modal
-  const [ currentManga, changeCurrentManga ] = useState({})
+  const [currentManga, changeCurrentManga] = useState({})
+  const [currentFilter, changeCurrentFilter] = useState([])
 
   const calendarSources = useMemo(() => {
     let sources = []
 
     sources = (calendarsData.map(publisher => {
-      return {
-        googleCalendarApiKey: googleApiKey,
-        googleCalendarId: publisher.id,
-        className: publisher.class,
-        color: publisher.color,
+      if (!(currentFilter.includes(publisher.class))) {
+        return {
+          googleCalendarApiKey: googleApiKey,
+          googleCalendarId: publisher.id,
+          className: publisher.class,
+          color: publisher.color,
+        }
       }
     }))
 
     return sources
-  }, [googleApiKey])
+  }, [currentFilter])
 
-  function shareModal() {
+  const shareModal = () => {
     if (navigator.share) {
       navigator.share({
         title: document.title,
         url: document.querySelector('link[rel=canonical]') ? document.querySelector('link[rel=canonical]').href : document.location.href,
       })
         .then(() => console.log('Chia sẻ thành công'))
-        .catch((error) => console.log('Lỗi khi chia sẻ', error));
+        .catch((error) => console.log('Lỗi khi chia sẻ', error))
     } else {
-      UIkit.modal('#modal-share').show();
+      UIkit.modal('#modal-share').show()
     }
   }
 
-  function scrollToToday() {
-    document.querySelector('.fc-day-today').scrollIntoView({
-      behavior: 'smooth',
-        block: 'end',
-        inline: 'nearest',
-    })
-  }
-
-  function openDetailedModal(eventInfo) {
+  const openDetailedModal = (eventInfo) => {
     const url = eventInfo.event.url
     const eventId = url.slice(url.indexOf("eid=") + ("eid=").length)
 
@@ -117,23 +114,17 @@ export default function Home({ info, covers, googleApiKey }) {
     UIkit.modal('#modal-detailed').show()
   }
 
-  function toggleSources(e) {
-    let targetVariable = "--" + e.target.dataset.selector + '-display';
-    let targetVariableList = "--" + e.target.dataset.selector + '-display-list';
-    let root = document.querySelector(':root');
-
-    if (e.target.checked == true) {
-      root.style.setProperty(targetVariable, 'block');
-      root.style.setProperty(targetVariableList, 'table-row');
+  const toggleSources = (name) => {
+    if (currentFilter.includes(name)) {
+      changeCurrentFilter(filters => filters.filter(value => !(value == name)))
     } else {
-      root.style.setProperty(targetVariable, 'none');
-      root.style.setProperty(targetVariableList, 'none');
+      changeCurrentFilter(filters => [...filters, name])
     }
   }
 
   // hot fix: the table head keeps making the content disappear
   function injectHeader() {
-    var calendarTable = document.getElementsByClassName('fc-scrollgrid-sync-table')[0];
+    const calendarTable = document.getElementsByClassName('fc-scrollgrid-sync-table')[0];
 
     calendarTable.insertAdjacentHTML("afterbegin", `
     <thead class="table-head-fix">
@@ -152,30 +143,9 @@ export default function Home({ info, covers, googleApiKey }) {
 
   return (
     <>
-      <div className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`} data-tabindex="-1" uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;">
-        <ul className="uk-slideshow-items">
-          {covers.map(cover => {
-            const [helper, title, copyright, image, textColor, classname] = cover
+      <HeroBanner items={covers}/>
 
-            return (
-              <>
-                <li>
-                  <img src={image} className={banner.image} objectfit="cover" alt={title} uk-img="target: !.uk-slideshow-items" />
-                  <div className={`${banner.content} ${classname}`}>
-                    <h2 className={`${banner.helper} uk-margin-remove`}>{helper}</h2>
-                    <h1 className={banner.title} style={{ color: textColor }}>{title}</h1>
-                    <span className={banner.copyright}>{copyright}</span>
-                  </div>
-                </li>
-              </>
-            )
-          })}
-        </ul>
-        <a className="uk-position-center-left uk-position-small uk-hidden-hover" href="#" uk-slidenav-previous="true" uk-slideshow-item="previous"></a>
-        <a className="uk-position-center-right uk-position-small uk-hidden-hover" href="#" uk-slidenav-next="true" uk-slideshow-item="next"></a>
-      </div>
-
-      <a uk-tooltip="Xem lịch hôm nay" onClick={() => scrollToToday()} className={`${styles.today} uk-icon-button`} uk-icon="icon: location; ratio: 1.5"></a>
+      <ScrollToToday/>
 
       <Layout title={pageTitle} description={pageDescription}>
         <div id="modal-detailed" uk-modal="true">
@@ -194,7 +164,7 @@ export default function Home({ info, covers, googleApiKey }) {
                   <a id="fahasa" href={`//www.fahasa.com/catalogsearch/result/?q=${currentManga.name}`} target="_blank" rel='noreferrer'>FAHASA</a>{' / '}
                   <a id="tiki" href={`//tiki.vn/search?q=${currentManga.name}`} target="_blank" rel='noreferrer'>Tiki</a>{' / '}
                   <a id="shopee" href={`//shopee.vn/search?keyword=${currentManga.name}`} target="_blank" rel='noreferrer'>Shopee</a>
-                  </p>
+                </p>
               </div>
             </div>
           </div>
@@ -266,7 +236,7 @@ export default function Home({ info, covers, googleApiKey }) {
                 {calendarsData.map(publisher => {
                   return <>
                     <label className={styles.checkbox}>
-                      <input type="checkbox" data-selector={publisher.class} defaultChecked onChange={toggleSources} />
+                      <input type="checkbox" data-selector={publisher.class} defaultChecked onChange={() => toggleSources(publisher.class)} />
                       <span style={{ backgroundColor: publisher.color, border: '1px solid ' + publisher.color }} className={`uk-label`}>{publisher.name}</span>
                     </label>
                   </>
