@@ -1,6 +1,5 @@
 // 1. Your custom variables and variable overwrites.
-$global-font-family: 'Inter',
-sans-serif;
+$global-font-family: "Inter", sans-serif;
 $global-link-color: inherit;
 $alert-background: #eaeaea;
 $inverse-navbar-nav-item-active-color: #0f6ecd;
@@ -52,10 +51,10 @@ $inverse-navbar-nav-item-active-color: #0f6ecd;
   overflow: hidden;
 }
 
-.uk-subnav-pill>.uk-active>a,
-.uk-subnav-pill>*>a,
-.uk-subnav-pill>*>a:hover,
-.uk-subnav-pill>*>a:focus {
+.uk-subnav-pill > .uk-active > a,
+.uk-subnav-pill > * > a,
+.uk-subnav-pill > * > a:hover,
+.uk-subnav-pill > * > a:focus {
   border-radius: 0.8rem;
 }
 

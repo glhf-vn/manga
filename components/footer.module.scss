@@ -4,21 +4,21 @@
 }
 
 .wrapper {
-    background-color: rgba(243, 244, 246);
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    text-align: center;
-  
-    @media (min-width: 768px) {
-      text-align: left;
-  
-      .contact,
-      .copyright {
-        display: inline;
-      }
-  
-      .contact {
-         float: right;
-      }
+  background-color: rgba(243, 244, 246);
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    text-align: left;
+
+    .contact,
+    .copyright {
+      display: inline;
     }
+
+    .contact {
+      float: right;
+    }
+  }
 }

@@ -1,7 +1,9 @@
 ## Getting Started
+
 Clone it first, then create an environment variable file contain two of these values: `GOOGLE_API_KEY` and `SHEET_ID`.
 
 Also, remember to install the packages first:
+
 ```bash
 yarn
 ```

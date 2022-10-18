@@ -1,43 +1,43 @@
 .main {
-    margin-top: 2rem;
-    margin-bottom: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 
 .title {
-    font-weight: 900;
-    text-transform: capitalize;
+  font-weight: 900;
+  text-transform: capitalize;
 }
 
 .flex {
-    display: flex;
-    @media (max-width: 768px) {
-      flex-direction: column-reverse;
+  display: flex;
+  @media (max-width: 768px) {
+    flex-direction: column-reverse;
+  }
+
+  .flexBig {
+    flex: 3;
+  }
+
+  .flexSmall {
+    flex: 1;
+    @media (min-width: 769px) {
+      margin-left: 50px;
     }
-  
-    .flexBig {
-      flex: 3;
-    }
-  
-    .flexSmall {
-      flex: 1;
-      @media (min-width: 769px) {
-        margin-left: 50px;
-      }
-      margin-bottom: 2rem;
-    }
+    margin-bottom: 2rem;
+  }
 }
 
 .social {
-    text-align: center;
-    margin-bottom: 1rem;
+  text-align: center;
+  margin-bottom: 1rem;
 }
 
 @keyframes imageLoading {
-  0%{
-      background-position: -468px 0
+  0% {
+    background-position: -468px 0;
   }
-  100%{
-      background-position: 468px 0
+  100% {
+    background-position: 468px 0;
   }
 }
 
@@ -64,7 +64,12 @@
       animation-name: imageLoading;
       animation-timing-function: linear;
       background: darkgray;
-      background: linear-gradient(to right, #eeeeee 10%, #dddddd 18%, #eeeeee 33%);
+      background: linear-gradient(
+        to right,
+        #eeeeee 10%,
+        #dddddd 18%,
+        #eeeeee 33%
+      );
       background-size: 800px 104px;
       position: relative;
       object-fit: cover;
