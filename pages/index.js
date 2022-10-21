@@ -1,11 +1,9 @@
 import { getEntries, getEntriesByGroup } from "../lib/calendar";
 
-import Link from "next/link";
-import Image from "next/image";
-
 import moment from "moment";
 import "moment/locale/vi";
 import Banner from "../components/Banner/Banner";
+import Header from "../components/Header/header";
 import Cover from "../components/Cover";
 moment.locale("vi");
 
@@ -37,23 +35,13 @@ export async function getStaticProps() {
 }
 
 export default function Home({ events, bannerEvents }) {
+  console.log(events);
+
   return (
     <>
-      <div className="fixed top-8 left-8 z-50">
-        <Link href="/" scroll={false}>
-          <a>
-            <Image
-              layout="fixed"
-              src="/img/logo_rzt5it.png"
-              width={64}
-              height={32}
-              alt="GLHF logo"
-            />
-          </a>
-        </Link>
-      </div>
+      <Header />
       <Banner items={bannerEvents} />
-      <div className="container mx-auto md:px-6">
+      <div className="container mx-auto px-6 mb-6">
         {events.map((single) => {
           return (
             <>

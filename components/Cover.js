@@ -8,7 +8,7 @@ export default function Cover({ name, id, isBanner = false }) {
       >
         <img
           className="rounded-2xl w-full h-auto"
-          src={`/api/og?name=${name}`}
+          src={`/api/og?name=${encodeURIComponent(name)}`}
           alt={name}
         />
       </object>

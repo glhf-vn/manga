@@ -19,21 +19,21 @@ export default function Banner({ items }) {
           pagination: false,
           breakpoints: {
             640: {
-              padding: "2rem",
+              padding: "1.5rem",
               gap: "1rem",
             },
           },
         }}
         className="pt-20 sm:pt-6"
       >
-        <div className="block sm:hidden px-8">
+        <div className="block sm:hidden px-6">
           <span className="text-3xl font-display font-bold">Phát hành</span>
         </div>
         <SplideTrack>
           {items.map((entry) => {
             return (
               <SplideSlide>
-                <div className="container flex flex-col-reverse sm:flex-row gap-6 sm:gap-12 mx-auto md:px-6 pb-12">
+                <div className="container flex flex-col-reverse sm:flex-row gap-6 sm:gap-12 mx-auto sm:px-6 pb-12">
                   <div className="sm:basis-72">
                     <Cover name={entry.name} id={entry.id} />
                   </div>
