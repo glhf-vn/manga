@@ -1,86 +1,20 @@
-// 1. Your custom variables and variable overwrites.
-$global-font-family: "Inter", sans-serif;
-$global-link-color: inherit;
-$alert-background: #eaeaea;
-$inverse-navbar-nav-item-active-color: #0f6ecd;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-// 2. Import default variables and available mixins.
-@import "uikit/variables-theme.scss";
-@import "uikit/mixins-theme.scss";
+@import "components/calendar";
 
-// 3. Your custom mixin overwrites.
-@mixin hook-base-link() {
-  font-weight: 500;
-}
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;700&family=Kanit:wght@400;700&display=swap");
 
-@mixin hook-base-link-hover() {
-  text-decoration: none;
-}
+/* splide */
+.splide__pagination {
+  @apply gap-1;
 
-@mixin hook-modal-dialog() {
-  border-radius: 0.8rem;
-  overflow: hidden;
-}
+  .splide__pagination__page {
+    @apply w-3 h-3 bg-gray-300 rounded-full;
 
-@mixin hook-button() {
-  border-radius: 999px;
-  transition: all 300ms ease;
-  padding: 0 18px;
-}
-
-@mixin hook-label() {
-  font-weight: bold;
-  border-radius: 0.2rem 0.5rem;
-  margin: 0.2rem 0.1rem;
-}
-
-@mixin hook-slideshow() {
-  img {
-    filter: brightness(0.35);
+    &.is-active {
+      @apply bg-gray-600;
+    }
   }
 }
-
-@mixin hook-card() {
-  border-radius: 0.8rem;
-  overflow: hidden;
-  transition: all 300ms ease;
-}
-
-@mixin hook-alert() {
-  border-radius: 0.8rem;
-  overflow: hidden;
-}
-
-.uk-subnav-pill > .uk-active > a,
-.uk-subnav-pill > * > a,
-.uk-subnav-pill > * > a:hover,
-.uk-subnav-pill > * > a:focus {
-  border-radius: 0.8rem;
-}
-
-@mixin hook-dropdown() {
-  @media (prefers-color-scheme: dark) {
-    background-color: #333;
-  }
-}
-
-@mixin hook-navbar-dropdown() {
-  @media (prefers-color-scheme: dark) {
-    background-color: #333;
-  }
-}
-
-@mixin hook-navbar-dropdown-nav-header() {
-  @media (prefers-color-scheme: dark) {
-    color: #e6e6e6;
-  }
-}
-
-// 4. Import UIkit.
-@import "uikit/uikit-theme";
-
-// 4.5. Import dark-mode.
-@import "dark";
-
-// 5. Import custom FullCalendar styles
-@import "calendar";

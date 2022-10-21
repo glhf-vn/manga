@@ -416,14 +416,6 @@ export default function Layout({ children, title, description }) {
           </div>
         </div>
       </footer>
-      <script
-        defer={true}
-        src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit.min.js"
-      ></script>
-      <script
-        defer={true}
-        src="https://cdn.jsdelivr.net/npm/uikit@3.7.1/dist/js/uikit-icons.min.js"
-      ></script>
     </div>
   );
 }

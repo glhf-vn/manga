@@ -1,52 +1,65 @@
+import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
+import moment from "moment";
+
+import "@splidejs/react-splide/css/core";
 import banner from "./banner.module.scss";
 
-export default function HeroBanner({ items }) {
-  return (
-    <div
-      className={`${banner.banner} uk-position-relative uk-visible-toggle uk-light`}
-      data-tabindex="-1"
-      uk-slideshow="min-height: 300; max-height: 350; animation: pull; autoplay: true;"
-    >
-      <ul className="uk-slideshow-items">
-        {items.map((cover) => {
-          const [helper, title, copyright, image, textColor, classname] = cover;
+import Cover from "../Cover";
 
-          return (
-            <>
-              <li>
-                <img
-                  src={image}
-                  className={banner.image}
-                  objectfit="cover"
-                  alt={title}
-                  uk-img="target: !.uk-slideshow-items"
-                />
-                <div className={`${banner.content} ${classname}`}>
-                  <h2 className={`${banner.helper} uk-margin-remove`}>
-                    {helper}
-                  </h2>
-                  <h1 className={banner.title} style={{ color: textColor }}>
-                    {title}
-                  </h1>
-                  <span className={banner.copyright}>{copyright}</span>
+export default function Banner({ items }) {
+  return (
+    <div className={`relative ${banner.container}`}>
+      <Splide
+        hasTrack={false}
+        options={{
+          autoplay: true,
+          interval: 5000,
+          rewind: true,
+          arrows: false,
+          pagination: false,
+          breakpoints: {
+            640: {
+              padding: "2rem",
+              gap: "1rem",
+            },
+          },
+        }}
+        className="pt-20 sm:pt-6"
+      >
+        <div className="block sm:hidden px-8">
+          <span className="text-3xl font-display font-bold">Phát hành</span>
+        </div>
+        <SplideTrack>
+          {items.map((entry) => {
+            return (
+              <SplideSlide>
+                <div className="container flex flex-col-reverse sm:flex-row gap-6 sm:gap-12 mx-auto md:px-6 pb-12">
+                  <div className="sm:basis-72">
+                    <Cover name={entry.name} id={entry.id} />
+                  </div>
+                  <div className="sm:pt-20 sm:flex-1">
+                    <span className="hidden sm:inline">Phát hành </span>
+                    <span className="text-xl sm:text-base">
+                      {moment(entry.date).format("dddd, DD/MM/yyyy")}
+                    </span>
+                    <h2 className="font-bold font-display text-4xl mt-3 mb-6 hidden sm:block">
+                      {entry.name}
+                    </h2>
+                    <p
+                      dangerouslySetInnerHTML={{ __html: entry.description }}
+                      className="hidden sm:block"
+                    ></p>
+                  </div>
                 </div>
-              </li>
-            </>
-          );
-        })}
-      </ul>
-      <a
-        className="uk-position-center-left uk-position-small uk-hidden-hover"
-        href="#"
-        uk-slidenav-previous="true"
-        uk-slideshow-item="previous"
-      ></a>
-      <a
-        className="uk-position-center-right uk-position-small uk-hidden-hover"
-        href="#"
-        uk-slidenav-next="true"
-        uk-slideshow-item="next"
-      ></a>
+              </SplideSlide>
+            );
+          })}
+        </SplideTrack>
+
+        <div className="splide__progress absolute top-[75%] left-0 right-0 -z-10 hidden sm:block">
+          <div className="splide__progress__bar bg-primary h-1" />
+        </div>
+      </Splide>
     </div>
   );
 }
