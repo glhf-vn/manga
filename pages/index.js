@@ -53,11 +53,11 @@ export default function Home({ events, bannerEvents }) {
         </Link>
       </div>
       <Banner items={bannerEvents} />
-      <div class="container mx-auto md:px-6">
+      <div className="container mx-auto md:px-6">
         {events.map((single) => {
           return (
             <>
-              <h1 class="font-display text-4xl font-bold mt-12 mb-3">
+              <h1 className="font-display text-4xl font-bold mt-12 mb-3">
                 Phát hành {single.date}
               </h1>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
