@@ -9,25 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@fullcalendar/common": "^5.11.3",
-    "@fullcalendar/daygrid": "^5.11.3",
-    "@fullcalendar/google-calendar": "^5.11.3",
-    "@fullcalendar/list": "^5.11.3",
-    "@fullcalendar/react": "^5.11.2",
     "@splidejs/react-splide": "^0.7.12",
-    "@vercel/og": "^0.0.19",
     "autoprefixer": "^10.4.12",
-    "babel-plugin-transform-require-ignore": "^0.1.1",
-    "dayjs": "^1.11.5",
-    "fs": "^0.0.1-security",
     "googleapis": "^108.0.0",
     "gray-matter": "^4.0.3",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "next": "12.3.1",
-    "next-compose-plugins": "^2.2.1",
-    "next-mdx-remote": "^4.0.0",
-    "next-transpile-modules": "^9.1.0",
     "nextjs-progressbar": "^0.0.16",
     "postcss": "^8.4.18",
     "react": "^18.2.0",
@@ -35,11 +23,9 @@
     "react-dom": "^18.2.0",
     "react-ga": "^3.3.1",
     "react-icons": "^4.6.0",
-    "reactfire": "^4.2.2",
     "sass": "^1.55.0",
     "swr": "^1.3.0",
-    "tailwindcss": "^3.1.8",
-    "xhr2": "^0.2.1"
+    "tailwindcss": "^3.1.8"
   },
   "devDependencies": {
     "eslint": "8.25.0",

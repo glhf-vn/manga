@@ -35,7 +35,7 @@ export default function Banner({ items }) {
               <SplideSlide>
                 <div className="container flex flex-col-reverse sm:flex-row gap-6 sm:gap-12 mx-auto sm:px-6 pb-12">
                   <div className="sm:basis-72">
-                    <Cover name={entry.name} id={entry.id} />
+                    <Cover entry={entry} hero={true} />
                   </div>
                   <div className="sm:pt-20 sm:flex-1">
                     <span className="hidden sm:inline">Phát hành </span>

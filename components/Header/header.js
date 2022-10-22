@@ -28,7 +28,7 @@ export default function Headers() {
         <Link href="/">
           <a class="bm-item">Lịch phát hành</a>
         </Link>
-        <Link href="/index1">
+        <Link href="/license">
           <a class="bm-item">Thông tin bản quyền</a>
         </Link>
       </Menu>

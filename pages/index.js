@@ -35,8 +35,6 @@ export async function getStaticProps() {
 }
 
 export default function Home({ events, bannerEvents }) {
-  console.log(events);
-
   return (
     <>
       <Header />
@@ -50,7 +48,7 @@ export default function Home({ events, bannerEvents }) {
               </h1>
               <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
                 {single.entries.map((entry) => {
-                  return <Cover name={entry.name} id={entry.id} />;
+                  return <Cover entry={entry} />;
                 })}
               </div>
             </>
