@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { stack as Menu } from "react-burger-menu";
+import { Squash as Hamburger } from "hamburger-react";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -45,10 +46,14 @@ export default function Headers() {
           </a>
         </Link>
       </div>
-      <div className="sm:hidden fixed top-6 right-6 z-[10000] h-[32px] w-[32px]">
-        <BsList
-          class="h-[32px] w-[32px]"
-          onClick={() => setMenuOpen(!menuOpen)}
+      <div className="sm:hidden fixed top-4 right-4 z-[10000]">
+        <Hamburger
+          size="24"
+          toggled={menuOpen}
+          toggle={() => setMenuOpen(!menuOpen)}
+          color={menuOpen ? "white" : "black"}
+          label="Mở menu"
+          rounded
         />
       </div>
       <div className="hidden sm:block absolute top-6 right-6 z-10">

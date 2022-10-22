@@ -13,6 +13,7 @@
     "autoprefixer": "^10.4.12",
     "googleapis": "^108.0.0",
     "gray-matter": "^4.0.3",
+    "hamburger-react": "^2.5.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.4",
     "next": "12.3.1",
