@@ -1,18 +1,18 @@
 export default function Cover({ entry, hero = false }) {
   return (
-    <div className="cursor-default shadow-md hover:shadow-lg transition-all ease-in-out h-fit rounded-2xl">
+    <div className="h-fit w-full">
       {entry.image ? (
         <img
-          className="rounded-2xl w-full h-auto"
+          className="h-auto w-full"
           src={entry.image}
           alt={entry.name}
           type="image/png"
         />
       ) : (
         <div
-          className={`bg-gray-300 text-gray-500 flex p-6 font-bold ${
+          className={`flex bg-gray-300 p-6 font-bold text-gray-500 ${
             hero ? "text-3xl" : "text-xl"
-          } font-display text-center aspect-[2/3] h-full w-full rounded-2xl items-center justify-center`}
+          } aspect-[2/3] h-full w-full items-center justify-center text-center font-display`}
         >
           <span>{entry.name}</span>
         </div>

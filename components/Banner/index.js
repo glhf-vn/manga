@@ -26,23 +26,25 @@ export default function Banner({ items }) {
         }}
         className="pt-20 sm:pt-6"
       >
-        <div className="block sm:hidden px-6">
-          <span className="text-3xl font-display font-bold">Phát hành</span>
+        <div className="block px-6 sm:hidden">
+          <span className="font-display text-3xl font-bold">Phát hành</span>
         </div>
         <SplideTrack>
           {items.map((entry) => {
             return (
               <SplideSlide>
-                <div className="container flex flex-col-reverse sm:flex-row gap-6 sm:gap-12 mx-auto sm:px-6 pb-12">
-                  <div className="sm:basis-72">
+                <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6">
+                  <div className="cursor-default overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg sm:basis-72">
                     <Cover entry={entry} hero={true} />
                   </div>
-                  <div className="sm:pt-20 sm:flex-1">
+                  <div className="sm:flex-1 sm:pt-20">
                     <span className="hidden sm:inline">Phát hành </span>
                     <span className="text-xl sm:text-base">
-                      {moment(entry.date).format("dddd, DD/MM/yyyy")}
+                      <span className="capitalize">
+                        {moment(entry.date).format("dddd, DD/MM/yyyy")}
+                      </span>
                     </span>
-                    <h2 className="font-bold font-display text-4xl mt-3 mb-6 hidden sm:block">
+                    <h2 className="mt-3 mb-6 hidden font-display text-4xl font-bold sm:block">
                       {entry.name}
                     </h2>
                     <p
@@ -57,7 +59,7 @@ export default function Banner({ items }) {
         </SplideTrack>
 
         <div className="splide__progress absolute top-[75%] left-0 right-0 -z-10 hidden sm:block">
-          <div className="splide__progress__bar bg-primary h-1" />
+          <div className="splide__progress__bar h-1 bg-primary" />
         </div>
       </Splide>
     </div>

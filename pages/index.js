@@ -2,10 +2,14 @@ import { getEntries, getEntriesByGroup } from "../lib/calendar";
 
 import moment from "moment";
 import "moment/locale/vi";
-import Banner from "../components/Banner/Banner";
-import Header from "../components/Header/header";
+import Banner from "../components/Banner";
 import Cover from "../components/Cover";
+import Layout from "../components/layout";
+import ReactModal from "react-modal";
+import { useState } from "react";
 moment.locale("vi");
+
+import { BsXLg } from "react-icons/bs";
 
 const pageTitle = "Lịch phát hành Manga";
 const pageDescription =
@@ -14,16 +18,10 @@ const pageDescription =
 export async function getStaticProps() {
   const events = await getEntriesByGroup();
 
-  Date.prototype.addDays = function (days) {
-    let date = new Date(this.valueOf());
-    date.setDate(date.getDate() + days);
-    return date;
-  };
-
-  const startDate = new Date();
-  const endDate = startDate.addDays(3);
-
-  const bannerEvents = await getEntries(startDate, endDate);
+  const bannerEvents = await getEntries(
+    moment().toISOString(),
+    moment().add(3, "days").toISOString()
+  );
 
   return {
     props: {
@@ -35,26 +33,74 @@ export async function getStaticProps() {
 }
 
 export default function Home({ events, bannerEvents }) {
+  const [modalData, setModalData] = useState({
+    name: null,
+    description: null,
+  });
+  const [modalOpen, setModalOpen] = useState(false);
+
   return (
-    <>
-      <Header />
+    <Layout>
+      <ReactModal
+        isOpen={modalOpen}
+        onRequestClose={() => setModalOpen(false)}
+        className={"EntryModal__Content"}
+        overlayClassName={{
+          base: "EntryModal__Overlay",
+          afterOpen: "EntryModal__Overlay--after-open",
+          beforeClose: "EntryModal__Overlay--before-close",
+        }}
+        shouldCloseOnOverlayClick={true}
+        shouldCloseOnEsc={true}
+        closeTimeoutMS={150}
+      >
+        <BsXLg
+          className="absolute top-3 right-3 cursor-pointer text-lg text-gray-500"
+          onClick={() => setModalOpen(false)}
+        />
+        <div className="flex flex-col sm:flex-row">
+          <div class="w-full max-w-[250px]">
+            <Cover entry={modalData} />
+          </div>
+          <div className="flex-1 p-6 sm:pt-9">
+            <h2 className="mb-3 font-display text-2xl font-bold lg:text-3xl">
+              {modalData.name}
+            </h2>
+            {modalData.description}
+          </div>
+        </div>
+      </ReactModal>
       <Banner items={bannerEvents} />
-      <div className="container mx-auto px-6 mb-6">
+      <div className="container mx-auto mb-6 px-6">
         {events.map((single) => {
+          let date = moment(single.date);
+
           return (
             <>
-              <h1 className="font-display text-4xl font-bold mt-12 mb-3">
-                Phát hành {single.date}
+              <h1 className="mt-12 mb-3 font-display text-4xl font-bold">
+                <span className="capitalize">
+                  {moment(date).format("dddd - DD/MM")}
+                </span>
               </h1>
-              <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-6">
+              <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
                 {single.entries.map((entry) => {
-                  return <Cover entry={entry} />;
+                  return (
+                    <a
+                      onClick={() => {
+                        setModalData(entry);
+                        setModalOpen(true);
+                      }}
+                      className="cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg"
+                    >
+                      <Cover entry={entry} />
+                    </a>
+                  );
                 })}
               </div>
             </>
           );
         })}
       </div>
-    </>
+    </Layout>
   );
 }

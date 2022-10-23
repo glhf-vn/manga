@@ -29,12 +29,37 @@
 
 /* Wrapper for item list */
 .bm-item-list {
-  @apply pt-20 text-gray-200 font-display text-2xl;
+  @apply pt-20 text-gray-200;
 }
 
 /* Individual item */
-.bm-item {
-  @apply block mb-3;
+a.bm-item,
+.bm-list-heading {
+  @apply mb-3 block font-display text-2xl;
+}
+
+.bm-list-item {
+  @apply mb-3 block font-display text-xl font-light text-zinc-400;
+}
+
+.bm-sublist-heading {
+  @apply mb-2 block;
+}
+
+.bm-sublist {
+  @apply pl-2;
+}
+
+.bm-sublist-item {
+  @apply mb-2 block;
+}
+
+.bm-divider {
+  @apply my-6;
+}
+
+.bm-social {
+  @apply flex gap-3 text-xl text-zinc-400;
 }
 
 /* Styling of overlay */
