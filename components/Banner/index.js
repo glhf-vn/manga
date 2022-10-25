@@ -32,7 +32,7 @@ export default function Banner({ items }) {
         <SplideTrack>
           {items.map((entry) => {
             return (
-              <SplideSlide>
+              <SplideSlide key={entry.id}>
                 <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6">
                   <div className="cursor-default overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg sm:basis-72">
                     <Cover entry={entry} hero={true} />

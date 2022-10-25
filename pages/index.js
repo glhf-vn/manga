@@ -66,7 +66,13 @@ export default function Home({ events, bannerEvents }) {
             <h2 className="mb-3 font-display text-2xl font-bold lg:text-3xl">
               {modalData.name}
             </h2>
-            {modalData.description}
+            <p>
+              <b>Phát hành</b>: {modalData.publisher}
+            </p>
+            <p>
+              <b>Giá dự kiến</b>: {modalData.price ?? <>chưa có</>}
+            </p>
+            <p className="mt-3">{modalData.description}</p>
           </div>
         </div>
       </ReactModal>
