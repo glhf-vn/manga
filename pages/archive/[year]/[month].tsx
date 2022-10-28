@@ -212,6 +212,7 @@ export default function Home({ events, bannerEvents }) {
           defaultValue={calendarsData}
           closeMenuOnSelect={false}
           closeMenuOnScroll={false}
+          isSearchable={false}
           isMulti
           onChange={(values: any[]) => {
             setFilterData(values.map((value) => value.value));
@@ -227,7 +228,9 @@ export default function Home({ events, bannerEvents }) {
                 <span className="capitalize">
                   {date.toFormat("EEEE - dd/MM")}
                 </span>
-                {date < today && <Badge status="success">Đã phát hành!</Badge>}
+                {date < today && (
+                  <Badge className="bg-green-200">Đã phát hành!</Badge>
+                )}
               </div>
               <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
                 {single.entries.map((entry) => {

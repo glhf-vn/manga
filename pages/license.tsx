@@ -60,6 +60,7 @@ export default function License({ licenses }) {
             defaultValue={[]}
             closeMenuOnSelect={false}
             closeMenuOnScroll={false}
+            isSearchable={false}
             isMulti
             onChange={(values: any[]) => {
               setTypeFilter(values.map((value) => value.value));
@@ -75,6 +76,7 @@ export default function License({ licenses }) {
             defaultValue={[]}
             closeMenuOnSelect={false}
             closeMenuOnScroll={false}
+            isSearchable={false}
             isMulti
             onChange={(values: any[]) => {
               setPublisherFilter(values.map((value) => value.value));
