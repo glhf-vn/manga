@@ -1,26 +1,32 @@
-import { getEntries, getEntriesByGroup } from "../lib/calendar";
+import { getEntries, getEntriesByGroup } from "../../../lib/calendar";
 
-import moment from "moment";
-import "moment/locale/vi";
-import Banner from "../components/Banner";
-import Cover from "../components/Cover";
-import Layout from "../components/layout";
+import { DateTime } from "luxon";
+import Banner from "../../../components/Banner";
+import Cover from "../../../components/Cover";
+import Layout from "../../../components/layout";
 import ReactModal from "react-modal";
 import { useState } from "react";
-moment.locale("vi");
+import { Kanit } from "@next/font/google";
 
 import { BsXLg } from "react-icons/bs";
+import ArchiveList from "../../../components/ArchiveList";
 
-const pageTitle = "Lịch phát hành Manga";
-const pageDescription =
-  "Xem lịch phát hành manga chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!";
+const kanit = Kanit({
+  weight: "700",
+});
 
-export async function getStaticProps() {
-  const events = await getEntriesByGroup();
+export async function getServerSideProps({ params }) {
+  const startDate = DateTime.fromObject({
+    year: params.year,
+    month: params.month,
+  }).startOf("month");
+  const endDate = startDate.endOf("month");
+
+  const events = await getEntriesByGroup(startDate.toISO(), endDate.toISO());
 
   const bannerEvents = await getEntries(
-    moment().toISOString(),
-    moment().add(3, "days").toISOString()
+    DateTime.now().toISO(),
+    DateTime.now().plus({ days: 3 }).toISO()
   );
 
   return {
@@ -28,14 +34,15 @@ export async function getStaticProps() {
       events,
       bannerEvents,
     },
-    revalidate: 7200,
   };
 }
 
 export default function Home({ events, bannerEvents }) {
   const [modalData, setModalData] = useState({
     name: null,
-    description: null,
+    publisher: null,
+    price: null,
+    date: null,
   });
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -53,41 +60,47 @@ export default function Home({ events, bannerEvents }) {
         shouldCloseOnOverlayClick={true}
         shouldCloseOnEsc={true}
         closeTimeoutMS={150}
+        ariaHideApp={false}
       >
         <BsXLg
           className="absolute top-3 right-3 cursor-pointer text-lg text-gray-500"
           onClick={() => setModalOpen(false)}
         />
         <div className="flex flex-col sm:flex-row">
-          <div class="w-full max-w-[250px]">
+          <div className="w-full sm:max-w-[250px]">
             <Cover entry={modalData} />
           </div>
           <div className="flex-1 p-6 sm:pt-9">
-            <h2 className="mb-3 font-display text-2xl font-bold lg:text-3xl">
+            <h2 className={`mb-3 text-2xl lg:text-3xl ${kanit.className}`}>
               {modalData.name}
             </h2>
-            <p>
-              <b>Phát hành</b>: {modalData.publisher}
+            <span>
+              <b>Ngày phát hành</b>:{" "}
+              {DateTime.fromISO(modalData.date)
+                .setLocale("vi")
+                .toLocaleString(DateTime.DATE_SHORT)}
+            </span>
+            <p className="mt-3">
+              <b>Nhà xuất bản/phát hành</b>: {modalData.publisher}
+              <br />
+              <b>Giá dự kiến</b>: {modalData.price}
             </p>
-            <p>
-              <b>Giá dự kiến</b>: {modalData.price ?? <>chưa có</>}
-            </p>
-            <p className="mt-3">{modalData.description}</p>
           </div>
         </div>
       </ReactModal>
       <Banner items={bannerEvents} />
       <div className="container mx-auto mb-6 px-6">
+        <ArchiveList />
         {events.map((single) => {
-          let date = moment(single.date);
+          const date = DateTime.fromISO(single.date).setLocale("vi");
 
           return (
-            <>
-              <h1 className="mt-12 mb-3 font-display text-4xl font-bold">
+            <div id={date.get("day").toString()} key={date.valueOf()}>
+              <h2 className={`mt-12 mb-3 text-xl font-bold`}>
                 <span className="capitalize">
-                  {moment(date).format("dddd - DD/MM")}
+                  {date.toFormat("EEEE - dd/MM")}
                 </span>
-              </h1>
+              </h2>
               <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
                 {single.entries.map((entry) => {
                   return (
@@ -96,14 +109,15 @@ export default function Home({ events, bannerEvents }) {
                         setModalData(entry);
                         setModalOpen(true);
                       }}
-                      className="cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg"
+                      className="h-fit cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg"
+                      key={entry.id}
                     >
                       <Cover entry={entry} />
                     </a>
                   );
                 })}
               </div>
-            </>
+            </div>
           );
         })}
       </div>

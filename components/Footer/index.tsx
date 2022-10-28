@@ -1,5 +1,3 @@
-import moment from "moment";
-
 import { BsHeartFill } from "react-icons/bs";
 
 export default function Footer() {

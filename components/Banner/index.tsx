@@ -1,10 +1,15 @@
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
-import moment from "moment";
+import { DateTime } from "luxon";
+import { Kanit } from "@next/font/google";
 
 import "@splidejs/react-splide/css/core";
 import banner from "./banner.module.scss";
 
 import Cover from "../Cover";
+
+const kanit = Kanit({
+  weight: "700",
+});
 
 export default function Banner({ items }) {
   return (
@@ -27,7 +32,7 @@ export default function Banner({ items }) {
         className="pt-20 sm:pt-6"
       >
         <div className="block px-6 sm:hidden">
-          <span className="font-display text-3xl font-bold">Phát hành</span>
+          <span className={`text-3xl ${kanit.className}`}>Phát hành</span>
         </div>
         <SplideTrack>
           {items.map((entry) => {
@@ -41,16 +46,21 @@ export default function Banner({ items }) {
                     <span className="hidden sm:inline">Phát hành </span>
                     <span className="text-xl sm:text-base">
                       <span className="capitalize">
-                        {moment(entry.date).format("dddd, DD/MM/yyyy")}
+                        {DateTime.fromISO(entry.date)
+                          .setLocale("vi")
+                          .toFormat("EEEE, D")}
                       </span>
                     </span>
-                    <h2 className="mt-3 mb-6 hidden font-display text-4xl font-bold sm:block">
+                    <h2
+                      className={`mt-3 mb-6 hidden text-4xl sm:block ${kanit.className}`}
+                    >
                       {entry.name}
                     </h2>
-                    <p
-                      dangerouslySetInnerHTML={{ __html: entry.description }}
-                      className="hidden sm:block"
-                    ></p>
+                    <p className="hidden sm:block">
+                      <b>Nhà xuất bản/phát hành</b>: {entry.publisher}
+                      <br />
+                      <b>Giá dự kiến</b>: {entry.price}
+                    </p>
                   </div>
                 </div>
               </SplideSlide>

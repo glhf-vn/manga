@@ -35,11 +35,11 @@
 /* Individual item */
 a.bm-item,
 .bm-list-heading {
-  @apply mb-3 block font-display text-2xl;
+  @apply mb-3 block text-2xl;
 }
 
 .bm-list-item {
-  @apply mb-3 block font-display text-xl font-light text-zinc-400;
+  @apply mb-3 block text-xl text-zinc-400;
 }
 
 .bm-sublist-heading {

@@ -20,10 +20,6 @@ module.exports = {
         primary: "#fbea11",
         secondary: "#f8b60b",
       },
-      fontFamily: {
-        sans: ["Inter", "sans-serif"],
-        display: ["Kanit"],
-      },
     },
   },
   plugins: [],
