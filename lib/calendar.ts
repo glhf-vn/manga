@@ -3,9 +3,7 @@ import _ from "lodash";
 import Papa from "papaparse";
 import { DateTime } from "luxon";
 
-import calendarsData from "../calendar.config";
-
-const now = new Date();
+import calendarsData from "../data/calendars.json";
 
 // get first date and last date of month
 const firstDay = DateTime.now().startOf("month").toISO();
@@ -16,7 +14,8 @@ const googleApiKey = process.env.GOOGLE_API_KEY;
 // get entries by lists, sorted from oldest to newest
 export async function getEntries(
   start: string = firstDay,
-  end: string = lastDay
+  end: string = lastDay,
+  calendars: any[] = calendarsData
 ) {
   const calendar = google.calendar({
     version: "v3",
@@ -26,7 +25,7 @@ export async function getEntries(
   let events = [];
 
   await Promise.all(
-    calendarsData.map(async (publisher) => {
+    calendars.map(async (publisher) => {
       const res = await calendar.events.list({
         calendarId: publisher.id,
         timeMin: start,
@@ -47,7 +46,8 @@ export async function getEntries(
         events.push({
           name: entry.summary,
           id: entry.id,
-          publisher: publisher.name,
+          publisher: publisher.label,
+          publisherValue: publisher.value,
           date: entry.start.date,
           description: data[2] ?? null,
           image: data[1] ?? null,

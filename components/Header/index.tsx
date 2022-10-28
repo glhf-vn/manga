@@ -120,7 +120,7 @@ export default function Headers() {
           <li>
             <Link
               href="/"
-              className={router.pathname.includes("/") ? "text-secondary" : ""}
+              className={router.pathname == "/" ? "text-secondary" : ""}
             >
               Lịch phát hành
             </Link>

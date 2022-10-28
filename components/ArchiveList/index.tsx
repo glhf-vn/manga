@@ -66,13 +66,14 @@ export default function ArchiveList() {
 
   return (
     <div
-      className={`flex items-center gap-3 text-xl sm:text-2xl lg:text-3xl ${kanit.className}`}
+      className={`flex items-center gap-3 text-lg sm:text-xl md:text-2xl lg:text-3xl ${kanit.className}`}
     >
       <span>Lịch phát hành</span>
       <Select
         styles={selectCustomStyles}
         options={options}
         onChange={(e) => router.push(`/archive/${e.value}`)}
+        isSearchable={false}
         value={
           isEmpty(path)
             ? {

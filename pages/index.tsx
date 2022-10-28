@@ -1,21 +1,27 @@
 import { getEntries, getEntriesByGroup } from "../lib/calendar";
 
 import { DateTime } from "luxon";
+import chroma from "chroma-js";
+import { useState } from "react";
+
+import ReactModal from "react-modal";
+import Select from "react-select";
+import { Kanit } from "@next/font/google";
+import { BsFilter, BsXLg } from "react-icons/bs";
+
+import Badge from "../components/Badge";
+import ArchiveList from "../components/ArchiveList";
 import Banner from "../components/Banner";
 import Cover from "../components/Cover";
 import Layout from "../components/layout";
-import ReactModal from "react-modal";
-import { useState } from "react";
-import { Kanit } from "@next/font/google";
 
-import { BsXLg } from "react-icons/bs";
-import ArchiveList from "../components/ArchiveList";
+import calendarsData from "../data/calendars.json";
 
 const kanit = Kanit({
   weight: "700",
 });
 
-export async function getStaticProps() {
+export async function getStaticProps({ params }) {
   const events = await getEntriesByGroup();
 
   const bannerEvents = await getEntries(
@@ -40,6 +46,88 @@ export default function Home({ events, bannerEvents }) {
     date: null,
   });
   const [modalOpen, setModalOpen] = useState(false);
+
+  const [filterData, setFilterData] = useState(
+    calendarsData.map((value) => value.value)
+  );
+  const [filterOpen, setFilterOpen] = useState(false);
+
+  const colourStyles = {
+    container: (provided) => ({
+      ...provided,
+      display: filterOpen ? "block" : "none",
+    }),
+    control: (provided, { isFocused }) => ({
+      ...provided,
+      border: "none",
+      background: "none",
+      borderRadius: "none",
+      boxShadow: "unset",
+    }),
+    valueContainer: (provided) => ({
+      ...provided,
+      padding: "unset",
+    }),
+    option: (provided, { data, isDisabled, isFocused, isSelected }) => {
+      const color = chroma(data.color);
+      return {
+        ...provided,
+        backgroundColor: isDisabled
+          ? undefined
+          : isSelected
+          ? data.color
+          : isFocused
+          ? color.alpha(0.1).css()
+          : undefined,
+        color: isDisabled
+          ? "#ccc"
+          : isSelected
+          ? chroma.contrast(color, "white") > 2
+            ? "white"
+            : "black"
+          : data.color,
+        cursor: isDisabled ? "not-allowed" : "default",
+
+        ":active": {
+          ...provided[":active"],
+          backgroundColor: !isDisabled
+            ? isSelected
+              ? data.color
+              : color.alpha(0.3).css()
+            : undefined,
+        },
+      };
+    },
+    multiValue: (styles, { data }) => {
+      const color = chroma(data.color);
+      return {
+        ...styles,
+        borderRadius: "0.5rem",
+        backgroundColor: color.alpha(0.1).css(),
+      };
+    },
+    multiValueLabel: (styles, { data }) => ({
+      ...styles,
+      color: data.color,
+    }),
+    multiValueRemove: (styles, { data }) => ({
+      ...styles,
+      color: data.color,
+      ":hover": {
+        backgroundColor: data.color,
+        color: "white",
+      },
+    }),
+    menu: (provided) => ({
+      ...provided,
+      borderRadius: "1rem",
+      overflow: "hidden",
+    }),
+    menuList: (provided) => ({
+      ...provided,
+      padding: 0,
+    }),
+  };
 
   return (
     <Layout>
@@ -85,31 +173,55 @@ export default function Home({ events, bannerEvents }) {
       </ReactModal>
       <Banner items={bannerEvents} />
       <div className="container mx-auto mb-6 px-6">
-        <ArchiveList />
+        <div className="flex justify-between">
+          <ArchiveList />
+          <button
+            className="rounded-2xl bg-zinc-200 px-2 text-xl sm:text-2xl lg:text-3xl"
+            onClick={() => setFilterOpen(!filterOpen)}
+          >
+            <BsFilter />
+          </button>
+        </div>
+        <Select
+          className="mt-3"
+          styles={colourStyles}
+          options={calendarsData}
+          defaultValue={calendarsData}
+          closeMenuOnSelect={false}
+          closeMenuOnScroll={false}
+          isMulti
+          onChange={(values: any[]) => {
+            setFilterData(values.map((value) => value.value));
+          }}
+        />
         {events.map((single) => {
           let date = DateTime.fromISO(single.date).setLocale("vi");
+          let today = DateTime.now();
 
           return (
-            <div id={date.toFormat("dd/MM")} key={date.valueOf()}>
-              <h2 className={`mt-12 mb-3 text-xl font-bold`}>
+            <div key={date.valueOf()}>
+              <div className={`mt-12 mb-3 flex items-center text-xl font-bold`}>
                 <span className="capitalize">
                   {date.toFormat("EEEE - dd/MM")}
                 </span>
-              </h2>
+                {date < today && <Badge status="success">Đã phát hành!</Badge>}
+              </div>
               <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
                 {single.entries.map((entry) => {
-                  return (
-                    <a
-                      onClick={() => {
-                        setModalData(entry);
-                        setModalOpen(true);
-                      }}
-                      className="h-fit cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg"
-                      key={entry.id}
-                    >
-                      <Cover entry={entry} />
-                    </a>
-                  );
+                  if (filterData.includes(entry.publisherValue)) {
+                    return (
+                      <a
+                        onClick={() => {
+                          setModalData(entry);
+                          setModalOpen(true);
+                        }}
+                        className="h-fit cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg"
+                        key={entry.id}
+                      >
+                        <Cover entry={entry} />
+                      </a>
+                    );
+                  }
                 })}
               </div>
             </div>

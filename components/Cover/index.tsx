@@ -4,11 +4,17 @@ const kanit = Kanit({
   weight: "700",
 });
 
-export default function Cover({ entry, hero = false }) {
+export default function Cover({ entry, hero = false, fit = "fit" }) {
   return (
-    <div className="h-fit w-full">
+    <div className={`${fit == "h-fit" ? "h-fit" : "h-full"} w-full`}>
       {entry.image ? (
-        <img className="h-auto w-full" src={entry.image} alt={entry.name} />
+        <img
+          className={`${
+            fit == "h-fit" ? "h-fit" : "h-full object-cover"
+          } w-full`}
+          src={entry.image}
+          alt={entry.name}
+        />
       ) : (
         <div
           className={`flex bg-zinc-200 p-6 text-zinc-500 ${
