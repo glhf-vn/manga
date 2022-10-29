@@ -5,7 +5,8 @@ import { useState } from "react";
 
 import Select from "react-select";
 import { Kanit } from "@next/font/google";
-import { BsFilter, BsXLg } from "react-icons/bs";
+import { BsFilter } from "react-icons/bs";
+import { Dialog } from "@headlessui/react";
 
 import Layout from "@layouts/layout";
 
@@ -59,44 +60,40 @@ export default function Home({ events, bannerEvents }) {
   return (
     <Layout>
       {/* Entry details modal */}
-      <Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
-        <BsXLg
-          className="absolute top-3 right-3 cursor-pointer text-lg text-gray-500"
-          onClick={() => setModalOpen(false)}
-        />
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <div className="flex flex-col sm:flex-row">
           <div className="w-full sm:max-w-[250px]">
             <Cover entry={modalData} />
           </div>
           <div className="flex-1 p-6 sm:pt-9">
-            <h2 className={`mb-3 text-2xl lg:text-3xl ${kanit.className}`}>
+            <Dialog.Title
+              className={`mb-3 text-2xl lg:text-3xl ${kanit.className}`}
+            >
               {modalData.name}
-            </h2>
-            <span>
+            </Dialog.Title>
+            <Dialog.Description>
               <b>Ngày phát hành</b>:{" "}
               {DateTime.fromISO(modalData.date)
                 .setLocale("vi")
                 .toLocaleString(DateTime.DATE_SHORT)}
-            </span>
-            <p className="mt-3">
+              <br />
+              <br />
               <b>Nhà xuất bản/phát hành</b>: {modalData.publisher}
               <br />
               <b>Giá dự kiến</b>: {modalData.price}
-            </p>
+            </Dialog.Description>
           </div>
         </div>
       </Modal>
 
       {/* Filter modal */}
-      <Modal isOpen={filterOpen} onRequestClose={() => setFilterOpen(false)}>
-        <BsXLg
-          className="absolute top-3 right-3 cursor-pointer text-lg text-gray-500"
-          onClick={() => setFilterOpen(false)}
-        />
+      <Modal isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
         <div>
-          <h2 className={`m-6 text-xl ${kanit.className}`}>
+          <Dialog.Title
+            className={`m-6 text-2xl lg:text-3xl ${kanit.className}`}
+          >
             Lọc theo nhà xuất bản/phát hành
-          </h2>
+          </Dialog.Title>
           <Select
             className="m-6 mb-48"
             styles={colourStyles}
@@ -147,7 +144,7 @@ export default function Home({ events, bannerEvents }) {
                           setModalData(entry);
                           setModalOpen(true);
                         }}
-                        className="h-fit cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg"
+                        className="h-fit cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all duration-150 ease-linear hover:shadow-lg"
                         key={entry.id}
                       >
                         <Cover entry={entry} />

@@ -5,7 +5,7 @@ import { useState } from "react";
 
 import Select from "react-select";
 import { Kanit } from "@next/font/google";
-import { BsFilter, BsXLg } from "react-icons/bs";
+import { BsFilter } from "react-icons/bs";
 
 import Layout from "@layouts/layout";
 
@@ -94,11 +94,7 @@ export default function Home({ events, bannerEvents }) {
   return (
     <Layout>
       {/* Entry details modal */}
-      <Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
-        <BsXLg
-          className="absolute top-3 right-3 cursor-pointer text-lg text-gray-500"
-          onClick={() => setModalOpen(false)}
-        />
+      <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <div className="flex flex-col sm:flex-row">
           <div className="w-full sm:max-w-[250px]">
             <Cover entry={modalData} />
@@ -123,11 +119,7 @@ export default function Home({ events, bannerEvents }) {
       </Modal>
 
       {/* Filter modal */}
-      <Modal isOpen={filterOpen} onRequestClose={() => setFilterOpen(false)}>
-        <BsXLg
-          className="absolute top-3 right-3 cursor-pointer text-lg text-gray-500"
-          onClick={() => setFilterOpen(false)}
-        />
+      <Modal isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
         <div>
           <h2 className={`m-6 text-xl ${kanit.className}`}>
             Lọc theo nhà xuất bản/phát hành

@@ -26,6 +26,8 @@ export default function Banner({ items }) {
           interval: 5000,
           rewind: true,
           pagination: false,
+          speed: 500,
+          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
           breakpoints: {
             640: {
               arrows: false,
