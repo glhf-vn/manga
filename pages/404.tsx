@@ -1,6 +1,7 @@
-import Layout from "../components/layout";
 import Link from "next/link";
 import { Kanit } from "@next/font/google";
+
+import Layout from "@layouts/layout";
 
 const kanit = Kanit({
   weight: "700",

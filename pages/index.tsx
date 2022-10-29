@@ -1,27 +1,28 @@
-import { getEntries, getEntriesByGroup } from "../lib/calendar";
+import { getEntries, getEntriesByGroup } from "@lib/calendar";
 
 import { DateTime } from "luxon";
-import chroma from "chroma-js";
 import { useState } from "react";
 
-import ReactModal from "react-modal";
 import Select from "react-select";
 import { Kanit } from "@next/font/google";
 import { BsFilter, BsXLg } from "react-icons/bs";
 
-import Badge from "../components/Badge";
-import ArchiveList from "../components/ArchiveList";
-import Banner from "../components/Banner";
-import Cover from "../components/Cover";
-import Layout from "../components/layout";
+import Layout from "@layouts/layout";
 
-import calendarsData from "../data/calendars.json";
+import Badge from "@components/Badge";
+import ArchiveList from "@components/ArchiveList";
+import Banner from "@components/Banner";
+import Cover from "@components/Cover";
+import Modal from "@components/Modal";
+
+import calendarsData from "@data/calendars.json";
+import { colourStyles } from "@data/indexFilterStyles";
 
 const kanit = Kanit({
   weight: "700",
 });
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps() {
   const events = await getEntriesByGroup();
 
   const bannerEvents = await getEntries(
@@ -39,112 +40,26 @@ export async function getStaticProps({ params }) {
 }
 
 export default function Home({ events, bannerEvents }) {
+  // Set the open state & data for the modal
   const [modalData, setModalData] = useState({
     name: null,
     publisher: null,
     price: null,
     date: null,
+    image: null,
   });
   const [modalOpen, setModalOpen] = useState(false);
 
+  // Set the open state & filter data
   const [filterData, setFilterData] = useState(
     calendarsData.map((value) => value.value)
   );
   const [filterOpen, setFilterOpen] = useState(false);
 
-  const colourStyles = {
-    container: (provided) => ({
-      ...provided,
-      display: filterOpen ? "block" : "none",
-    }),
-    control: (provided, { isFocused }) => ({
-      ...provided,
-      border: "none",
-      background: "none",
-      borderRadius: "none",
-      boxShadow: "unset",
-    }),
-    valueContainer: (provided) => ({
-      ...provided,
-      padding: "unset",
-    }),
-    option: (provided, { data, isDisabled, isFocused, isSelected }) => {
-      const color = chroma(data.color);
-      return {
-        ...provided,
-        backgroundColor: isDisabled
-          ? undefined
-          : isSelected
-          ? data.color
-          : isFocused
-          ? color.alpha(0.1).css()
-          : undefined,
-        color: isDisabled
-          ? "#ccc"
-          : isSelected
-          ? chroma.contrast(color, "white") > 2
-            ? "white"
-            : "black"
-          : data.color,
-        cursor: isDisabled ? "not-allowed" : "default",
-
-        ":active": {
-          ...provided[":active"],
-          backgroundColor: !isDisabled
-            ? isSelected
-              ? data.color
-              : color.alpha(0.3).css()
-            : undefined,
-        },
-      };
-    },
-    multiValue: (styles, { data }) => {
-      const color = chroma(data.color);
-      return {
-        ...styles,
-        borderRadius: "0.5rem",
-        backgroundColor: color.alpha(0.1).css(),
-      };
-    },
-    multiValueLabel: (styles, { data }) => ({
-      ...styles,
-      color: data.color,
-    }),
-    multiValueRemove: (styles, { data }) => ({
-      ...styles,
-      color: data.color,
-      ":hover": {
-        backgroundColor: data.color,
-        color: "white",
-      },
-    }),
-    menu: (provided) => ({
-      ...provided,
-      borderRadius: "1rem",
-      overflow: "hidden",
-    }),
-    menuList: (provided) => ({
-      ...provided,
-      padding: 0,
-    }),
-  };
-
   return (
     <Layout>
-      <ReactModal
-        isOpen={modalOpen}
-        onRequestClose={() => setModalOpen(false)}
-        className={"EntryModal__Content"}
-        overlayClassName={{
-          base: "EntryModal__Overlay",
-          afterOpen: "EntryModal__Overlay--after-open",
-          beforeClose: "EntryModal__Overlay--before-close",
-        }}
-        shouldCloseOnOverlayClick={true}
-        shouldCloseOnEsc={true}
-        closeTimeoutMS={150}
-        ariaHideApp={false}
-      >
+      {/* Entry details modal */}
+      <Modal isOpen={modalOpen} onRequestClose={() => setModalOpen(false)}>
         <BsXLg
           className="absolute top-3 right-3 cursor-pointer text-lg text-gray-500"
           onClick={() => setModalOpen(false)}
@@ -170,8 +85,36 @@ export default function Home({ events, bannerEvents }) {
             </p>
           </div>
         </div>
-      </ReactModal>
+      </Modal>
+
+      {/* Filter modal */}
+      <Modal isOpen={filterOpen} onRequestClose={() => setFilterOpen(false)}>
+        <BsXLg
+          className="absolute top-3 right-3 cursor-pointer text-lg text-gray-500"
+          onClick={() => setFilterOpen(false)}
+        />
+        <div>
+          <h2 className={`m-6 text-xl ${kanit.className}`}>
+            Lọc theo nhà xuất bản/phát hành
+          </h2>
+          <Select
+            className="m-6 mb-48"
+            styles={colourStyles}
+            options={calendarsData}
+            defaultValue={calendarsData}
+            closeMenuOnSelect={false}
+            closeMenuOnScroll={false}
+            isSearchable={false}
+            isMulti
+            onChange={(values: any[]) => {
+              setFilterData(values.map((value) => value.value));
+            }}
+          />
+        </div>
+      </Modal>
+
       <Banner items={bannerEvents} />
+
       <div className="container mx-auto mb-6 px-6">
         <div className="flex justify-between">
           <ArchiveList />
@@ -182,19 +125,7 @@ export default function Home({ events, bannerEvents }) {
             <BsFilter />
           </button>
         </div>
-        <Select
-          className="mt-3"
-          styles={colourStyles}
-          options={calendarsData}
-          defaultValue={calendarsData}
-          closeMenuOnSelect={false}
-          closeMenuOnScroll={false}
-          isSearchable={false}
-          isMulti
-          onChange={(values: any[]) => {
-            setFilterData(values.map((value) => value.value));
-          }}
-        />
+
         {events.map((single) => {
           let date = DateTime.fromISO(single.date).setLocale("vi");
           let today = DateTime.now();
@@ -205,9 +136,7 @@ export default function Home({ events, bannerEvents }) {
                 <span className="capitalize">
                   {date.toFormat("EEEE - dd/MM")}
                 </span>
-                {date < today && (
-                  <Badge className="bg-green-200">Đã phát hành!</Badge>
-                )}
+                {date < today && <Badge intent="success">Đã phát hành!</Badge>}
               </div>
               <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
                 {single.entries.map((entry) => {

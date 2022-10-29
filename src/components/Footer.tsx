@@ -12,15 +12,13 @@ export default function Footer() {
       behavior: "smooth",
     });
   };
+
   return (
     <div className="container mx-auto mt-6 p-6">
       <hr className="mb-6 w-24 border-4 border-zinc-400" />
       <div className="flex justify-between">
         <div>
-          <ul
-            className="flex gap-3 text-2xl text-zinc-400"
-            style={{ display: "flex" }}
-          >
+          <ul className="flex gap-3 text-2xl text-zinc-400">
             <a
               href="https://facebook.com/mangaglhf/"
               className="transition-colors duration-100 ease-linear hover:text-[#1877f2]"

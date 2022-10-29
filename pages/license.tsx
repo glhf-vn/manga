@@ -1,15 +1,19 @@
-import { getSheetsContent } from "../lib/sheets";
-import { selectStyles } from "../data/selectStyles";
-import Layout from "../components/layout";
+import { getSheetsContent } from "@lib/sheets";
+
 import { useState } from "react";
-import Hero from "../components/Hero";
-import Cover from "../components/Cover";
 import Select from "react-select";
-import Badge from "../components/Badge";
+import { Flipper, Flipped } from "react-flip-toolkit";
 import { Kanit } from "@next/font/google";
 
-import typeFilterOptions from "../data/bookTypes.json";
-import publisherFilterOptions from "../data/calendars.json";
+import Layout from "@layouts/layout";
+
+import Header from "@components/Header";
+import Cover from "@components/Cover";
+import Badge from "@components/Badge";
+
+import typeFilterOptions from "@data/bookTypes.json";
+import publisherFilterOptions from "@data/calendars.json";
+import { selectStyles } from "@data/selectStyles";
 
 const kanit = Kanit({
   weight: "400",
@@ -46,7 +50,7 @@ export default function License({ licenses }) {
 
   return (
     <Layout>
-      <Hero>Thông tin bản quyền</Hero>
+      <Header>Thông tin bản quyền</Header>
       <div className="container mx-auto flex flex-col gap-6 px-6 md:flex-row-reverse">
         <div className="basis-56 lg:basis-72">
           <h2 className={`text-2xl ${kanit.className}`}>Bộ lọc</h2>
@@ -83,60 +87,64 @@ export default function License({ licenses }) {
             }}
           />
         </div>
-        <ul className="grid flex-1 grid-cols-1 gap-6 md:grid-cols-2">
-          {licenses.map((manga) => {
-            return (
-              <li key={manga.name}>
-                <div className="grid grid-cols-3 overflow-hidden rounded-2xl bg-zinc-100 shadow-md transition-all ease-in-out hover:shadow-lg">
-                  <div className="col-span-1">
-                    <Cover entry={manga} />
-                  </div>
-                  <div className="relative col-span-2 flex flex-col justify-between">
-                    <Badge className="absolute top-1 right-1">
-                      {manga.type}
-                    </Badge>
-                    <div className="p-6">
-                      <span className="text-sm">
-                        {
-                          publisherFilterOptions.find(
-                            (e) => e.value == manga.publisher
-                          ).label
-                        }
-                      </span>
-                      <h3 className={`${kanit.className} text-2xl`}>
-                        {manga.name}
-                      </h3>
-                    </div>
-                    {(manga.source || manga.anilist) && (
-                      <div className="border-t border-zinc-200 px-3 text-right text-zinc-600">
-                        {manga.source && (
-                          <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href={manga.source}
-                            className="inline-block px-3 py-3"
-                          >
-                            Nguồn
-                          </a>
-                        )}
-                        {manga.anilist && (
-                          <a
-                            target="_blank"
-                            rel="noreferrer"
-                            href={`//anilist.co/manga/${manga.anilist}`}
-                            className="inline-block px-3 py-3"
-                          >
-                            AniList
-                          </a>
+        <Flipper flipKey={licenses.length} className="flex-1">
+          <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
+            {licenses.map((manga) => {
+              return (
+                <Flipped key={manga.name} flipId={manga.name}>
+                  <li>
+                    <div className="grid grid-cols-3 overflow-hidden rounded-2xl bg-zinc-100 shadow-md transition-all ease-in-out hover:shadow-lg">
+                      <div className="col-span-1">
+                        <Cover entry={manga} fit="full" />
+                      </div>
+                      <div className="relative col-span-2 flex flex-col justify-between">
+                        <div className="absolute top-1 right-1">
+                          <Badge>{manga.type}</Badge>
+                        </div>
+                        <div className="p-6">
+                          <span className="text-sm">
+                            {
+                              publisherFilterOptions.find(
+                                (e) => e.value == manga.publisher
+                              ).label
+                            }
+                          </span>
+                          <h3 className={`${kanit.className} text-2xl`}>
+                            {manga.name}
+                          </h3>
+                        </div>
+                        {(manga.source || manga.anilist) && (
+                          <div className="border-t border-zinc-200 px-3 text-right text-zinc-600">
+                            {manga.source && (
+                              <a
+                                target="_blank"
+                                rel="noreferrer"
+                                href={manga.source}
+                                className="inline-block px-3 py-3"
+                              >
+                                Nguồn
+                              </a>
+                            )}
+                            {manga.anilist && (
+                              <a
+                                target="_blank"
+                                rel="noreferrer"
+                                href={`//anilist.co/manga/${manga.anilist}`}
+                                className="inline-block px-3 py-3"
+                              >
+                                AniList
+                              </a>
+                            )}
+                          </div>
                         )}
                       </div>
-                    )}
-                  </div>
-                </div>
-              </li>
-            );
-          })}
-        </ul>
+                    </div>
+                  </li>
+                </Flipped>
+              );
+            })}
+          </ul>
+        </Flipper>
       </div>
     </Layout>
   );

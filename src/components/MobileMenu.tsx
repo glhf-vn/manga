@@ -1,13 +1,10 @@
-import Link from "next/link";
-import Image from "next/image";
-import { slide as Menu } from "react-burger-menu";
-import { Squash as Hamburger } from "hamburger-react";
-import { Kanit } from "@next/font/google";
-
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
-
 import { BsFacebook, BsTwitter, BsDiscord, BsGithub } from "react-icons/bs";
+import { slide as Menu } from "react-burger-menu";
+import { useRouter } from "next/router";
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import { Kanit } from "@next/font/google";
+import { Squash as Hamburger } from "hamburger-react";
 
 const kanit = Kanit({
   weight: "400",
@@ -17,7 +14,7 @@ const kanitLight = Kanit({
   weight: "300",
 });
 
-export default function Headers() {
+export default function MobileMenu() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const router = useRouter();
@@ -28,7 +25,6 @@ export default function Headers() {
 
   return (
     <>
-      {/* mobile menu */}
       <Menu
         isOpen={menuOpen}
         onStateChange={(state) => setMenuOpen(state.isOpen)}
@@ -92,17 +88,7 @@ export default function Headers() {
           </a>
         </ul>
       </Menu>
-      {/* logo */}
-      <div className="fixed top-6 left-6 z-[1200]">
-        <Link href="/" scroll={false}>
-          <Image
-            src="/img/logo_rzt5it.png"
-            width={64}
-            height={32}
-            alt="GLHF logo"
-          />
-        </Link>
-      </div>
+
       {/* open menu on mobile */}
       <div className="fixed top-4 right-4 z-[1200] sm:hidden">
         <Hamburger
@@ -113,32 +99,6 @@ export default function Headers() {
           label="Mở menu"
           rounded
         />
-      </div>
-      {/* desktop menu */}
-      <div className="absolute top-6 right-6 z-10 hidden sm:block">
-        <ul className="flex gap-6 font-bold text-gray-500">
-          <li>
-            <Link
-              href="/"
-              className={router.pathname == "/" ? "text-secondary" : ""}
-            >
-              Lịch phát hành
-            </Link>
-          </li>
-          <li>
-            <Link
-              href="/license"
-              className={
-                router.pathname.includes("license") ? "text-secondary" : ""
-              }
-            >
-              Bản quyền
-            </Link>
-          </li>
-          <li>
-            <a>Truyện mới</a>
-          </li>
-        </ul>
       </div>
     </>
   );
