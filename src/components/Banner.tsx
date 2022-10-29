@@ -1,11 +1,11 @@
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
 import { DateTime } from "luxon";
 import { Kanit } from "@next/font/google";
+import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 
 import "@splidejs/react-splide/css/core";
-import banner from "./banner.module.scss";
 
-import Cover from "../Cover";
+import Cover from "@components/Cover";
 
 const kanit = Kanit({
   weight: "700",
@@ -13,17 +13,22 @@ const kanit = Kanit({
 
 export default function Banner({ items }) {
   return (
-    <div className={`relative ${banner.container}`}>
+    <div
+      className="relative"
+      style={{
+        background: "linear-gradient(to bottom, #f4f4f5 75%, transparent 75%)",
+      }}
+    >
       <Splide
         hasTrack={false}
         options={{
           autoplay: true,
           interval: 5000,
           rewind: true,
-          arrows: false,
           pagination: false,
           breakpoints: {
             640: {
+              arrows: false,
               padding: "1.5rem",
               gap: "1rem",
             },
@@ -67,6 +72,15 @@ export default function Banner({ items }) {
             );
           })}
         </SplideTrack>
+
+        <div className="splide__arrows absolute top-1/2 left-0 right-0 mx-6 flex -translate-y-1/2 transform justify-between">
+          <button className="splide__arrow splide__arrow--prev text-4xl text-zinc-500">
+            <BsChevronCompactLeft />
+          </button>
+          <button className="splide__arrow splide__arrow--next text-4xl text-zinc-500">
+            <BsChevronCompactRight />
+          </button>
+        </div>
 
         <div className="splide__progress absolute top-[75%] left-0 right-0 -z-10 hidden sm:block">
           <div className="splide__progress__bar h-1 bg-primary" />
