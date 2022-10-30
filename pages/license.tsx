@@ -3,7 +3,7 @@ import { getSheetsContent } from "@lib/sheets";
 import { useState } from "react";
 import Select from "react-select";
 import { Flipper, Flipped } from "react-flip-toolkit";
-import { Kanit } from "@next/font/google";
+import { NextSeo } from "next-seo";
 
 import Layout from "@layouts/Layout";
 
@@ -15,10 +15,6 @@ import Badge from "@components/Badge";
 import typeFilterOptions from "@data/bookTypes.json";
 import publisherFilterOptions from "@data/calendars.json";
 import { selectStyles } from "@data/selectStyles";
-
-const kanit = Kanit({
-  weight: "400",
-});
 
 const sheetId = process.env.SHEET_ID;
 
@@ -51,10 +47,15 @@ export default function License({ licenses }) {
 
   return (
     <Layout>
+      <NextSeo
+        title="Thông tin bản quyền"
+        description="Xem thông tin manga/light-novel được mua bản quyền, cập nhật thường xuyên!"
+      />
+
       <Header>Thông tin bản quyền</Header>
       <div className="container mx-auto flex flex-col gap-6 px-6 md:flex-row-reverse">
         <div className="basis-56 lg:basis-72">
-          <h2 className={`text-2xl ${kanit.className}`}>Bộ lọc</h2>
+          <h2 className="font-kanit text-2xl">Bộ lọc</h2>
           <br />
           <h3>Loại truyện</h3>
           <Select
@@ -111,7 +112,7 @@ export default function License({ licenses }) {
                                 ).label
                               }
                             </span>
-                            <h3 className={`${kanit.className} text-2xl`}>
+                            <h3 className="font-kanit text-2xl">
                               {manga.name}
                             </h3>
                           </div>

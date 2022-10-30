@@ -1,15 +1,10 @@
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
 import { DateTime } from "luxon";
-import { Kanit } from "@next/font/google";
 import { BsChevronCompactLeft, BsChevronCompactRight } from "react-icons/bs";
 
 import "@splidejs/react-splide/css/core";
 
 import Cover from "@components/Cover";
-
-const kanit = Kanit({
-  weight: "700",
-});
 
 export default function Banner({ items }) {
   return (
@@ -39,7 +34,7 @@ export default function Banner({ items }) {
         className="pt-20 sm:pt-6"
       >
         <div className="block px-6 sm:hidden">
-          <span className={`text-3xl ${kanit.className}`}>Phát hành</span>
+          <span className="font-kanit text-3xl font-bold">Phát hành</span>
         </div>
         <SplideTrack>
           {items.map((entry) => {
@@ -58,9 +53,7 @@ export default function Banner({ items }) {
                           .toFormat("EEEE, D")}
                       </span>
                     </span>
-                    <h2
-                      className={`mt-3 mb-6 hidden text-4xl sm:block ${kanit.className}`}
-                    >
+                    <h2 className="mt-3 mb-6 hidden font-kanit text-4xl font-bold sm:block">
                       {entry.name}
                     </h2>
                     <p className="hidden sm:block">

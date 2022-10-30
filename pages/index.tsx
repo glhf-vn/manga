@@ -4,9 +4,9 @@ import { DateTime } from "luxon";
 import { useState } from "react";
 
 import Select from "react-select";
-import { Kanit } from "@next/font/google";
 import { BsFilter } from "react-icons/bs";
 import { Dialog } from "@headlessui/react";
+import { NextSeo } from "next-seo";
 
 import Layout from "@layouts/Layout";
 
@@ -19,10 +19,6 @@ import Modal from "@components/Modal";
 
 import calendarsData from "@data/calendars.json";
 import { colourStyles } from "@data/indexFilterStyles";
-
-const kanit = Kanit({
-  weight: "700",
-});
 
 export async function getStaticProps() {
   const events = await getEntriesByGroup();
@@ -60,6 +56,11 @@ export default function Home({ events, bannerEvents }) {
 
   return (
     <Layout>
+      <NextSeo
+        title="Lịch phát hành"
+        description="Xem lịch phát hành chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
+      />
+
       {/* Entry details modal */}
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <div className="flex flex-col sm:flex-row">
@@ -67,9 +68,7 @@ export default function Home({ events, bannerEvents }) {
             <Cover entry={modalData} />
           </div>
           <div className="flex-1 p-6 sm:pt-9">
-            <Dialog.Title
-              className={`mb-3 text-2xl lg:text-3xl ${kanit.className}`}
-            >
+            <Dialog.Title className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
               {modalData.name}
             </Dialog.Title>
             <Dialog.Description>
@@ -90,9 +89,7 @@ export default function Home({ events, bannerEvents }) {
       {/* Filter modal */}
       <Modal isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
         <div>
-          <Dialog.Title
-            className={`m-6 text-2xl lg:text-3xl ${kanit.className}`}
-          >
+          <Dialog.Title className="m-6 font-kanit text-2xl font-bold lg:text-3xl">
             Lọc theo nhà xuất bản/phát hành
           </Dialog.Title>
           <Select
@@ -146,6 +143,7 @@ export default function Home({ events, bannerEvents }) {
                           setModalOpen(true);
                         }}
                         key={entry.id}
+                        clickable={true}
                       >
                         <Cover entry={entry} />
                       </Card>

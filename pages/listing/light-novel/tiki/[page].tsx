@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `https://tiki.vn/api/personalish/v1/blocks/listings?limit=24&category=1084&page=${params.page}&sort=newest&seller=1&urlKey=truyen-tranh`,
+    `https://tiki.vn/api/personalish/v1/blocks/listings?limit=24&category=7358&page=${params.page}&sort=newest&seller=1&urlKey=truyen-tranh`,
     {
       headers: {
         "User-Agent":
@@ -42,7 +42,7 @@ export async function getStaticProps({ params }) {
   };
 }
 
-export default function TikiMangaListing({ params, products }) {
+export default function TikiLNListing({ params, products }) {
   const router = useRouter();
   const path = router.query;
   const currencyFormatter = new Intl.NumberFormat("vi-VN", {
@@ -54,7 +54,7 @@ export default function TikiMangaListing({ params, products }) {
 
   return (
     <Layout>
-      <Header>Manga/Tiki Trading</Header>
+      <Header>Light-novel/Tiki Trading</Header>
       <div className="container mx-auto px-6">
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => (

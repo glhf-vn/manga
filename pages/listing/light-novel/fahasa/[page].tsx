@@ -22,7 +22,7 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   const res = await fetch(
-    `https://tiki.vn/api/personalish/v1/blocks/listings?limit=24&category=1084&page=${params.page}&sort=newest&seller=1&urlKey=truyen-tranh`,
+    `https://fahasa.com/fahasa_catalog/product/loadproducts?category_id=5981&currentPage=${params.page}&limit=24&order=created_at&series_type=0`,
     {
       headers: {
         "User-Agent":
@@ -36,13 +36,13 @@ export async function getStaticProps({ params }) {
   return {
     props: {
       params,
-      products: products.data,
+      products: products.product_list,
     },
     revalidate: 360, // In seconds
   };
 }
 
-export default function TikiMangaListing({ params, products }) {
+export default function FahasaLNListing({ params, products }) {
   const router = useRouter();
   const path = router.query;
   const currencyFormatter = new Intl.NumberFormat("vi-VN", {
@@ -54,50 +54,46 @@ export default function TikiMangaListing({ params, products }) {
 
   return (
     <Layout>
-      <Header>Manga/Tiki Trading</Header>
+      <Header>Light-novel/FAHASA.com</Header>
       <div className="container mx-auto px-6">
         <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
           {products.map((product) => (
-            <li key={product.id} className="relative">
+            <li key={product.product_id} className="relative">
               <Card>
-                <a
-                  href={`https://tiki.vn/${product.url_key}.html`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href={product.product_url} target="_blank" rel="noreferrer">
                   {product.discount != 0 && (
                     <div className="absolute top-1 right-1">
-                      <Badge intent="success">
-                        -
-                        {Math.round(
-                          (product.discount / product.original_price) * 100
-                        )}
-                        %
-                      </Badge>
+                      <Badge intent="success">-{product.discount}%</Badge>
                     </div>
                   )}
                   <Image
-                    src={product.thumbnail_url}
-                    alt={product.name}
+                    src={product.image_src}
+                    alt={product.product_name}
                     width={280}
                     height={280}
                     className="h-full w-full"
                   />
                   <div className="p-6 font-bold">
-                    <h3>{product.name}</h3>
+                    <h3>{product.product_name}</h3>
                     <p className="mt-3">
-                      {product.original_price > product.price ? (
+                      {product.product_price > product.product_finalprice ? (
                         <>
                           <span className="text-green-400">
-                            {currencyFormatter.format(product.price)}
+                            {currencyFormatter.format(
+                              product.product_finalprice * 1000
+                            )}
                           </span>{" "}
                           <span className="text-sm text-red-400 line-through">
-                            {currencyFormatter.format(product.original_price)}
+                            {currencyFormatter.format(
+                              product.product_price * 1000
+                            )}
                           </span>
                         </>
                       ) : (
                         <span className="text-primary">
-                          {currencyFormatter.format(product.price)}
+                          {currencyFormatter.format(
+                            product.product_finalprice * 1000
+                          )}
                         </span>
                       )}
                     </p>

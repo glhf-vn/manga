@@ -1,10 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
-import { Kanit } from "@next/font/google";
-
-const kanit = Kanit({
-  weight: "700",
-});
 
 const imageStyles = cva("w-full h-full", {
   variants: {
@@ -15,7 +10,7 @@ const imageStyles = cva("w-full h-full", {
 });
 
 const placeholderStyles = cva(
-  `flex bg-zinc-200 p-6 text-zinc-500 aspect-[2/3] h-full w-full items-center justify-center text-center ${kanit.className}`,
+  `flex bg-zinc-200 p-6 text-zinc-500 aspect-[2/3] h-full w-full items-center justify-center text-center font-kanit font-bold`,
   {
     variants: {
       hero: {

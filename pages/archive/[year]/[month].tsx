@@ -4,8 +4,8 @@ import { DateTime } from "luxon";
 import { useState } from "react";
 
 import Select from "react-select";
-import { Kanit } from "@next/font/google";
 import { BsFilter } from "react-icons/bs";
+import { NextSeo } from "next-seo";
 
 import Layout from "@layouts/Layout";
 
@@ -18,10 +18,6 @@ import Modal from "@components/Modal";
 
 import calendarsData from "@data/calendars.json";
 import { colourStyles } from "@data/indexFilterStyles";
-
-const kanit = Kanit({
-  weight: "700",
-});
 
 export async function getStaticPaths() {
   const lastMonth = DateTime.now().minus({ month: 1 });
@@ -69,13 +65,14 @@ export async function getStaticProps({ params }) {
 
   return {
     props: {
+      params,
       events,
       bannerEvents,
     },
   };
 }
 
-export default function Home({ events, bannerEvents }) {
+export default function Home({ params, events, bannerEvents }) {
   // Set the open state & data for the modal
   const [modalData, setModalData] = useState({
     name: null,
@@ -94,6 +91,11 @@ export default function Home({ events, bannerEvents }) {
 
   return (
     <Layout>
+      <NextSeo
+        title={`Lịch phát hành tháng ${params.month}`}
+        description="Xem lịch phát hành chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
+      />
+
       {/* Entry details modal */}
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <div className="flex flex-col sm:flex-row">
@@ -101,7 +103,7 @@ export default function Home({ events, bannerEvents }) {
             <Cover entry={modalData} />
           </div>
           <div className="flex-1 p-6 sm:pt-9">
-            <h2 className={`mb-3 text-2xl lg:text-3xl ${kanit.className}`}>
+            <h2 className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
               {modalData.name}
             </h2>
             <span>
@@ -122,7 +124,7 @@ export default function Home({ events, bannerEvents }) {
       {/* Filter modal */}
       <Modal isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
         <div>
-          <h2 className={`m-6 text-xl ${kanit.className}`}>
+          <h2 className="m-6 font-kanit text-xl font-bold">
             Lọc theo nhà xuất bản/phát hành
           </h2>
           <Select
@@ -160,7 +162,7 @@ export default function Home({ events, bannerEvents }) {
 
           return (
             <div key={date.valueOf()}>
-              <div className={`mt-12 mb-3 flex items-center text-xl font-bold`}>
+              <div className="mt-12 mb-3 flex items-center text-xl font-bold">
                 <span className="capitalize">
                   {date.toFormat("EEEE - dd/MM")}
                 </span>
@@ -176,6 +178,7 @@ export default function Home({ events, bannerEvents }) {
                           setModalOpen(true);
                         }}
                         key={entry.id}
+                        clickable={true}
                       >
                         <Cover entry={entry} />
                       </Card>

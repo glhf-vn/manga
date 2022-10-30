@@ -1,13 +1,8 @@
-import { Kanit } from "@next/font/google";
 import { type ReactNode } from "react";
 
-const kanit = Kanit({
-  weight: "700",
-});
-
 const containerStyles =
-  "mb-12 flex h-96 items-center justify-center bg-zinc-100";
-const titleStyles = `container px-6 text-center text-4xl ${kanit.className}`;
+  "mb-12 flex h-96 items-center justify-center bg-zinc-100 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)]";
+const titleStyles = `container px-6 text-center text-4xl font-kanit font-bold`;
 
 export interface HeaderProps {
   children: ReactNode;

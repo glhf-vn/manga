@@ -1,15 +1,10 @@
 import { DateTime } from "luxon";
 import { useRouter } from "next/router";
-import { Kanit } from "@next/font/google";
 import { isEmpty } from "lodash";
 
 import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
 import { BsChevronDown } from "react-icons/bs";
-
-const kanit = Kanit({
-  weight: "700",
-});
 
 export default function ArchiveList() {
   const lastMonth = DateTime.now().minus({ month: 1 });
@@ -37,9 +32,7 @@ export default function ArchiveList() {
   const pagedMonth = isEmpty(path) ? thisMonth.get("month") : path.month;
 
   return (
-    <div
-      className={`flex items-center gap-3 text-lg sm:text-xl md:text-2xl lg:text-3xl ${kanit.className}`}
-    >
+    <div className="flex items-center gap-3 font-kanit text-lg font-bold sm:text-xl md:text-2xl lg:text-3xl">
       <span>Lịch phát hành</span>
       <Menu as="div" className="relative">
         <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2">

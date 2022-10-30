@@ -2,7 +2,7 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { type HTMLProps, type ReactNode } from "react";
 
 const cardStyles = cva(
-  "h-fit cursor-pointer overflow-hidden rounded-2xl shadow-md bg-zinc-100",
+  "h-fit overflow-hidden rounded-2xl shadow-md bg-zinc-100",
   {
     variants: {
       intent: {
@@ -13,12 +13,15 @@ const cardStyles = cva(
       },
       hoverable: {
         true: "hover:shadow-lg transition-shadow duration-150 ease-linear",
-        false: "",
+      },
+      clickable: {
+        true: "cursor-pointer",
       },
     },
     defaultVariants: {
       intent: "primary",
       hoverable: true,
+      clickable: false,
     },
   }
 );
@@ -32,11 +35,12 @@ export interface CardProps
 export default function Card({
   intent,
   hoverable,
+  clickable,
   children,
   ...props
 }: CardProps): JSX.Element {
   return (
-    <div className={cardStyles({ intent, hoverable })} {...props}>
+    <div className={cardStyles({ intent, hoverable, clickable })} {...props}>
       {children}
     </div>
   );
