@@ -1,19 +1,18 @@
 import { Dialog, Transition } from "@headlessui/react";
-import { Fragment } from "react";
+import { Fragment, type HTMLProps, type ReactNode } from "react";
 import { BsXLg } from "react-icons/bs";
 
-export interface ModalProps {
-  children: React.ReactNode;
+export interface ModalProps extends HTMLProps<HTMLDivElement> {
+  children: ReactNode;
   isOpen: boolean;
-  onClose: () => void;
+  onClose(): void;
 }
 
 export default function Modal({
   children,
   isOpen,
   onClose,
-  ...props
-}: ModalProps) {
+}: ModalProps): JSX.Element {
   return (
     <Transition show={isOpen} as={Fragment}>
       <Dialog onClose={onClose}>

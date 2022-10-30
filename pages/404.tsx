@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Kanit } from "@next/font/google";
 
-import Layout from "@layouts/layout";
+import Layout from "@layouts/Layout";
 
 const kanit = Kanit({
   weight: "700",
@@ -18,7 +18,7 @@ export default function Custom404() {
             Oops, lỗi rồi... vì đường dẫn không tồn tại.
             <br />
             Về{" "}
-            <Link className="font-bold text-secondary" href="/" scroll={false}>
+            <Link className="font-bold text-primary" href="/" scroll={false}>
               trang chủ
             </Link>
             ?

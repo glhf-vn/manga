@@ -10,7 +10,7 @@ export default function DesktopMenu() {
         <li>
           <Link
             href="/"
-            className={router.pathname == "/" ? "text-secondary" : ""}
+            className={router.pathname == "/" ? "text-primary" : ""}
           >
             Lịch phát hành
           </Link>
@@ -19,7 +19,7 @@ export default function DesktopMenu() {
           <Link
             href="/license"
             className={
-              router.pathname.includes("license") ? "text-secondary" : ""
+              router.pathname.includes("license") ? "text-primary" : ""
             }
           >
             Bản quyền

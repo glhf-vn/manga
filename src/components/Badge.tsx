@@ -1,5 +1,5 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import { type ReactNode } from "react";
+import { HTMLProps, type ReactNode } from "react";
 
 const buttonStyles = cva("m-2 rounded-lg py-0.5 px-1.5 text-xs", {
   variants: {
@@ -15,7 +15,9 @@ const buttonStyles = cva("m-2 rounded-lg py-0.5 px-1.5 text-xs", {
   },
 });
 
-export interface BadgeProps extends VariantProps<typeof buttonStyles> {
+export interface BadgeProps
+  extends VariantProps<typeof buttonStyles>,
+    HTMLProps<HTMLSpanElement> {
   children?: ReactNode;
 }
 

@@ -8,8 +8,9 @@ import { Kanit } from "@next/font/google";
 import { BsFilter } from "react-icons/bs";
 import { Dialog } from "@headlessui/react";
 
-import Layout from "@layouts/layout";
+import Layout from "@layouts/Layout";
 
+import Card from "@components/Card";
 import Badge from "@components/Badge";
 import ArchiveList from "@components/ArchiveList";
 import Banner from "@components/Banner";
@@ -112,7 +113,7 @@ export default function Home({ events, bannerEvents }) {
 
       <Banner items={bannerEvents} />
 
-      <div className="container mx-auto mb-6 px-6">
+      <div className="container mx-auto px-6">
         <div className="flex justify-between">
           <ArchiveList />
           <button
@@ -139,16 +140,15 @@ export default function Home({ events, bannerEvents }) {
                 {single.entries.map((entry) => {
                   if (filterData.includes(entry.publisherValue)) {
                     return (
-                      <a
+                      <Card
                         onClick={() => {
                           setModalData(entry);
                           setModalOpen(true);
                         }}
-                        className="h-fit cursor-pointer overflow-hidden rounded-2xl shadow-md transition-all duration-150 ease-linear hover:shadow-lg"
                         key={entry.id}
                       >
                         <Cover entry={entry} />
-                      </a>
+                      </Card>
                     );
                   }
                 })}

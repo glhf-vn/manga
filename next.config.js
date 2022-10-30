@@ -11,6 +11,16 @@ module.exports = {
         hostname: "s4.anilist.co",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "salt.tikicdn.com",
+        pathname: "/**",
+      },
+      {
+        protocol: "https",
+        hostname: "cdn0.fahasa.com",
+        pathname: "/**",
+      },
     ],
   },
   experimental: {

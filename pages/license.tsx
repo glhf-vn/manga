@@ -5,8 +5,9 @@ import Select from "react-select";
 import { Flipper, Flipped } from "react-flip-toolkit";
 import { Kanit } from "@next/font/google";
 
-import Layout from "@layouts/layout";
+import Layout from "@layouts/Layout";
 
+import Card from "@components/Card";
 import Header from "@components/Header";
 import Cover from "@components/Cover";
 import Badge from "@components/Badge";
@@ -93,52 +94,54 @@ export default function License({ licenses }) {
               return (
                 <Flipped key={manga.name} flipId={manga.name}>
                   <li>
-                    <div className="grid grid-cols-3 overflow-hidden rounded-2xl bg-zinc-100 shadow-md transition-all ease-in-out hover:shadow-lg">
-                      <div className="col-span-1">
-                        <Cover entry={manga} fit="full" />
-                      </div>
-                      <div className="relative col-span-2 flex flex-col justify-between">
-                        <div className="absolute top-1 right-1">
-                          <Badge>{manga.type}</Badge>
+                    <Card>
+                      <div className="grid grid-cols-3">
+                        <div className="col-span-1">
+                          <Cover entry={manga} fit="full" />
                         </div>
-                        <div className="p-6">
-                          <span className="text-sm">
-                            {
-                              publisherFilterOptions.find(
-                                (e) => e.value == manga.publisher
-                              ).label
-                            }
-                          </span>
-                          <h3 className={`${kanit.className} text-2xl`}>
-                            {manga.name}
-                          </h3>
-                        </div>
-                        {(manga.source || manga.anilist) && (
-                          <div className="border-t border-zinc-200 px-3 text-right text-zinc-600">
-                            {manga.source && (
-                              <a
-                                target="_blank"
-                                rel="noreferrer"
-                                href={manga.source}
-                                className="inline-block px-3 py-3"
-                              >
-                                Nguồn
-                              </a>
-                            )}
-                            {manga.anilist && (
-                              <a
-                                target="_blank"
-                                rel="noreferrer"
-                                href={`//anilist.co/manga/${manga.anilist}`}
-                                className="inline-block px-3 py-3"
-                              >
-                                AniList
-                              </a>
-                            )}
+                        <div className="relative col-span-2 flex flex-col justify-between">
+                          <div className="absolute top-1 right-1">
+                            <Badge>{manga.type}</Badge>
                           </div>
-                        )}
+                          <div className="p-6">
+                            <span className="text-sm">
+                              {
+                                publisherFilterOptions.find(
+                                  (e) => e.value == manga.publisher
+                                ).label
+                              }
+                            </span>
+                            <h3 className={`${kanit.className} text-2xl`}>
+                              {manga.name}
+                            </h3>
+                          </div>
+                          {(manga.source || manga.anilist) && (
+                            <div className="border-t border-zinc-200 px-3 text-right text-zinc-600">
+                              {manga.source && (
+                                <a
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  href={manga.source}
+                                  className="inline-block px-3 py-3"
+                                >
+                                  Nguồn
+                                </a>
+                              )}
+                              {manga.anilist && (
+                                <a
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  href={`//anilist.co/manga/${manga.anilist}`}
+                                  className="inline-block px-3 py-3"
+                                >
+                                  AniList
+                                </a>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
+                    </Card>
                   </li>
                 </Flipped>
               );
