@@ -11,6 +11,7 @@ import { NextSeo } from "next-seo";
 import Layout from "@layouts/Layout";
 
 import Card from "@components/Card";
+import Button from "@components/Button";
 import Badge from "@components/Badge";
 import ArchiveList from "@components/ArchiveList";
 import Banner from "@components/Banner";
@@ -33,7 +34,7 @@ export async function getStaticProps() {
       events,
       bannerEvents,
     },
-    revalidate: 7200,
+    revalidate: 600,
   };
 }
 
@@ -68,20 +69,62 @@ export default function Home({ events, bannerEvents }) {
             <Cover entry={modalData} />
           </div>
           <div className="flex-1 p-6 sm:pt-9">
-            <Dialog.Title className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
-              {modalData.name}
-            </Dialog.Title>
-            <Dialog.Description>
-              <b>Ngày phát hành</b>:{" "}
-              {DateTime.fromISO(modalData.date)
-                .setLocale("vi")
-                .toLocaleString(DateTime.DATE_SHORT)}
-              <br />
-              <br />
-              <b>Nhà xuất bản/phát hành</b>: {modalData.publisher}
-              <br />
-              <b>Giá dự kiến</b>: {modalData.price}
-            </Dialog.Description>
+            <div className="flex h-full flex-col justify-between">
+              <div>
+                <Dialog.Title className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
+                  {modalData.name}
+                </Dialog.Title>
+                <Dialog.Description>
+                  <b>Ngày phát hành</b>:{" "}
+                  {DateTime.fromISO(modalData.date)
+                    .setLocale("vi")
+                    .toLocaleString(DateTime.DATE_SHORT)}
+                  <br />
+                  <br />
+                  <b>Nhà xuất bản/phát hành</b>: {modalData.publisher}
+                  <br />
+                  <b>Giá dự kiến</b>: {modalData.price}
+                </Dialog.Description>
+              </div>
+              <div className="mt-6">
+                <span className="font-bold">Tìm kiếm nhanh</span>
+                <div className="mt-1 flex gap-2">
+                  <Button
+                    style={{ backgroundColor: "#c92127", color: "#ffffff" }}
+                  >
+                    <a
+                      href={`https://fahasa.com/catalogsearch/result/?q=${modalData.name}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      FAHASA
+                    </a>
+                  </Button>
+                  <Button
+                    style={{ backgroundColor: "#1a94ff", color: "#ffffff" }}
+                  >
+                    <a
+                      href={`https://tiki.vn/search?q=${modalData.name}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Tiki
+                    </a>
+                  </Button>
+                  <Button
+                    style={{ backgroundColor: "#ff6633", color: "#ffffff" }}
+                  >
+                    <a
+                      href={`https://shopee.vn/search?keyword=${modalData.name}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      Shopee
+                    </a>
+                  </Button>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </Modal>
