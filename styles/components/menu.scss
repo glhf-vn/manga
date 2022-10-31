@@ -3,18 +3,12 @@
   @apply hidden;
 }
 
-/* Color/shape of close button cross */
-.bm-cross {
-  background: #bdc3c7;
-}
-
 /*
   Sidebar wrapper styles
   Note: Beware of modifying this element as it can break the animations - you should not need to touch it in most cases
   */
 .bm-menu-wrap {
-  position: fixed;
-  height: 100%;
+  @apply fixed h-full;
 }
 
 /* General sidebar styles */
@@ -64,5 +58,5 @@ a.bm-item,
 
 /* Styling of overlay */
 .bm-overlay {
-  background: rgba(0, 0, 0, 0.3);
+  @apply bg-zinc-900/30;
 }
