@@ -1,6 +1,7 @@
 import "../styles/app.scss";
 import NextNProgress from "nextjs-progressbar";
 import { DefaultSeo } from "next-seo";
+import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "@next/font/google";
 
 const inter = Inter();
@@ -34,6 +35,7 @@ export default function App({ Component, pageProps }) {
       />
       <NextNProgress color="#fbea11" />
       <Component {...pageProps} />
+      <Analytics />
     </div>
   );
 }
