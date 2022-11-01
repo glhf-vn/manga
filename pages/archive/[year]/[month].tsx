@@ -21,37 +21,7 @@ import Modal from "@components/Modal";
 import calendarsData from "@data/calendars.json";
 import { colourStyles } from "@data/indexFilterStyles";
 
-export async function getStaticPaths() {
-  const lastMonth = DateTime.now().minus({ month: 1 });
-  const thisMonth = DateTime.now();
-  const nextMonth = DateTime.now().plus({ month: 1 });
-
-  return {
-    paths: [
-      {
-        params: {
-          year: lastMonth.get("year").toString(),
-          month: lastMonth.get("month").toString(),
-        },
-      },
-      {
-        params: {
-          year: thisMonth.get("year").toString(),
-          month: thisMonth.get("month").toString(),
-        },
-      },
-      {
-        params: {
-          year: nextMonth.get("year").toString(),
-          month: nextMonth.get("month").toString(),
-        },
-      },
-    ],
-    fallback: false,
-  };
-}
-
-export async function getStaticProps({ params }) {
+export async function getServerSideProps({ params }) {
   const startDate = DateTime.fromObject({
     year: params.year,
     month: params.month,
@@ -71,7 +41,6 @@ export async function getStaticProps({ params }) {
       events,
       bannerEvents,
     },
-    revalidate: 600,
   };
 }
 
