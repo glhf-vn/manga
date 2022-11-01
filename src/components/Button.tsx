@@ -25,6 +25,8 @@ const buttonStyles = cva(
   }
 );
 
+const buttonContainerStyles = cva("flex justify-center items-center gap-3");
+
 export interface ButtonProps
   extends VariantProps<typeof buttonStyles>,
     HTMLProps<HTMLDivElement> {
@@ -39,7 +41,7 @@ export default function Card({
 }: ButtonProps): JSX.Element {
   return (
     <div className={buttonStyles({ intent, hoverable })} {...props}>
-      {children}
+      <div className={buttonContainerStyles()}> {children}</div>
     </div>
   );
 }

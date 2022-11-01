@@ -49,38 +49,32 @@ export default function ArchiveList() {
         >
           <Menu.Items className="absolute right-0 mt-3 w-full overflow-hidden rounded-2xl bg-zinc-200 shadow-lg">
             <Menu.Item>
-              {({ active }) => (
-                <Link
-                  className={`block py-1 px-2 ${active && "bg-zinc-300"}`}
-                  href={`/archive/${lastMonth.get("year")}/${lastMonth.get(
-                    "month"
-                  )}`}
-                >
-                  {lastMonth.setLocale("vi").toFormat("MMMM")}
-                </Link>
-              )}
+              <Link
+                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300"
+                href={`/archive/${lastMonth.get("year")}/${lastMonth.get(
+                  "month"
+                )}`}
+              >
+                {lastMonth.setLocale("vi").toFormat("MMMM")}
+              </Link>
             </Menu.Item>
             <Menu.Item>
-              {({ active }) => (
-                <Link
-                  className={`block py-1 px-2 ${active && "bg-zinc-300"}`}
-                  href={`/`}
-                >
-                  {thisMonth.setLocale("vi").toFormat("MMMM")}
-                </Link>
-              )}
+              <Link
+                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300"
+                href={`/`}
+              >
+                {thisMonth.setLocale("vi").toFormat("MMMM")}
+              </Link>
             </Menu.Item>
             <Menu.Item>
-              {({ active }) => (
-                <Link
-                  className={`block py-1 px-2 ${active && "bg-zinc-300"}`}
-                  href={`/archive/${nextMonth.get("year")}/${nextMonth.get(
-                    "month"
-                  )}`}
-                >
-                  {nextMonth.setLocale("vi").toFormat("MMMM")}
-                </Link>
-              )}
+              <Link
+                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300"
+                href={`/archive/${nextMonth.get("year")}/${nextMonth.get(
+                  "month"
+                )}`}
+              >
+                {nextMonth.setLocale("vi").toFormat("MMMM")}
+              </Link>
             </Menu.Item>
           </Menu.Items>
         </Transition>

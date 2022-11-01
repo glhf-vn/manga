@@ -1,10 +1,4 @@
-import {
-  BsFacebook,
-  BsTwitter,
-  BsDiscord,
-  BsGithub,
-  BsArrowUpRight,
-} from "react-icons/bs";
+import { BsFacebook, BsTwitter, BsDiscord, BsGithub } from "react-icons/bs";
 import { slide as Menu } from "react-burger-menu";
 import { useRouter } from "next/router";
 import { useState, useEffect } from "react";
@@ -31,49 +25,13 @@ export default function MobileMenu() {
       >
         <Link href="/" className={`bm-item font-kanit`}>
           Lịch phát hành{" "}
-          <BsArrowUpRight className="ml-2 inline-block text-base" />
         </Link>
         <Link href="/license" className={`bm-item font-kanit`}>
           Thông tin bản quyền{" "}
-          <BsArrowUpRight className="ml-2 inline-block text-base" />
         </Link>
-        <span className={`bm-list-heading font-kanit`}>Mua truyện mới</span>
-        <ul className={`bm-list font-kanit font-light`}>
-          <li className="bm-list-item">
-            <span className="bm-sublist-heading">Manga</span>
-            <ul className="bm-sublist">
-              <li className="bm-sublist-item">
-                <Link href="/listing/manga/tiki/1">
-                  Tiki Trading{" "}
-                  <BsArrowUpRight className="ml-2 inline-block text-base" />
-                </Link>
-              </li>
-              <li className="bm-sublist-item">
-                <Link href="/listing/manga/fahasa/1">
-                  FAHASA.com{" "}
-                  <BsArrowUpRight className="ml-2 inline-block text-base" />
-                </Link>
-              </li>
-            </ul>
-          </li>
-          <li className="bm-list-item">
-            <span className="bm-sublist-heading">Light-novel</span>
-            <ul className="bm-sublist">
-              <li className="bm-sublist-item">
-                <Link href="/listing/light-novel/tiki/1">
-                  Tiki Trading{" "}
-                  <BsArrowUpRight className="ml-2 inline-block text-base" />
-                </Link>
-              </li>
-              <li className="bm-sublist-item">
-                <Link href="/listing/light-novel/fahasa/1">
-                  FAHASA.com{" "}
-                  <BsArrowUpRight className="ml-2 inline-block text-base" />
-                </Link>
-              </li>
-            </ul>
-          </li>
-        </ul>
+        <Link href="/listing" className={`bm-item font-kanit`}>
+          Mua truyện mới{" "}
+        </Link>
         <Link href="/donate" className={`bm-item font-kanit`}>
           {"Ủng hộ <3"}
         </Link>
