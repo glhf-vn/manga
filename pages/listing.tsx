@@ -59,7 +59,25 @@ const Products = ({ site, category, page }) => {
   );
 
   if (error) return <div>failed to load</div>;
-  if (!data) return <div>loading...</div>;
+  if (!data)
+    return (
+      <div className="grid animate-pulse grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {[...Array(24)].map((e, i) => (
+          <div key={i}>
+            <Card>
+              <div className="aspect-square h-full w-full bg-zinc-300"></div>
+              <div className="p-6 font-bold">
+                <div className="h-6 w-full rounded bg-zinc-300"></div>
+                <div className="mt-2 h-6 w-full rounded bg-zinc-300"></div>
+                <p className="mt-3">
+                  <div className="h-4 w-1/2 rounded bg-zinc-300"></div>
+                </p>
+              </div>
+            </Card>
+          </div>
+        ))}
+      </div>
+    );
 
   const currencyFormatter = new Intl.NumberFormat("vi-VN", {
     style: "currency",
