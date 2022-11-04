@@ -36,6 +36,7 @@ export interface CoverProps {
     image: string;
     id: string;
   };
+  loader?: boolean;
   priority?: boolean;
   sizes?: string;
 }
@@ -50,15 +51,16 @@ export default function Cover({
   hero,
   fit,
   priority = true,
+  loader = true,
   sizes = "(max-width: 768px) 50vw, (max-width: 1024px) 75vw, 100vw",
 }: Props) {
   return (
     <>
       {entry.image ? (
         <Image
-          loader={cloudinaryLoader}
+          loader={loader && cloudinaryLoader}
           className={imageStyles({ fit })}
-          src={entry.id}
+          src={loader ? entry.id : entry.image}
           alt={entry.name}
           width={300}
           height={450}
