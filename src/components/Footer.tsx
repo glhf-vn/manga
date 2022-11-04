@@ -19,30 +19,42 @@ export default function Footer() {
       <div className="flex justify-between">
         <div>
           <ul className="flex gap-3 text-2xl text-zinc-400">
-            <a
-              href="https://facebook.com/mangaglhf/"
-              className="transition-colors duration-100 ease-linear hover:text-[#1877f2]"
-            >
-              <BsFacebook />
-            </a>
-            <a
-              href="https://twitter.com/mangaglhf/"
-              className="transition-colors duration-100 ease-linear hover:text-[#1da1f2]"
-            >
-              <BsTwitter />
-            </a>
-            <a
-              href="https://via.glhf.vn/discord"
-              className="transition-colors duration-100 ease-linear hover:text-[#5865f2]"
-            >
-              <BsDiscord />
-            </a>
-            <a
-              href="https://github.com/glhf"
-              className="transition-colors duration-100 ease-linear hover:text-[#161b22]"
-            >
-              <BsGithub />
-            </a>
+            <li>
+              <a
+                href="https://facebook.com/mangaglhf/"
+                className="transition-colors duration-100 ease-linear hover:text-[#1877f2]"
+                aria-label="Facebook"
+              >
+                <BsFacebook />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://twitter.com/mangaglhf/"
+                className="transition-colors duration-100 ease-linear hover:text-[#1da1f2]"
+                aria-label="Twitter"
+              >
+                <BsTwitter />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://via.glhf.vn/discord"
+                className="transition-colors duration-100 ease-linear hover:text-[#5865f2]"
+                aria-label="Discord"
+              >
+                <BsDiscord />
+              </a>
+            </li>
+            <li>
+              <a
+                href="https://github.com/glhf"
+                className="transition-colors duration-100 ease-linear hover:text-[#161b22]"
+                aria-label="GitHub"
+              >
+                <BsGithub />
+              </a>
+            </li>
           </ul>
         </div>
         <div>

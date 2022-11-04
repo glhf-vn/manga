@@ -73,7 +73,10 @@ export default function Home({ params, events, bannerEvents }) {
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
         <div className="flex flex-col sm:flex-row">
           <div className="w-full sm:max-w-[250px]">
-            <Cover entry={modalData} />
+            <Cover
+              entry={modalData}
+              sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
+            />
           </div>
           <div className="flex-1 p-6 sm:pt-9">
             <div className="flex h-full flex-col justify-between">
@@ -166,6 +169,7 @@ export default function Home({ params, events, bannerEvents }) {
           <button
             className="rounded-2xl bg-zinc-200 px-2 text-xl sm:text-2xl lg:text-3xl"
             onClick={() => setFilterOpen(!filterOpen)}
+            aria-label="Mở bộ lọc"
           >
             <BsFilter />
           </button>
@@ -197,7 +201,7 @@ export default function Home({ params, events, bannerEvents }) {
                       >
                         <Cover
                           entry={entry}
-                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                          sizes="(max-width: 768px) 40vw, (max-width: 1024px) 15vw, 5vw"
                         />
                       </Card>
                     );

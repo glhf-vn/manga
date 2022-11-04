@@ -2,16 +2,19 @@
   font-family: "Kanit";
   src: url("/fonts/Kanit-Regular.woff") format("woff");
   font-weight: 400;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Kanit";
   src: url("/fonts/Kanit-Bold.woff") format("woff");
   font-weight: 700;
+  font-display: swap;
 }
 
 @font-face {
   font-family: "Kanit";
   src: url("/fonts/Kanit-Light.woff") format("woff");
   font-weight: 300;
+  font-display: swap;
 }

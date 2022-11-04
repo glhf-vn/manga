@@ -42,7 +42,11 @@ export default function Banner({ items }) {
               <SplideSlide key={entry.id}>
                 <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6">
                   <div className="cursor-default overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg sm:basis-72">
-                    <Cover entry={entry} hero={true} />
+                    <Cover
+                      entry={entry}
+                      hero={true}
+                      sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
+                    />
                   </div>
                   <div className="sm:flex-1 sm:pt-20">
                     <span className="hidden sm:inline">Phát hành </span>

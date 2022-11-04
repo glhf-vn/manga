@@ -60,8 +60,8 @@ export default function Cover({
           className={imageStyles({ fit })}
           src={entry.id}
           alt={entry.name}
-          width={400}
-          height={600}
+          width={300}
+          height={450}
           priority={priority}
           sizes={sizes}
         />

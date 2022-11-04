@@ -28,4 +28,8 @@ module.exports = {
       { loader: "@next/font/google", options: { subsets: ["vietnamese"] } },
     ],
   },
+  i18n: {
+    locales: ["vi"],
+    defaultLocale: "vi",
+  },
 };
