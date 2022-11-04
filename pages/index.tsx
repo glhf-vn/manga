@@ -195,7 +195,7 @@ export default function Home({ events, bannerEvents }) {
                       >
                         <Cover
                           entry={entry}
-                          sizes="(max-width: 768px) 40vw, (max-width: 1024px) 15vw, 5vw"
+                          sizes="(max-width: 768px) 40vw, 200px"
                         />
                       </Card>
                     );
