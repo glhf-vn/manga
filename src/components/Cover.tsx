@@ -1,6 +1,12 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import Image from "next/image";
 
+const cloudinaryLoader = ({ src, width, quality }) => {
+  return `https://res.cloudinary.com/glhfvn/image/upload/c_scale,w_${width}/q_${
+    quality || 80
+  }/f_auto/covers/${src}.jpg`;
+};
+
 const imageStyles = cva("w-full h-full", {
   variants: {
     fit: {
@@ -28,7 +34,10 @@ export interface CoverProps {
   entry: {
     name: string;
     image: string;
+    id: string;
   };
+  priority?: boolean;
+  sizes?: string;
 }
 
 export interface Props
@@ -36,22 +45,28 @@ export interface Props
     VariantProps<typeof imageStyles>,
     VariantProps<typeof placeholderStyles> {}
 
-export default function Cover({ entry, hero, fit, ...props }: Props) {
+export default function Cover({
+  entry,
+  hero,
+  fit,
+  priority = true,
+  sizes = "(max-width: 768px) 50vw, (max-width: 1024px) 75vw, 100vw",
+}: Props) {
   return (
     <>
       {entry.image ? (
         <Image
+          loader={cloudinaryLoader}
           className={imageStyles({ fit })}
-          src={entry.image}
+          src={entry.id}
           alt={entry.name}
           width={400}
           height={600}
-          {...props}
+          priority={priority}
+          sizes={sizes}
         />
       ) : (
-        <div className={placeholderStyles({ hero })} {...props}>
-          {entry.name}
-        </div>
+        <div className={placeholderStyles({ hero })}>{entry.name}</div>
       )}
     </>
   );

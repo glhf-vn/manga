@@ -52,6 +52,7 @@ export default function Home({ params, events, bannerEvents }) {
     price: null,
     date: null,
     image: null,
+    id: null,
   });
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -194,7 +195,10 @@ export default function Home({ params, events, bannerEvents }) {
                         key={entry.id}
                         clickable={true}
                       >
-                        <Cover entry={entry} />
+                        <Cover
+                          entry={entry}
+                          sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                        />
                       </Card>
                     );
                   }
