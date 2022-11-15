@@ -32,7 +32,7 @@ export default function ArchiveList() {
   const pagedMonth = isEmpty(path) ? thisMonth.get("month") : path.month;
 
   return (
-    <div className="flex items-center gap-3 font-kanit text-lg font-bold sm:text-xl md:text-2xl lg:text-3xl">
+    <div className="z-10 flex items-center gap-3 font-kanit text-lg font-bold sm:text-xl md:text-2xl lg:text-3xl">
       <span>Lịch phát hành</span>
       <Menu as="div" className="relative">
         <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2">

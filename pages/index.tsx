@@ -70,6 +70,7 @@ export default function Home({ events, bannerEvents }) {
             <Cover
               entry={modalData}
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
+              fit="full"
             />
           </div>
           <div className="flex-1 p-6 sm:pt-9">
@@ -192,6 +193,7 @@ export default function Home({ events, bannerEvents }) {
                         }}
                         key={entry.id}
                         clickable={true}
+                        entry={entry}
                       >
                         <Cover
                           entry={entry}

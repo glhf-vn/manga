@@ -33,7 +33,7 @@ export default function App({ Component, pageProps }) {
         ]}
         {...SEO}
       />
-      <NextNProgress color="#fbea11" />
+      <NextNProgress color="#f8b60b" />
       <Component {...pageProps} />
       <Analytics />
     </div>
