@@ -62,6 +62,7 @@ export default function Cover({
           className={imageStyles({ fit })}
           src={loader ? entry.id : entry.image}
           alt={entry.name}
+          unoptimized={!loader && true}
           width={300}
           height={450}
           priority={priority}
