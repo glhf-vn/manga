@@ -3,7 +3,7 @@ import Navigation from "@components/Navigation";
 
 export default function Layout({ children }) {
   return (
-    <div>
+    <div className="bg-zinc-50">
       <Navigation />
 
       <main>{children}</main>

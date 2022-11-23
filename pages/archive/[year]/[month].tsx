@@ -62,6 +62,8 @@ export default function Home({ params, events, bannerEvents }) {
   );
   const [filterOpen, setFilterOpen] = useState(false);
 
+  console.log(events);
+
   return (
     <Layout>
       <NextSeo
@@ -198,6 +200,7 @@ export default function Home({ params, events, bannerEvents }) {
                         }}
                         key={entry.id}
                         clickable={true}
+                        entry={entry}
                       >
                         <Cover
                           entry={entry}

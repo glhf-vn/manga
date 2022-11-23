@@ -68,7 +68,7 @@ export default function Card({
           <button
             onMouseEnter={() => setOpen(true)}
             onMouseLeave={() => setOpen(false)}
-            className="block overflow-hidden rounded-2xl"
+            className="block h-full w-full overflow-hidden rounded-2xl"
             ref={setReferenceElement}
           >
             {children}
