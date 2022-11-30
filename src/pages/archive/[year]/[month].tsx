@@ -1,4 +1,4 @@
-import { getEntries, getEntriesByGroup } from "@lib/calendar";
+import { getEntries, getEntriesByGroup } from "@lib/supabase";
 
 import { DateTime } from "luxon";
 import { useState } from "react";
@@ -13,53 +13,64 @@ import Layout from "@layouts/Layout";
 import Card from "@components/Card";
 import Button from "@components/Button";
 import Badge from "@components/Badge";
-import ArchiveList from "@components/ArchiveList";
+import MonthSelect from "@components/MonthSelect";
 import Banner from "@components/Banner";
 import Cover from "@components/Cover";
 import Modal from "@components/Modal";
 
-import calendarsData from "@data/calendars.json";
+import publishers from "@data/publishers.json";
 import { colourStyles } from "@data/indexFilterStyles";
 
-export async function getStaticProps() {
-  const events = await getEntriesByGroup();
+export async function getServerSideProps({ params }) {
+  const startDate = DateTime.fromObject({
+    year: params.year,
+    month: params.month,
+  }).startOf("month");
+  const endDate = startDate.endOf("month");
 
-  const bannerEvents = await getEntries(
-    DateTime.now().toISO(),
-    DateTime.now().plus({ days: 3 }).toISO()
+  let events = await getEntriesByGroup(
+    startDate.toISODate(),
+    endDate.toISODate()
+  );
+
+  let bannerEvents = await getEntries(
+    DateTime.now().toISODate(),
+    DateTime.now().plus({ days: 3 }).toISODate()
   );
 
   return {
     props: {
+      params,
       events,
       bannerEvents,
     },
-    revalidate: 600,
   };
 }
 
-export default function Home({ events, bannerEvents }) {
+export default function Home({ params, events, bannerEvents }) {
   // Set the open state & data for the modal
   const [modalData, setModalData] = useState({
     name: null,
     publisher: null,
+    publisherLabel: null,
     price: null,
     date: null,
-    image: null,
+    image_url: null,
     id: null,
+    edition: null,
   });
   const [modalOpen, setModalOpen] = useState(false);
 
   // Set the open state & filter data
   const [filterData, setFilterData] = useState(
-    calendarsData.map((value) => value.value)
+    publishers.map((value) => value.value)
   );
   const [filterOpen, setFilterOpen] = useState(false);
 
   return (
     <Layout>
       <NextSeo
-        title="Lịch phát hành"
+        title={`Lịch phát hành tháng ${params.month}`}
         description="Xem lịch phát hành chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
       />
 
@@ -70,7 +81,6 @@ export default function Home({ events, bannerEvents }) {
             <Cover
               entry={modalData}
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
-              fit="full"
             />
           </div>
           <div className="flex-1 p-6 sm:pt-9">
@@ -85,8 +95,14 @@ export default function Home({ events, bannerEvents }) {
                     .setLocale("vi")
                     .toLocaleString(DateTime.DATE_SHORT)}
                   <br />
+                  {modalData.edition && (
+                    <>
+                      <b>Phiên bản</b>: {modalData.edition}
+                      <br />
+                    </>
+                  )}
                   <br />
-                  <b>Nhà xuất bản/phát hành</b>: {modalData.publisher}
+                  <b>Nhà xuất bản/phát hành</b>: {modalData.publisherLabel}
                   <br />
                   <b>Giá dự kiến</b>: {modalData.price}
                 </Dialog.Description>
@@ -137,14 +153,14 @@ export default function Home({ events, bannerEvents }) {
       {/* Filter modal */}
       <Modal isOpen={filterOpen} onClose={() => setFilterOpen(false)}>
         <div>
-          <Dialog.Title className="m-6 font-kanit text-2xl font-bold lg:text-3xl">
+          <h2 className="m-6 font-kanit text-xl font-bold">
             Lọc theo nhà xuất bản/phát hành
-          </Dialog.Title>
+          </h2>
           <Select
             className="m-6 mb-48"
             styles={colourStyles}
-            options={calendarsData}
-            defaultValue={calendarsData}
+            options={publishers}
+            defaultValue={publishers}
             closeMenuOnSelect={false}
             closeMenuOnScroll={false}
             isSearchable={false}
@@ -158,9 +174,9 @@ export default function Home({ events, bannerEvents }) {
 
       <Banner items={bannerEvents} />
 
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto mb-6 px-6">
         <div className="flex justify-between">
-          <ArchiveList />
+          <MonthSelect />
           <button
             className="rounded-2xl bg-zinc-200 px-2 text-xl sm:text-2xl lg:text-3xl"
             onClick={() => setFilterOpen(!filterOpen)}
@@ -184,7 +200,7 @@ export default function Home({ events, bannerEvents }) {
               </div>
               <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
                 {single.entries.map((entry) => {
-                  if (filterData.includes(entry.publisherValue)) {
+                  if (filterData.includes(entry.publisher)) {
                     return (
                       <Card
                         onClick={() => {
@@ -195,6 +211,11 @@ export default function Home({ events, bannerEvents }) {
                         clickable={true}
                         entry={entry}
                       >
+                        {entry.edition && (
+                          <div className="absolute top-0 right-0 w-fit max-w-[80%] overflow-hidden text-ellipsis whitespace-nowrap rounded-bl-2xl bg-gradient-to-br from-[#f8ed0b] to-[#f2b011] px-2 py-1 text-center text-sm font-bold">
+                            {entry.edition}
+                          </div>
+                        )}
                         <Cover
                           entry={entry}
                           sizes="(max-width: 768px) 40vw, 200px"

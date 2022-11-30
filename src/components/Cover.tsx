@@ -33,7 +33,7 @@ const placeholderStyles = cva(
 export interface CoverProps {
   entry: {
     name: string;
-    image: string;
+    image_url: string;
     id: string;
   };
   loader?: boolean;
@@ -56,11 +56,11 @@ export default function Cover({
 }: Props) {
   return (
     <>
-      {entry.image ? (
+      {entry.image_url ? (
         <Image
           loader={loader && cloudinaryLoader}
           className={imageStyles({ fit })}
-          src={loader ? entry.id : entry.image}
+          src={loader ? entry.id : entry.image_url}
           alt={entry.name}
           unoptimized={!loader && true}
           width={300}

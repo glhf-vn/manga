@@ -6,7 +6,7 @@ import Link from "next/link";
 import { Menu, Transition } from "@headlessui/react";
 import { BsChevronDown } from "react-icons/bs";
 
-export default function ArchiveList() {
+export default function MonthSelect() {
   const lastMonth = DateTime.now().minus({ month: 1 });
   const thisMonth = DateTime.now();
   const nextMonth = DateTime.now().plus({ month: 1 });

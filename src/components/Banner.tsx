@@ -61,7 +61,7 @@ export default function Banner({ items }) {
                       {entry.name}
                     </h2>
                     <p className="hidden sm:block">
-                      <b>Nhà xuất bản/phát hành</b>: {entry.publisher}
+                      <b>Nhà xuất bản/phát hành</b>: {entry.publisherLabel}
                       <br />
                       <b>Giá dự kiến</b>: {entry.price}
                     </p>

@@ -1,4 +1,4 @@
-import "../styles/app.scss";
+import "@styles/app.scss";
 import NextNProgress from "nextjs-progressbar";
 import { DefaultSeo } from "next-seo";
 import { Analytics } from "@vercel/analytics/react";

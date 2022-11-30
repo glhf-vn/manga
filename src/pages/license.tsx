@@ -1,4 +1,4 @@
-import { getSheetsContent } from "@lib/sheets";
+import { getLicensed } from "@lib/supabase";
 
 import { useState } from "react";
 import Select from "react-select";
@@ -13,13 +13,11 @@ import Cover from "@components/Cover";
 import Badge from "@components/Badge";
 
 import typeFilterOptions from "@data/bookTypes.json";
-import publisherFilterOptions from "@data/calendars.json";
+import publisherFilterOptions from "@data/publishers.json";
 import { selectStyles } from "@data/selectStyles";
 
-const sheetId = process.env.SHEET_ID;
-
 export async function getStaticProps() {
-  const licenses = await getSheetsContent(sheetId, "licensed");
+  const licenses = await getLicensed();
 
   return {
     props: {
