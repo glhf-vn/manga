@@ -31,17 +31,36 @@ export interface ButtonProps
   extends VariantProps<typeof buttonStyles>,
     HTMLProps<HTMLDivElement> {
   children?: ReactNode;
+  className?: string;
+  href?: string;
 }
 
 export default function Card({
   intent,
   hoverable,
   children,
+  className,
+  href,
   ...props
 }: ButtonProps): JSX.Element {
-  return (
-    <div className={buttonStyles({ intent, hoverable })} {...props}>
-      <div className={buttonContainerStyles()}> {children}</div>
-    </div>
-  );
+  if (href) {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        className={`${buttonStyles({ intent, hoverable })} ${className}`}
+      >
+        <div className={buttonContainerStyles()}>{children}</div>
+      </a>
+    );
+  } else {
+    return (
+      <div
+        className={`${buttonStyles({ intent, hoverable })} ${className}`}
+        {...props}
+      >
+        <div className={buttonContainerStyles()}>{children}</div>
+      </div>
+    );
+  }
 }

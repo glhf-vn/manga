@@ -5,6 +5,7 @@ import {
   BsGithub,
   BsArrowUp,
 } from "react-icons/bs";
+import Link from "next/link";
 
 export default function Footer() {
   const handleClick = () => {
@@ -16,7 +17,7 @@ export default function Footer() {
   return (
     <div className="container mx-auto mt-6 p-6">
       <hr className="mb-6 w-24 border-4 border-zinc-400" />
-      <div className="flex justify-between">
+      <div className="flex flex-col justify-between gap-6 sm:flex-row">
         <div>
           <ul className="flex gap-3 text-2xl text-zinc-400">
             <li>
@@ -57,8 +58,29 @@ export default function Footer() {
             </li>
           </ul>
         </div>
-        <div>
-          <BsArrowUp onClick={handleClick} className="text-2xl text-zinc-400" />
+        <div className="flex flex-row justify-end gap-6 text-zinc-400">
+          <ul className="flex flex-row gap-6">
+            <li>
+              <a
+                href="mailto:konnichiwa@glhf.vn"
+                className="transition-all ease-linear hover:text-zinc-600"
+              >
+                Liên hệ
+              </a>
+            </li>
+            <li>
+              <Link
+                href="/donate"
+                className="transition-all ease-linear hover:text-zinc-600"
+              >
+                Ủng hộ
+              </Link>
+            </li>
+          </ul>
+          <BsArrowUp
+            onClick={handleClick}
+            className="cursor-pointer text-2xl transition-all ease-linear hover:text-zinc-600"
+          />
         </div>
       </div>
     </div>

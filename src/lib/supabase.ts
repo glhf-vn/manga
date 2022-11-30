@@ -25,6 +25,9 @@ export async function getEntries(
     .lte("date", end)
     .order("date", {
       ascending: true,
+    })
+    .order("name", {
+      ascending: true,
     });
 
   if (error) {
