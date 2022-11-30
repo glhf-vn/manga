@@ -48,6 +48,7 @@ export default function Card({
       <a
         href={href}
         target="_blank"
+        rel="noreferrer"
         className={`${buttonStyles({ intent, hoverable })} ${className}`}
       >
         <div className={buttonContainerStyles()}>{children}</div>
