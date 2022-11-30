@@ -68,7 +68,12 @@ export async function getEntriesByGroup(
 }
 
 export async function getLicensed() {
-  const { data, error } = await client.from("licensed").select();
+  const { data, error } = await client
+    .from("licensed")
+    .select()
+    .order("publisher", {
+      ascending: true,
+    });
 
   if (error) {
     throw error;
