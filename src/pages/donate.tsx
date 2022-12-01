@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { NextSeo } from "next-seo";
+import Image from "next/image";
 
 import Layout from "@layouts/Layout";
 
@@ -15,17 +16,29 @@ export default function Donate() {
 
       <div className="container mx-auto px-6">
         <h3 className="mb-3 font-kanit text-2xl font-bold">Hỗ trợ dự án</h3>
-        <div className="mb-12 flex gap-3">
+        <div className="mb-12">
           <Button
             href="https://me.momo.vn/catouberos"
-            className="bg-[#d82d8b] text-white"
+            className="mr-3 bg-[#d82d8b] text-white"
           >
-            Momo
+            <Image
+              alt="MoMo logo"
+              src="/img/momo-logo.png"
+              width={20}
+              height={20}
+            />
+            MoMo
           </Button>
           <Button
             href="https://social.zalopay.vn/mt-gateway/v1/private-qr?note=&receiver_id=190126000002776"
-            className="bg-[#0068ff] text-white"
+            className="text-bold mr-3 border border-[#efefef] bg-white"
           >
+            <Image
+              alt="ZaloPay logo"
+              src="/img/zalopay-logo.png"
+              width={20}
+              height={20}
+            />
             ZaloPay
           </Button>
           <Button>Chuyển khoản</Button>
