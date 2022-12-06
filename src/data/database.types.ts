@@ -12,30 +12,30 @@ export interface Database {
       licensed: {
         Row: {
           id: string
-          name: string | null
+          name: string
           source: string | null
           anilist: number | null
           image_url: string | null
-          publisher: string | null
-          type: string | null
+          publisher: string
+          type: string
         }
         Insert: {
           id?: string
-          name?: string | null
+          name: string
           source?: string | null
           anilist?: number | null
           image_url?: string | null
-          publisher?: string | null
-          type?: string | null
+          publisher: string
+          type: string
         }
         Update: {
           id?: string
-          name?: string | null
+          name?: string
           source?: string | null
           anilist?: number | null
           image_url?: string | null
-          publisher?: string | null
-          type?: string | null
+          publisher?: string
+          type?: string
         }
       }
       publication: {
