@@ -41,9 +41,9 @@ export interface Database {
       publication: {
         Row: {
           id: string
-          name: string | null
-          date: string | null
-          publisher: string | null
+          name: string
+          date: string
+          publisher: string
           price: number
           description: string | null
           image_url: string | null
@@ -51,9 +51,9 @@ export interface Database {
         }
         Insert: {
           id?: string
-          name?: string | null
-          date?: string | null
-          publisher?: string | null
+          name: string
+          date: string
+          publisher: string
           price?: number
           description?: string | null
           image_url?: string | null
@@ -61,9 +61,9 @@ export interface Database {
         }
         Update: {
           id?: string
-          name?: string | null
-          date?: string | null
-          publisher?: string | null
+          name?: string
+          date?: string
+          publisher?: string
           price?: number
           description?: string | null
           image_url?: string | null
