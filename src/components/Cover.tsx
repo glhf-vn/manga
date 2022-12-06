@@ -1,7 +1,7 @@
 import { cva, type VariantProps } from "class-variance-authority";
-import Image from "next/image";
+import Image, { type ImageLoaderProps } from "next/image";
 
-const cloudinaryLoader = ({ src, width, quality }) => {
+const cloudinaryLoader = ({ src, width, quality }: ImageLoaderProps) => {
   return `https://res.cloudinary.com/glhfvn/image/upload/c_scale,w_${width}/q_${
     quality || 80
   }/f_auto/covers/${src}.jpg`;
@@ -33,7 +33,7 @@ const placeholderStyles = cva(
 export interface CoverProps {
   entry: {
     name: string;
-    image_url: string;
+    image_url: string | null;
     id: string;
   };
   loader?: boolean;
@@ -54,23 +54,35 @@ export default function Cover({
   loader = true,
   sizes = "(max-width: 768px) 50vw, (max-width: 1024px) 75vw, 100vw",
 }: Props) {
-  return (
-    <>
-      {entry.image_url ? (
+  if (entry.image_url) {
+    if (loader) {
+      return (
         <Image
-          loader={loader && cloudinaryLoader}
+          loader={cloudinaryLoader}
           className={imageStyles({ fit })}
-          src={loader ? entry.id : entry.image_url}
+          src={entry.id}
           alt={entry.name}
-          unoptimized={!loader && true}
           width={300}
           height={450}
           priority={priority}
           sizes={sizes}
         />
-      ) : (
-        <div className={placeholderStyles({ hero })}>{entry.name}</div>
-      )}
-    </>
-  );
+      );
+    } else {
+      return (
+        <Image // : entry.image_url}
+          className={imageStyles({ fit })}
+          src={entry.image_url}
+          alt={entry.name}
+          unoptimized={true}
+          width={300}
+          height={450}
+          priority={priority}
+          sizes={sizes}
+        />
+      );
+    }
+  } else {
+    return <div className={placeholderStyles({ hero })}>{entry.name}</div>;
+  }
 }

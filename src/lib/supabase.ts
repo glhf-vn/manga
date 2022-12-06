@@ -6,8 +6,8 @@ import { Database } from "@data/database.types";
 
 // Create a single supabase client for interacting with your database
 const client = createClient<Database>(
-  process.env.SUPABASE_URL,
-  process.env.SUPABASE_ANON_KEY
+  process.env.SUPABASE_URL || "",
+  process.env.SUPABASE_ANON_KEY || ""
 );
 
 // Default the range to current month
@@ -37,13 +37,15 @@ export async function getEntries(
   const parsedData = await Promise.all(
     data.map(async (entry) => ({
       ...entry,
-      price: entry.price
-        ? new Intl.NumberFormat("vi-VN", {
-            style: "currency",
-            currency: "VND",
-          }).format(entry.price)
-        : "đang cập nhật",
-      publisherLabel: (await getPublisher(entry.publisher)).name,
+      price:
+        entry.price != 0
+          ? new Intl.NumberFormat("vi-VN", {
+              style: "currency",
+              currency: "VND",
+            }).format(entry.price)
+          : "đang cập nhật",
+      publisherLabel:
+        (await getPublisher(entry.publisher)).name || "đang cập nhật",
     }))
   );
 
@@ -71,6 +73,9 @@ export async function getLicensed() {
   const { data, error } = await client
     .from("licensed")
     .select()
+    .order("timestamp", {
+      ascending: false,
+    })
     .order("publisher", {
       ascending: true,
     });
@@ -79,7 +84,31 @@ export async function getLicensed() {
     throw error;
   }
 
-  return data;
+  const parsedData = await Promise.all(
+    data.map(async (entry) => {
+      return {
+        ...entry,
+        publisherLabel:
+          (await getPublisher(entry.publisher)).name || "đang cập nhật",
+      };
+    })
+  );
+
+  return parsedData;
+}
+
+export async function getType(query: string) {
+  const { data, error } = await client
+    .from("type")
+    .select()
+    .eq("id", query)
+    .limit(1);
+
+  if (error) {
+    throw error;
+  }
+
+  return data[0];
 }
 
 export async function getPublisher(query: string) {
@@ -94,4 +123,24 @@ export async function getPublisher(query: string) {
   }
 
   return data[0];
+}
+
+export async function getTypes() {
+  const { data, error } = await client.from("type").select();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function getPublishers() {
+  const { data, error } = await client.from("publisher").select();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
 }

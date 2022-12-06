@@ -1,5 +1,5 @@
+import type { HTMLProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type HTMLProps, type ReactNode } from "react";
 
 const cardStyles = cva(
   "rounded-2xl h-fit shadow-md bg-zinc-100 overflow-hidden relative",

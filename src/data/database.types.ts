@@ -76,18 +76,35 @@ export interface Database {
       publisher: {
         Row: {
           id: string
-          name: string | null
-          color: string | null
+          name: string
+          color: string
         }
         Insert: {
           id: string
-          name?: string | null
-          color?: string | null
+          name: string
+          color: string
         }
         Update: {
           id?: string
-          name?: string | null
-          color?: string | null
+          name?: string
+          color?: string
+        }
+      }
+      type: {
+        Row: {
+          id: string
+          name: string
+          color: string
+        }
+        Insert: {
+          id: string
+          name: string
+          color: string
+        }
+        Update: {
+          id?: string
+          name?: string
+          color?: string
         }
       }
     }

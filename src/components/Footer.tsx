@@ -9,7 +9,7 @@ import Link from "next/link";
 
 export default function Footer() {
   const handleClick = () => {
-    document.getElementById("__next").scrollIntoView({
+    document.getElementById("__next")?.scrollIntoView({
       behavior: "smooth",
     });
   };

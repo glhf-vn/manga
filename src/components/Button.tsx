@@ -1,5 +1,5 @@
+import type { HTMLProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
-import { type HTMLProps, type ReactNode } from "react";
 
 const buttonStyles = cva(
   "h-fit cursor-pointer overflow-hidden rounded-xl py-2 px-3 inline-block",

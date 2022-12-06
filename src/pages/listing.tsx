@@ -1,6 +1,5 @@
-import useSWR from "swr";
-import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import useSWR, { Fetcher } from "swr";
+import { useState } from "react";
 
 import Image from "next/image";
 import { Listbox, Transition } from "@headlessui/react";
@@ -17,48 +16,36 @@ import Badge from "@components/Badge";
 import Header from "@components/Header";
 import Button from "@components/Button";
 
-const siteList = [
-  {
-    id: 0,
-    name: "Tiki",
-    value: "tiki",
-    categories: [
-      {
-        id: 1084,
-        name: "Manga",
-      },
-      {
-        id: 7358,
-        name: "Light-novel",
-      },
-    ],
-  },
-  {
-    id: 1,
-    name: "FAHASA",
-    value: "fahasa",
-    categories: [
-      {
-        id: 6718,
-        name: "Manga",
-      },
-      {
-        id: 5981,
-        name: "Light-novel",
-      },
-    ],
-  },
-];
+import { siteList } from "@data/config";
+import type { ListingResponse } from "@data/api.types";
 
-const fetcher = (url) => fetch(url).then((res) => res.json());
+type ListingSetting = {
+  site: string;
+  category: number;
+  page: number;
+};
 
-const Products = ({ site, category, page }) => {
+type FilterParams = {
+  value: {
+    name: string;
+  };
+  contents: Array<{
+    id: number;
+    name: string;
+  }>;
+  onChange: any;
+};
+
+const Products = ({ site, category, page }: ListingSetting) => {
+  const fetcher: Fetcher<ListingResponse[], string> = (url) =>
+    fetch(url).then((res) => res.json());
+
   const { data, error } = useSWR(
     `/api/${site}?category=${category}&page=${page}`,
     fetcher
   );
 
-  if (error) return <div>failed to load</div>;
+  if (error) return <div>Đã có lỗi xảy ra, vui lòng thử lại sau</div>;
   if (!data)
     return (
       <div className="grid animate-pulse grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
@@ -130,9 +117,37 @@ const Products = ({ site, category, page }) => {
   );
 };
 
-export default function Listing() {
-  const router = useRouter();
+const Filter = ({ value, contents, onChange }: FilterParams) => {
+  return (
+    <Listbox as="div" className="z-10" value={value} onChange={onChange}>
+      <Listbox.Button className="relative flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-3">
+        {value.name} <BsChevronBarExpand />
+      </Listbox.Button>
+      <Transition
+        enter="transition duration-100 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
+      >
+        <Listbox.Options className="absolute left-0 mt-3 cursor-default overflow-hidden whitespace-nowrap rounded-2xl bg-zinc-200 shadow-lg">
+          {contents.map((content: any) => (
+            <Listbox.Option
+              key={content.id}
+              value={content}
+              className="py-1 px-3 transition-colors duration-75 ease-linear ui-selected:font-bold ui-active:bg-zinc-300"
+            >
+              {content.name}
+            </Listbox.Option>
+          ))}
+        </Listbox.Options>
+      </Transition>
+    </Listbox>
+  );
+};
 
+export default function Listing() {
   // init
   const [currentSite, changeCurrentSite] = useState(siteList[0]);
   const [currentCategory, changeCurrentCategory] = useState(
@@ -141,10 +156,20 @@ export default function Listing() {
   const [currentPage, changeCurrentPage] = useState(1);
 
   // functions
-  const handleSiteChange = (e) => {
-    changeCurrentSite(e);
-    changeCurrentCategory(e.categories[0]);
-    changeCurrentPage(1);
+  const handlePageChange = (page: typeof currentPage) => {
+    document.getElementById("__next")?.scrollIntoView({
+      behavior: "smooth",
+    });
+    changeCurrentPage(page);
+  };
+  const handleCategoryChange = (category: typeof currentCategory) => {
+    changeCurrentCategory(category);
+    handlePageChange(1);
+  };
+  const handleSiteChange = (site: typeof currentSite) => {
+    changeCurrentSite(site); // change current site to selection
+    changeCurrentCategory(site.categories[0]); // change to the 1st category of that selection
+    handlePageChange(1); // reset page to 1
   };
 
   return (
@@ -152,78 +177,30 @@ export default function Listing() {
       <Header>Thông tin truyện mới</Header>
       <div className="container mx-auto px-6">
         <div className="mb-6 flex items-center gap-3">
-          <Listbox
-            as="div"
-            className="z-10"
+          <Filter
             value={currentSite}
             onChange={handleSiteChange}
-          >
-            <Listbox.Button className="relative flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-3">
-              {currentSite.name} <BsChevronBarExpand />
-            </Listbox.Button>
-            <Transition
-              enter="transition duration-100 ease-out"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Listbox.Options className="absolute left-0 mt-3 cursor-default overflow-hidden whitespace-nowrap rounded-2xl bg-zinc-200 shadow-lg">
-                {siteList.map((site) => (
-                  <Listbox.Option
-                    key={site.id}
-                    value={site}
-                    className="py-1 px-3 transition-colors duration-75 ease-linear ui-selected:bg-primary ui-selected:text-white ui-active:bg-zinc-300"
-                  >
-                    {site.name}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Transition>
-          </Listbox>
+            contents={siteList}
+          />
           /
-          <Listbox
-            as="div"
-            className="z-10"
+          <Filter
             value={currentCategory}
-            onChange={changeCurrentCategory}
-          >
-            <Listbox.Button className="relative flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-3">
-              {currentCategory.name} <BsChevronBarExpand />
-            </Listbox.Button>
-            <Transition
-              enter="transition duration-100 ease-out"
-              enterFrom="transform scale-95 opacity-0"
-              enterTo="transform scale-100 opacity-100"
-              leave="transition duration-75 ease-out"
-              leaveFrom="transform scale-100 opacity-100"
-              leaveTo="transform scale-95 opacity-0"
-            >
-              <Listbox.Options className="absolute left-0 mt-3 cursor-default overflow-hidden whitespace-nowrap rounded-2xl bg-zinc-200 shadow-lg">
-                {currentSite.categories.map((category) => (
-                  <Listbox.Option
-                    key={category.id}
-                    value={category}
-                    className="py-1 px-3 transition-colors duration-75 ease-linear ui-selected:bg-primary ui-selected:text-white ui-active:bg-zinc-300"
-                  >
-                    {category.name}
-                  </Listbox.Option>
-                ))}
-              </Listbox.Options>
-            </Transition>
-          </Listbox>
-          /<span>{currentPage}</span>
+            onChange={handleCategoryChange}
+            contents={currentSite.categories}
+          />
+          /<span>Trang {currentPage}</span>
         </div>
+
         <Products
           site={currentSite.value}
           category={currentCategory.id}
           page={currentPage}
         />
+
         <ul className="mt-6 flex justify-between">
           {currentPage > 1 && (
             <li className="mr-3">
-              <Button onClick={() => changeCurrentPage(currentPage - 1)}>
+              <Button onClick={() => handlePageChange(currentPage - 1)}>
                 <BsChevronLeft /> Trước
               </Button>
             </li>
@@ -231,7 +208,7 @@ export default function Listing() {
           <li className="ml-auto">
             <Button
               intent="primary"
-              onClick={() => changeCurrentPage(currentPage + 1)}
+              onClick={() => handlePageChange(currentPage + 1)}
             >
               Sau <BsChevronRight />
             </Button>
