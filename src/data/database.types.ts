@@ -18,6 +18,7 @@ export interface Database {
           image_url: string | null
           publisher: string
           type: string
+          timestamp: string
         }
         Insert: {
           id?: string
@@ -27,6 +28,7 @@ export interface Database {
           image_url?: string | null
           publisher: string
           type: string
+          timestamp?: string
         }
         Update: {
           id?: string
@@ -36,6 +38,7 @@ export interface Database {
           image_url?: string | null
           publisher?: string
           type?: string
+          timestamp?: string
         }
       }
       publication: {
