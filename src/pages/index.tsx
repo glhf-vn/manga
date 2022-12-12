@@ -132,7 +132,7 @@ const ReleasesSlide = ({ releases }: SlideProps) => {
           </button>
         </div>
 
-        <div className="splide__progress absolute top-[75%] left-0 right-0 -z-10 hidden sm:block">
+        <div className="splide__progress absolute top-[70%] left-0 right-0 -z-10 hidden sm:block">
           <div className="splide__progress__bar h-1 bg-primary" />
         </div>
       </Splide>
