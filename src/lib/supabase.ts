@@ -26,6 +26,9 @@ export async function getEntries(
     .order("date", {
       ascending: true,
     })
+    .order("wide", {
+      ascending: false,
+    })
     .order("name", {
       ascending: true,
     });

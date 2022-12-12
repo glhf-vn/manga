@@ -63,12 +63,8 @@ interface SlideProps {
 
 const ReleasesSlide = ({ releases }: SlideProps) => {
   return (
-    <div
-      className="relative"
-      style={{
-        background: "linear-gradient(to bottom, #f4f4f5 75%, transparent 75%)",
-      }}
-    >
+    <div className="relative">
+      <div className="absolute inset-0 bottom-[30%] bg-zinc-100 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)] dark:bg-zinc-900"></div>
       <Splide
         hasTrack={false}
         options={{
@@ -158,7 +154,7 @@ const MonthSelect = () => {
     <div className="z-10 flex items-center gap-3 font-kanit text-lg font-bold sm:text-xl md:text-2xl lg:text-3xl">
       <span>Lịch phát hành</span>
       <Menu as="div" className="relative">
-        <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2">
+        <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2 dark:bg-zinc-700">
           tháng {pagedMonth}
           <BsChevronDown className="text-sm" />
         </Menu.Button>
@@ -170,10 +166,10 @@ const MonthSelect = () => {
           leaveFrom="transform scale-100 opacity-100"
           leaveTo="transform scale-95 opacity-0"
         >
-          <Menu.Items className="absolute right-0 mt-3 w-full overflow-hidden rounded-2xl bg-zinc-200 shadow-lg">
+          <Menu.Items className="absolute right-0 mt-3 w-full overflow-hidden rounded-2xl bg-zinc-200 shadow-lg dark:bg-zinc-700">
             <Menu.Item>
               <Link
-                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300"
+                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
                 href={`/archive/${lastMonth.get("year")}/${lastMonth.get(
                   "month"
                 )}`}
@@ -183,7 +179,7 @@ const MonthSelect = () => {
             </Menu.Item>
             <Menu.Item>
               <Link
-                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300"
+                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
                 href={`/`}
               >
                 {thisMonth.setLocale("vi").toFormat("MMMM")}
@@ -191,7 +187,7 @@ const MonthSelect = () => {
             </Menu.Item>
             <Menu.Item>
               <Link
-                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300"
+                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
                 href={`/archive/${nextMonth.get("year")}/${nextMonth.get(
                   "month"
                 )}`}
@@ -315,12 +311,10 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
             <div className="mt-6">
               <div className="mt-1 flex gap-2">
                 {/* TODO: hide button on unsupported browser */}
-                <Button onClick={handleShare}>
+                <Button onClick={handleShare} intent="secondary">
                   <BsBoxArrowUp className="h-[20px] w-[20px]" />
                 </Button>
-                <Button
-                  style={{ backgroundColor: "#c92127", color: "#ffffff" }}
-                >
+                <Button className="bg-[#c92127] text-zinc-50">
                   <a
                     href={`https://fahasa.com/catalogsearch/result/?q=${data.name}`}
                     target="_blank"
@@ -334,9 +328,7 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
                     />
                   </a>
                 </Button>
-                <Button
-                  style={{ backgroundColor: "#1a94ff", color: "#ffffff" }}
-                >
+                <Button className="bg-[#1a94ff] text-zinc-50">
                   <a
                     href={`https://tiki.vn/search?q=${data.name}`}
                     target="_blank"
@@ -350,9 +342,7 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
                     />
                   </a>
                 </Button>
-                <Button
-                  style={{ backgroundColor: "#ff6633", color: "#ffffff" }}
-                >
+                <Button className="bg-[#ff6633] text-zinc-50">
                   <a
                     href={`https://shopee.vn/search?keyword=${data.name}`}
                     target="_blank"
@@ -460,13 +450,14 @@ export const Releases = ({
       <div className="container mx-auto px-6">
         <div className="flex justify-between">
           <MonthSelect />
-          <button
-            className="rounded-2xl bg-zinc-200 px-2 text-xl sm:text-2xl lg:text-3xl"
+          <Button
+            className="rounded-2xl px-2 text-xl sm:text-2xl lg:text-3xl"
             onClick={() => setFilterOpen(!filterOpen)}
             aria-label="Mở bộ lọc"
+            intent="secondary"
           >
             <BsFilter />
-          </button>
+          </Button>
         </div>
 
         {releases.map((releaseDate) => {
@@ -492,6 +483,7 @@ export const Releases = ({
                       key={release.id}
                       clickable={true}
                       entry={release}
+                      cardSize={release.wide ? "wide" : "normal"}
                     >
                       {release.edition && (
                         <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">

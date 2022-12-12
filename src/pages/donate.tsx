@@ -19,7 +19,7 @@ export default function Donate() {
         <div className="mb-12">
           <Button
             href="https://me.momo.vn/catouberos"
-            className="mr-3 bg-[#d82d8b] text-white"
+            className="mr-3 bg-[#d82d8b] text-white dark:bg-[#d82d8b]"
           >
             <Image
               alt="MoMo logo"
@@ -31,7 +31,7 @@ export default function Donate() {
           </Button>
           <Button
             href="https://social.zalopay.vn/mt-gateway/v1/private-qr?note=&receiver_id=190126000002776"
-            className="text-bold mr-3 border border-[#efefef] bg-white"
+            className="text-bold mr-3 border border-[#efefef] bg-white text-zinc-800 dark:bg-white"
           >
             <Image
               alt="ZaloPay logo"

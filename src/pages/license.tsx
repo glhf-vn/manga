@@ -56,7 +56,7 @@ const Filter = ({
                   />
                   <label
                     htmlFor={`${value.id}`}
-                    className="ml-3 text-sm text-gray-600"
+                    className="ml-3 text-sm text-zinc-600 dark:text-zinc-400"
                   >
                     {value.name}
                   </label>
@@ -174,7 +174,7 @@ export default function License({
                             </h3>
                           </div>
                           {(license.source || license.anilist) && (
-                            <div className="border-t border-zinc-200 px-3 text-right text-zinc-600">
+                            <div className="border-t border-zinc-200 px-3 text-right text-zinc-600 dark:border-zinc-600 dark:text-zinc-200">
                               {license.source && (
                                 <a
                                   target="_blank"

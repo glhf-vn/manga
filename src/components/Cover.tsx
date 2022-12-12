@@ -16,7 +16,7 @@ const imageStyles = cva("w-full h-full", {
 });
 
 const placeholderStyles = cva(
-  `flex bg-zinc-200 p-6 text-zinc-500 aspect-[2/3] h-full w-full items-center justify-center text-center font-kanit font-bold`,
+  `flex bg-zinc-200 dark:bg-zinc-700 dark:text-zinc-400 p-6 text-zinc-500 aspect-[2/3] h-full w-full items-center justify-center text-center font-kanit font-bold`,
   {
     variants: {
       hero: {

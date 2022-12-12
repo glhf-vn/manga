@@ -1,7 +1,7 @@
 import type { HTMLProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const buttonStyles = cva("m-2 rounded-lg py-0.5 px-1.5 text-xs", {
+const buttonStyles = cva("m-2 rounded-lg py-0.5 px-1.5 text-xs text-zinc-800", {
   variants: {
     intent: {
       primary: "bg-zinc-200",

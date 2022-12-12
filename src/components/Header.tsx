@@ -1,7 +1,7 @@
 import { type ReactNode } from "react";
 
 const containerStyles =
-  "mb-12 flex h-96 items-center justify-center bg-zinc-100 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)]";
+  "mb-12 flex h-96 items-center justify-center bg-zinc-100 dark:bg-zinc-900 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)]";
 const titleStyles = `container px-6 text-center text-4xl font-kanit font-bold`;
 
 export interface HeaderProps {

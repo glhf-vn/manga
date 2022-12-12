@@ -120,7 +120,7 @@ const Products = ({ site, category, page }: ListingSetting) => {
 const Filter = ({ value, contents, onChange }: FilterParams) => {
   return (
     <Listbox as="div" className="z-10" value={value} onChange={onChange}>
-      <Listbox.Button className="relative flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-3">
+      <Listbox.Button className="relative flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-3 dark:bg-zinc-700">
         {value.name} <BsChevronBarExpand />
       </Listbox.Button>
       <Transition
@@ -131,12 +131,12 @@ const Filter = ({ value, contents, onChange }: FilterParams) => {
         leaveFrom="transform scale-100 opacity-100"
         leaveTo="transform scale-95 opacity-0"
       >
-        <Listbox.Options className="absolute left-0 mt-3 cursor-default overflow-hidden whitespace-nowrap rounded-2xl bg-zinc-200 shadow-lg">
+        <Listbox.Options className="absolute left-0 mt-3 cursor-default overflow-hidden whitespace-nowrap rounded-2xl bg-zinc-200 shadow-lg dark:bg-zinc-700">
           {contents.map((content: any) => (
             <Listbox.Option
               key={content.id}
               value={content}
-              className="py-1 px-3 transition-colors duration-75 ease-linear ui-selected:font-bold ui-active:bg-zinc-300"
+              className="py-1 px-3 transition-colors duration-75 ease-linear ui-selected:font-bold ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
             >
               {content.name}
             </Listbox.Option>

@@ -67,12 +67,15 @@ const MobileMenu = () => {
       </Menu>
 
       {/* open menu on mobile */}
-      <div className="fixed top-4 right-4 z-[1200] sm:hidden">
+      <div
+        className={`fixed top-4 right-4 z-[1200] sm:hidden ${
+          menuOpen ? "text-zinc-50" : "text-zinc-800 dark:text-zinc-50"
+        }`}
+      >
         <Hamburger
           size={24}
           toggled={menuOpen}
           toggle={() => setMenuOpen(!menuOpen)}
-          color={menuOpen ? "white" : "black"}
           label="Mở menu"
           rounded
         />

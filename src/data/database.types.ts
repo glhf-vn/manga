@@ -48,9 +48,9 @@ export interface Database {
           date: string
           publisher: string
           price: number
-          description: string | null
           image_url: string | null
           edition: string | null
+          wide: boolean
         }
         Insert: {
           id?: string
@@ -58,9 +58,9 @@ export interface Database {
           date: string
           publisher: string
           price?: number
-          description?: string | null
           image_url?: string | null
           edition?: string | null
+          wide?: boolean
         }
         Update: {
           id?: string
@@ -68,9 +68,9 @@ export interface Database {
           date?: string
           publisher?: string
           price?: number
-          description?: string | null
           image_url?: string | null
           edition?: string | null
+          wide?: boolean
         }
       }
       publisher: {

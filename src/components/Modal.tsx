@@ -42,7 +42,7 @@ export default function Modal({
         >
           <div className="fixed inset-0 z-[1300] overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-6">
-              <Dialog.Panel className="relative w-full max-w-[640px] overflow-hidden rounded-2xl bg-white">
+              <Dialog.Panel className="relative w-full max-w-[640px] overflow-hidden rounded-2xl bg-zinc-50 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-50">
                 {children}
 
                 <BsXLg
