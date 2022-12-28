@@ -11,7 +11,6 @@
   "dependencies": {
     "@headlessui/react": "^1.7.3",
     "@headlessui/tailwindcss": "^0.1.1",
-    "@next/font": "^13.0.0",
     "@popperjs/core": "^2.11.6",
     "@splidejs/react-splide": "^0.7.12",
     "@supabase/supabase-js": "^2.1.1",

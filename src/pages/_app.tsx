@@ -3,17 +3,14 @@ import type { AppProps } from "next/app";
 import NextNProgress from "nextjs-progressbar";
 import { DefaultSeo } from "next-seo";
 import { Analytics } from "@vercel/analytics/react";
-import { Inter } from "@next/font/google";
 
 import "@styles/app.scss";
 
 import { seoConfig } from "@data/config";
 
-const inter = Inter();
-
 export default function App({ Component, pageProps }: AppProps) {
   return (
-    <div className={inter.className}>
+    <div>
       <DefaultSeo
         additionalLinkTags={[
           {

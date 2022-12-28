@@ -1,3 +1,5 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   content: ["./pages/**/*.{js,ts,jsx,tsx}", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -17,6 +19,7 @@ module.exports = {
         primary: "#f8b60b",
       },
       fontFamily: {
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
         kanit: "Kanit, sans-serif",
       },
     },
