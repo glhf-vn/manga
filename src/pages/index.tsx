@@ -19,6 +19,8 @@ import { NextSeo } from "next-seo";
 import {
   BsChevronDown,
   BsBoxArrowUp,
+  BsChevronLeft,
+  BsChevronRight,
   BsChevronCompactLeft,
   BsChevronCompactRight,
   BsFilter,
@@ -176,6 +178,33 @@ const MonthSelect = () => {
           </Menu.Items>
         </Transition>
       </Menu>
+    </div>
+  );
+};
+
+const Pagination = () => {
+  const lastMonth = DateTime.now().minus({ month: 1 });
+  const nextMonth = DateTime.now().plus({ month: 1 });
+
+  return (
+    <div className="flex justify-between">
+      <Button intent="secondary">
+        <Link
+          className="flex items-center justify-center gap-3"
+          href={`/archive/${lastMonth.year}/${lastMonth.month}`}
+        >
+          <BsChevronLeft /> Trước
+        </Link>
+      </Button>
+
+      <Button intent="primary">
+        <Link
+          className="flex items-center justify-center gap-3"
+          href={`/archive/${nextMonth.year}/${nextMonth.month}`}
+        >
+          Sau <BsChevronRight />
+        </Link>
+      </Button>
     </div>
   );
 };
@@ -555,6 +584,10 @@ export const Releases = ({
           data={releases}
         />
       )}
+
+      <div className="container mx-auto mt-12 px-6">
+        <Pagination />
+      </div>
     </Layout>
   );
 };
