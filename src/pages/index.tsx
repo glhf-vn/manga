@@ -17,8 +17,10 @@ import { DateTime } from "luxon";
 import { Dialog, Menu, Switch, Transition } from "@headlessui/react";
 import { NextSeo } from "next-seo";
 import {
-  BsChevronDown,
   BsBoxArrowUp,
+  BsBoxArrowUpRight,
+  BsCalendar2CheckFill,
+  BsChevronDown,
   BsChevronLeft,
   BsChevronRight,
   BsChevronCompactLeft,
@@ -183,8 +185,19 @@ const MonthSelect = () => {
 };
 
 const Pagination = () => {
-  const lastMonth = DateTime.now().minus({ month: 1 });
-  const nextMonth = DateTime.now().plus({ month: 1 });
+  const router = useRouter();
+  const params = router.query;
+
+  const year: number = params?.year ? +params.year : DateTime.now().year;
+  const month: number = params?.month ? +params.month : DateTime.now().month;
+
+  const pagedTime = DateTime.fromObject({
+    year: year,
+    month: month,
+  });
+
+  const lastMonth = pagedTime.minus({ month: 1 });
+  const nextMonth = pagedTime.plus({ month: 1 });
 
   return (
     <div className="flex justify-between">
@@ -420,7 +433,8 @@ const ListView = ({ setModalOpen, setModalData, data }: ReleasesView) => (
         <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">Tên</span>
         <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
         {data.map((releaseDate) => {
-          let date = DateTime.fromISO(releaseDate.date).setLocale("vi");
+          const date = DateTime.fromISO(releaseDate.date).setLocale("vi");
+          const today = DateTime.now();
 
           return (
             <>
@@ -431,12 +445,27 @@ const ListView = ({ setModalOpen, setModalData, data }: ReleasesView) => (
                 }}
               >
                 <span>{date.toFormat("dd/MM/yyyy")}</span>
+                {date < today && (
+                  <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-200" />
+                )}
               </div>
               {releaseDate.entries.map((release) => (
                 <>
-                  <span className="col-span-4 border-t p-3 dark:border-zinc-600">
-                    {release.name}
-                  </span>
+                  <div
+                    className="col-span-4 flex cursor-pointer items-center gap-3 border-t p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600"
+                    onClick={() => {
+                      setModalData(release);
+                      setModalOpen(true);
+                    }}
+                  >
+                    <span className="">{release.name}</span>
+                    {release.edition && (
+                      <Badge className="m-0 bg-amber-200/75 backdrop-blur-md">
+                        {release.edition}
+                      </Badge>
+                    )}
+                    <BsBoxArrowUpRight className="inline-block text-zinc-400" />
+                  </div>
                   <span className="border-t p-3 dark:border-zinc-600">
                     {release.price}
                   </span>
@@ -558,7 +587,7 @@ export const Releases = ({
                   view ? "translate-x-0" : "translate-x-full"
                 } absolute top-0 h-full w-1/2 transform bg-primary transition-transform duration-200 ease-in-out`}
               ></div>
-              <div className="relative z-10 grid w-full grid-cols-2 items-center">
+              <div className="relative grid w-full grid-cols-2 items-center">
                 <span className="flex h-full items-center justify-center px-3">
                   <BsFillGridFill />
                 </span>
