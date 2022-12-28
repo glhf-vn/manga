@@ -1,12 +1,20 @@
+import type { InferGetStaticPropsType } from "next";
+import type {
+  MinimalInfo,
+  SlideProps,
+  FilterModalProps,
+  InfoModalProps,
+  ReleasesView,
+} from "@data/index.types";
+
 import { getEntries, getEntriesByGroup, getPublishers } from "@lib/supabase";
 
-import type { InferGetStaticPropsType } from "next";
 import { useRouter } from "next/router";
 import { isEmpty } from "lodash";
 import { useState } from "react";
 import { DateTime } from "luxon";
 
-import { Dialog, Menu, Transition } from "@headlessui/react";
+import { Dialog, Menu, Switch, Transition } from "@headlessui/react";
 import { NextSeo } from "next-seo";
 import {
   BsChevronDown,
@@ -14,6 +22,8 @@ import {
   BsChevronCompactLeft,
   BsChevronCompactRight,
   BsFilter,
+  BsFillGridFill,
+  BsListUl,
 } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
@@ -28,38 +38,6 @@ import Cover from "@components/Cover";
 import Modal from "@components/Modal";
 
 import "@splidejs/react-splide/css/core";
-
-interface MinimalInfo {
-  name: string;
-  publisherLabel: string;
-  price: string;
-  date: string;
-  image_url: string | null;
-  id: string;
-  edition: string | null;
-}
-
-interface ModalProps {
-  isOpen: boolean;
-  onClose: () => void;
-}
-
-interface InfoModalProps extends ModalProps {
-  data: MinimalInfo;
-}
-
-interface FilterModalProps extends ModalProps {
-  values: {
-    id: string;
-    name: string;
-    color: string;
-  }[];
-  handler: (checked: boolean, filterId: string) => void;
-}
-
-interface SlideProps {
-  releases: MinimalInfo[];
-}
 
 const ReleasesSlide = ({ releases }: SlideProps) => {
   return (
@@ -151,7 +129,7 @@ const MonthSelect = () => {
   const pagedMonth = isEmpty(path) ? thisMonth.get("month") : path.month;
 
   return (
-    <div className="z-10 flex items-center gap-3 font-kanit text-lg font-bold sm:text-xl md:text-2xl lg:text-3xl">
+    <div className="z-10 flex items-center gap-3 font-kanit text-2xl font-bold">
       <span>Lịch phát hành</span>
       <Menu as="div" className="relative">
         <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2 dark:bg-zinc-700">
@@ -214,7 +192,6 @@ const FilterModal = ({
         <Dialog.Title className="m-6 font-kanit text-2xl font-bold lg:text-3xl">
           Lọc theo nhà xuất bản/phát hành
         </Dialog.Title>
-        {/* TODO: Filter */}
         <Dialog.Description className="m-6 space-y-1">
           {values.map((value) => (
             <div key={value.id} className="flex items-center">
@@ -227,7 +204,7 @@ const FilterModal = ({
               />
               <label
                 htmlFor={`${value.id}`}
-                className="ml-3 text-sm text-gray-600"
+                className="ml-3 text-sm text-zinc-600 dark:text-zinc-400"
               >
                 {value.name}
               </label>
@@ -365,6 +342,85 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
   );
 };
 
+const CardView = ({ setModalOpen, setModalData, data }: ReleasesView) => (
+  <>
+    {data.map((releaseDate) => {
+      let date = DateTime.fromISO(releaseDate.date).setLocale("vi");
+      let today = DateTime.now();
+
+      return (
+        <div className="container mx-auto px-6" key={date.valueOf()}>
+          <div className={`mt-12 mb-3 flex items-center text-xl font-bold`}>
+            <span className="capitalize">{date.toFormat("EEEE - dd/MM")}</span>
+            {date < today && <Badge intent="success">Đã phát hành!</Badge>}
+          </div>
+          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
+            {releaseDate.entries.map((release) => (
+              <Card
+                onClick={() => {
+                  setModalData(release);
+                  setModalOpen(true);
+                }}
+                key={release.id}
+                clickable={true}
+                entry={release}
+                cardSize={release.wide ? "wide" : "normal"}
+              >
+                {release.edition && (
+                  <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
+                    {release.edition}
+                  </Badge>
+                )}
+                <Cover entry={release} sizes="(max-width: 768px) 40vw, 200px" />
+              </Card>
+            ))}
+          </div>
+        </div>
+      );
+    })}
+  </>
+);
+
+const ListView = ({ setModalOpen, setModalData, data }: ReleasesView) => (
+  <div className="mx-auto overflow-scroll lg:container">
+    <div className="min-w-fit px-6">
+      <div className="mt-12 grid min-w-max grid-cols-6 overflow-hidden rounded-2xl border dark:border-zinc-600">
+        <span className="border-r p-3 text-center font-bold dark:border-zinc-600 dark:bg-zinc-700">
+          Ngày phát hành
+        </span>
+        <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">Tên</span>
+        <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
+        {data.map((releaseDate) => {
+          let date = DateTime.fromISO(releaseDate.date).setLocale("vi");
+
+          return (
+            <>
+              <div
+                className="flex h-full items-center justify-center border-t border-r p-3 font-bold dark:border-zinc-600"
+                style={{
+                  gridRow: `span ${releaseDate.entries.length} / span ${releaseDate.entries.length}`,
+                }}
+              >
+                <span>{date.toFormat("dd/MM/yyyy")}</span>
+              </div>
+              {releaseDate.entries.map((release) => (
+                <>
+                  <span className="col-span-4 border-t p-3 dark:border-zinc-600">
+                    {release.name}
+                  </span>
+                  <span className="border-t p-3 dark:border-zinc-600">
+                    {release.price}
+                  </span>
+                </>
+              ))}
+            </>
+          );
+        })}
+      </div>
+    </div>
+  </div>
+);
+
 export const getStaticProps = async () => {
   const releases = await getEntriesByGroup();
 
@@ -400,6 +456,7 @@ export const Releases = ({
     id: "default",
     edition: null,
   });
+
   const [filterPublishers, changeFilterPublishers] = useState(
     publishers.map((publisher) => publisher.id)
   );
@@ -425,6 +482,8 @@ export const Releases = ({
     ),
   }));
 
+  const [view, toggleView] = useState(true); // true = card, false = list
+
   return (
     <Layout>
       <NextSeo
@@ -448,60 +507,54 @@ export const Releases = ({
       <ReleasesSlide releases={slideReleases} />
 
       <div className="container mx-auto px-6">
-        <div className="flex justify-between">
+        <div className="flex flex-col justify-between gap-6 sm:flex-row">
           <MonthSelect />
-          <Button
-            className="rounded-2xl px-2 text-xl sm:text-2xl lg:text-3xl"
-            onClick={() => setFilterOpen(!filterOpen)}
-            aria-label="Mở bộ lọc"
-            intent="secondary"
-          >
-            <BsFilter />
-          </Button>
-        </div>
-
-        {releases.map((releaseDate) => {
-          let date = DateTime.fromISO(releaseDate.date).setLocale("vi");
-          let today = DateTime.now();
-
-          return (
-            <div key={date.valueOf()}>
-              <div className={`mt-12 mb-3 flex items-center text-xl font-bold`}>
-                <span className="capitalize">
-                  {date.toFormat("EEEE - dd/MM")}
+          <div className="grid grid-cols-2 gap-6 sm:flex">
+            <Button
+              className="rounded-2xl px-2 text-xl sm:text-2xl lg:text-3xl"
+              onClick={() => setFilterOpen(!filterOpen)}
+              aria-label="Mở bộ lọc"
+              intent="secondary"
+            >
+              <BsFilter />
+            </Button>
+            <Switch
+              checked={view}
+              onChange={toggleView}
+              className="relative overflow-hidden rounded-2xl bg-zinc-200 dark:bg-zinc-700"
+            >
+              <span className="sr-only">Thay đổi layout</span>
+              <div
+                className={`${
+                  view ? "translate-x-0" : "translate-x-full"
+                } absolute top-0 h-full w-1/2 transform bg-primary transition-transform duration-200 ease-in-out`}
+              ></div>
+              <div className="relative z-10 grid w-full grid-cols-2 items-center">
+                <span className="flex h-full items-center justify-center px-3">
+                  <BsFillGridFill />
                 </span>
-                {date < today && <Badge intent="success">Đã phát hành!</Badge>}
+                <span className="flex h-full items-center justify-center px-3">
+                  <BsListUl />
+                </span>
               </div>
-              <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
-                {releaseDate.entries.map((release) => {
-                  return (
-                    <Card
-                      onClick={() => {
-                        setModalData(release);
-                        setModalOpen(true);
-                      }}
-                      key={release.id}
-                      clickable={true}
-                      entry={release}
-                      cardSize={release.wide ? "wide" : "normal"}
-                    >
-                      {release.edition && (
-                        <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
-                          {release.edition}
-                        </Badge>
-                      )}
-                      <Cover
-                        entry={release}
-                        sizes="(max-width: 768px) 40vw, 200px"
-                      />
-                    </Card>
-                  );
-                })}
-              </div>
-            </div>
-          );
-        })}
+            </Switch>
+          </div>
+        </div>
       </div>
+
+      {view ? (
+        <CardView
+          setModalOpen={setModalOpen}
+          setModalData={setModalData}
+          data={releases}
+        />
+      ) : (
+        <ListView
+          setModalOpen={setModalOpen}
+          setModalData={setModalData}
+          data={releases}
+        />
+      )}
     </Layout>
   );
 };
