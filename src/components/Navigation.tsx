@@ -26,13 +26,13 @@ const MobileMenu = () => {
         right
       >
         <Link href="/" className={`bm-item font-kanit`}>
-          Lịch phát hành{" "}
+          Lịch phát hành
         </Link>
         <Link href="/license" className={`bm-item font-kanit`}>
-          Thông tin bản quyền{" "}
+          Thông tin bản quyền
         </Link>
         <Link href="/listing" className={`bm-item font-kanit`}>
-          Mua truyện mới{" "}
+          Mua truyện mới
         </Link>
         <Link href="/donate" className={`bm-item font-kanit`}>
           {"Ủng hộ <3"}
@@ -94,7 +94,7 @@ const DesktopMenu = () => {
           <Link
             href="/"
             className={`${
-              router.pathname == "/"
+              router.pathname == "/" || router.pathname.includes("archive")
                 ? "text-primary"
                 : "transition-colors duration-100 ease-linear hover:text-zinc-700"
             } p-3`}

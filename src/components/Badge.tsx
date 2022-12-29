@@ -20,7 +20,6 @@ export interface BadgeProps
   extends VariantProps<typeof buttonStyles>,
     HTMLProps<HTMLSpanElement> {
   children?: ReactNode;
-  className?: string;
 }
 
 export default function Badge({
@@ -30,7 +29,7 @@ export default function Badge({
   ...props
 }: BadgeProps) {
   return (
-    <span className={`${buttonStyles({ intent })} ${className}`} {...props}>
+    <span className={buttonStyles({ intent, className })} {...props}>
       {children}
     </span>
   );

@@ -35,7 +35,6 @@ export interface CardProps
   extends VariantProps<typeof cardStyles>,
     HTMLProps<HTMLDivElement> {
   children?: ReactNode;
-  className?: string;
   entry?: {
     name: string;
     price: string;
@@ -49,21 +48,22 @@ export default function Card({
   clickable,
   cardSize,
   children,
-  entry,
   className,
+  entry,
   ...props
 }: CardProps): JSX.Element {
   return (
     <div
-      className={`${className} ${cardStyles({
+      className={cardStyles({
         intent,
         hoverable,
         clickable,
         cardSize,
-      })}`}
+        className,
+      })}
       {...props}
     >
-      {children} {className}
+      {children}
     </div>
   );
 }
