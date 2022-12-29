@@ -37,7 +37,6 @@ export interface CoverProps {
     id: string;
   };
   loader?: boolean;
-  priority?: boolean;
   sizes?: string;
 }
 
@@ -50,7 +49,6 @@ export default function Cover({
   entry,
   hero,
   fit,
-  priority = true,
   loader = true,
   sizes = "(max-width: 768px) 50vw, (max-width: 1024px) 75vw, 100vw",
 }: Props) {
@@ -64,7 +62,6 @@ export default function Cover({
           alt={entry.name}
           width={300}
           height={450}
-          priority={priority}
           sizes={sizes}
         />
       );
@@ -77,7 +74,6 @@ export default function Cover({
           unoptimized={true}
           width={300}
           height={450}
-          priority={priority}
           sizes={sizes}
         />
       );
