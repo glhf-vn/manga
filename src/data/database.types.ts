@@ -51,6 +51,7 @@ export interface Database {
           image_url: string | null
           edition: string | null
           wide: boolean
+          type: string | null
         }
         Insert: {
           id?: string
@@ -61,6 +62,7 @@ export interface Database {
           image_url?: string | null
           edition?: string | null
           wide?: boolean
+          type?: string | null
         }
         Update: {
           id?: string
@@ -71,6 +73,7 @@ export interface Database {
           image_url?: string | null
           edition?: string | null
           wide?: boolean
+          type?: string | null
         }
       }
       publisher: {
