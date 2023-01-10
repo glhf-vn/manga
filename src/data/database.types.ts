@@ -19,6 +19,7 @@ export interface Database {
           publisher: string
           type: string
           timestamp: string
+          serie_id: number | null
         }
         Insert: {
           id?: string
@@ -29,6 +30,7 @@ export interface Database {
           publisher: string
           type: string
           timestamp?: string
+          serie_id?: number | null
         }
         Update: {
           id?: string
@@ -39,6 +41,7 @@ export interface Database {
           publisher?: string
           type?: string
           timestamp?: string
+          serie_id?: number | null
         }
       }
       publication: {
@@ -52,6 +55,7 @@ export interface Database {
           edition: string | null
           wide: boolean
           type: string | null
+          serie_id: number | null
         }
         Insert: {
           id?: string
@@ -63,6 +67,7 @@ export interface Database {
           edition?: string | null
           wide?: boolean
           type?: string | null
+          serie_id?: number | null
         }
         Update: {
           id?: string
@@ -74,6 +79,7 @@ export interface Database {
           edition?: string | null
           wide?: boolean
           type?: string | null
+          serie_id?: number | null
         }
       }
       publisher: {
@@ -91,6 +97,29 @@ export interface Database {
           id?: string
           name?: string
           color?: string
+        }
+      }
+      series: {
+        Row: {
+          id: number
+          name: string
+          publisher: string
+          type: string
+          anilist: number | null
+        }
+        Insert: {
+          id?: number
+          name: string
+          publisher: string
+          type: string
+          anilist?: number | null
+        }
+        Update: {
+          id?: number
+          name?: string
+          publisher?: string
+          type?: string
+          anilist?: number | null
         }
       }
       type: {
@@ -118,7 +147,14 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      continents:
+        | "Africa"
+        | "Antarctica"
+        | "Asia"
+        | "Europe"
+        | "Oceania"
+        | "North America"
+        | "South America"
     }
   }
 }
