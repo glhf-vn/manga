@@ -3,6 +3,7 @@ import { DateTime } from "luxon";
 import _ from "lodash";
 
 import { Database } from "@data/database.types";
+import { ServerResponse } from "http";
 
 // Create a single supabase client for interacting with your database
 const client = createClient<Database>(
@@ -31,6 +32,9 @@ export async function getEntries(
     })
     .order("name", {
       ascending: true,
+    })
+    .order("edition", {
+      ascending: false,
     });
 
   if (error) {
@@ -70,6 +74,37 @@ export async function getEntriesByGroup(
   });
 
   return mappedEvents;
+}
+
+export async function getEntriesById(id: number, count?: number) {
+  const response = client
+    .from("publication")
+    .select()
+    .eq("serie_id", id)
+    .order("date", {
+      ascending: true,
+    })
+    .order("edition", {
+      ascending: false,
+    });
+
+  const { data } = count ? await response.limit(count) : await response;
+
+  return data!;
+}
+
+export async function getLicensedInfo(id: number) {
+  const { data, error } = await client
+    .from("licensed")
+    .select()
+    .eq("serie_id", id)
+    .limit(1);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
 }
 
 export async function getLicensed() {
@@ -114,6 +149,16 @@ export async function getType(query: string) {
   return data[0];
 }
 
+export async function getTypes() {
+  const { data, error } = await client.from("type").select();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
 export async function getPublisher(query: string) {
   const { data, error } = await client
     .from("publisher")
@@ -128,16 +173,6 @@ export async function getPublisher(query: string) {
   return data[0];
 }
 
-export async function getTypes() {
-  const { data, error } = await client.from("type").select();
-
-  if (error) {
-    throw error;
-  }
-
-  return data;
-}
-
 export async function getPublishers() {
   const { data, error } = await client.from("publisher").select();
 
@@ -146,4 +181,65 @@ export async function getPublishers() {
   }
 
   return data;
+}
+
+export async function getSeriesId() {
+  const { data, error } = await client.from("series").select(`id`);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function getSeries() {
+  const { data, error } = await client.from("series").select(`
+    *,
+    publisher(name),
+    publication(id,name,edition,price,image_url,date),
+    licensed(name,source,image_url)
+  `);
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function getSerie(id: number) {
+  const { data, error } = await client
+    .from("series")
+    .select(
+      `
+    id,
+    name,
+    anilist,
+    type(*),
+    publisher(*),
+    publication(id,name,edition,price,image_url,date),
+    licensed(source,image_url,timestamp)
+    `
+    )
+    .eq("id", id)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return {
+    ...data,
+    type: Array.isArray(data.type) ? data.type[0] : data.type,
+    publisher: Array.isArray(data.publisher)
+      ? data.publisher[0]
+      : data.publisher,
+    publication: data.publication
+      ? Array.isArray(data.publication)
+        ? data.publication
+        : [data.publication]
+      : null,
+    licensed: Array.isArray(data.licensed) ? data.licensed[0] : data.licensed,
+  };
 }
