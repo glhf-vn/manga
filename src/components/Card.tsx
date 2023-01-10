@@ -26,7 +26,7 @@ const cardStyles = cva(
       intent: "primary",
       hoverable: true,
       clickable: false,
-      cardSize: "wide",
+      cardSize: "normal",
     },
   }
 );
