@@ -85,9 +85,7 @@ const ReleasesSlide = ({ releases }: SlideProps) => {
                     <span className="hidden sm:inline">Phát hành </span>
                     <span className="text-xl sm:text-base">
                       <span className="capitalize">
-                        {DateTime.fromISO(release.date)
-                          .setLocale("vi")
-                          .toFormat("EEEE, D")}
+                        {DateTime.fromISO(release.date).toFormat("EEEE, D")}
                       </span>
                     </span>
                     <h2 className="mt-3 mb-6 hidden font-kanit text-4xl font-bold sm:block">
@@ -156,7 +154,7 @@ const MonthSelect = () => {
                   "month"
                 )}`}
               >
-                {lastMonth.setLocale("vi").toFormat("MMMM")}
+                {lastMonth.toFormat("MMMM")}
               </Link>
             </Menu.Item>
             <Menu.Item>
@@ -164,7 +162,7 @@ const MonthSelect = () => {
                 className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
                 href={`/`}
               >
-                {thisMonth.setLocale("vi").toFormat("MMMM")}
+                {thisMonth.toFormat("MMMM")}
               </Link>
             </Menu.Item>
             <Menu.Item>
@@ -174,7 +172,7 @@ const MonthSelect = () => {
                   "month"
                 )}`}
               >
-                {nextMonth.setLocale("vi").toFormat("MMMM")}
+                {nextMonth.toFormat("MMMM")}
               </Link>
             </Menu.Item>
           </Menu.Items>
@@ -311,9 +309,9 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
               </Dialog.Title>
               <Dialog.Description>
                 <b>Ngày phát hành</b>:{" "}
-                {DateTime.fromISO(data.date)
-                  .setLocale("vi")
-                  .toLocaleString(DateTime.DATE_SHORT)}
+                {DateTime.fromISO(data.date).toLocaleString(
+                  DateTime.DATE_SHORT
+                )}
                 <br />
                 {data.edition && (
                   <>
@@ -387,7 +385,7 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
 const CardView = ({ setModalOpen, setModalData, data }: ReleasesView) => (
   <>
     {data.map((releaseDate) => {
-      let date = DateTime.fromISO(releaseDate.date).setLocale("vi");
+      let date = DateTime.fromISO(releaseDate.date);
       let today = DateTime.now();
 
       return (
@@ -433,7 +431,7 @@ const ListView = ({ setModalOpen, setModalData, data }: ReleasesView) => (
         <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">Tên</span>
         <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
         {data.map((releaseDate) => {
-          const date = DateTime.fromISO(releaseDate.date).setLocale("vi");
+          const date = DateTime.fromISO(releaseDate.date);
           const today = DateTime.now();
 
           return (

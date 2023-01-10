@@ -1,5 +1,7 @@
 import type { AppProps } from "next/app";
 
+import { DateTime, Settings } from "luxon";
+
 import NextNProgress from "nextjs-progressbar";
 import { DefaultSeo } from "next-seo";
 import { Analytics } from "@vercel/analytics/react";
@@ -9,6 +11,8 @@ import "@styles/app.scss";
 import { seoConfig } from "@data/config";
 
 export default function App({ Component, pageProps }: AppProps) {
+  Settings.defaultLocale = "vi";
+
   return (
     <div>
       <DefaultSeo
