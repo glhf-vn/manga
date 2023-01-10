@@ -7,18 +7,21 @@
 // }
 
 import Layout from "@layouts/Layout";
-import { getSerie, getSeries, getSeriesId } from "@lib/supabase";
+import { getSerie, getSeriesId } from "@lib/supabase";
 import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import {
   BsBookmarkCheck,
   BsPencilSquare,
   BsCalendarCheck,
   BsCalendar2CheckFill,
+  BsBoxArrowUp,
 } from "react-icons/bs";
 import { DateTime } from "luxon";
+import Image from "next/image";
 import Cover from "@components/Cover";
 import Card from "@components/Card";
 import Badge from "@components/Badge";
+import Button from "@components/Button";
 
 interface SerieReleasesView {
   data:
@@ -47,7 +50,7 @@ const ListView = ({ data }: SerieReleasesView) => (
           const today = DateTime.now();
 
           return (
-            <>
+            <div className="col-span-full grid grid-cols-6" key={entry.id}>
               <div className="flex h-full items-center justify-center border-t border-r p-3 font-bold dark:border-zinc-600">
                 <span>{date.toFormat("dd/MM/yyyy")}</span>
                 {date < today && (
@@ -68,7 +71,7 @@ const ListView = ({ data }: SerieReleasesView) => (
                   currency: "VND",
                 }).format(entry.price)}
               </span>
-            </>
+            </div>
           );
         })}
       </div>
@@ -102,25 +105,22 @@ export const getStaticPaths = async () => {
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const data = await getSerie(parseInt(context.params!.id as string));
-  let status = 1;
-  let image_url = null;
 
   const date_difference = DateTime.now().diff(
     DateTime.fromISO(data.licensed!.timestamp),
     "days"
   ).days;
 
-  // has entries
-  if (Array.isArray(data.publication) && data.publication.length > 0) {
-    if (date_difference > 0) {
-      status = 2;
-    } else {
-      status = 3;
-    }
+  const image_url =
+    (data.publication![0] && data.publication![0].image_url) ||
+    data.licensed!.image_url ||
+    null;
 
-    image_url =
-      data.publication[0].image_url || data.licensed!.image_url || null;
-  }
+  const status = data.publication![0]
+    ? DateTime.fromISO(data.publication![0].date).diffNow("days").days < 0
+      ? 3
+      : 2
+    : 1;
 
   return {
     props: {
@@ -142,15 +142,13 @@ export default function Serie({
   data,
   status,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const { publication, licensed, publisher } = data;
-
-  console.log(data);
+  const { publication, licensed, publisher, type } = data;
 
   return (
     <Layout>
       <div className="relative mb-12">
         <div className="absolute inset-0 bottom-1/4 bg-zinc-100 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)] dark:bg-zinc-900"></div>
-        <div className="container relative mx-auto flex flex-col-reverse gap-6 p-6 sm:flex-row sm:gap-12">
+        <div className="container relative mx-auto flex flex-col-reverse gap-6 px-6 sm:flex-row sm:gap-12 sm:pt-6">
           <div className="overflow-hidden rounded-2xl shadow-md transition-shadow duration-150 ease-linear hover:shadow-lg sm:basis-72">
             <Cover
               loader={false}
@@ -159,11 +157,35 @@ export default function Serie({
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
             />
           </div>
-          <div className="sm:flex-1 sm:pt-20">
-            <h2 className="mb-6 font-kanit text-4xl font-bold">{data.name}</h2>
+          <div className="pt-20 sm:flex-1">
+            <Badge className="m-0" style={{ backgroundColor: type!.color }}>
+              {type!.name}
+            </Badge>
+            <h2 className="mt-3 mb-6 font-kanit text-4xl font-bold">
+              {data.name}
+            </h2>
             <p>
-              <b>Nhà xuất bản/phát hành</b>: {data.publisher!.name}
+              <b>Nhà xuất bản/phát hành</b>: {publisher!.name}
             </p>
+
+            <div className="mt-6 space-x-3">
+              <Button intent="secondary">
+                <BsBoxArrowUp className="h-[20px] w-[20px]" />
+                Chia sẻ
+              </Button>
+              <Button
+                href={`https://anilist.co/manga/${data.anilist}`}
+                className="text-bold bg-[#152232] text-white"
+              >
+                <Image
+                  src="/img/anilist-logo.png"
+                  height={20}
+                  width={20}
+                  alt="AniList logo"
+                />
+                AniList
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -218,7 +240,7 @@ export default function Serie({
           Thông tin bản quyền
         </h3>
         <p className="mb-12 px-6">
-          Bộ truyện được mua bản quyền bởi <b>{data.publisher!.name}</b> ngày{" "}
+          Bộ truyện được mua bản quyền bởi <b>{publisher!.name}</b> vào ngày{" "}
           <b>{DateTime.fromISO(licensed.timestamp!).toLocaleString()}</b>.{" "}
           {status == 1 && (
             <>
@@ -236,7 +258,7 @@ export default function Serie({
             <ListView data={publication} />
 
             <h3 className="mb-6 px-6 font-kanit text-2xl font-bold">Ảnh bìa</h3>
-            <CoverView data={data.publication} />
+            <CoverView data={publication} />
           </>
         )}
       </div>
