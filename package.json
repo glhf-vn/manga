@@ -12,7 +12,7 @@
     "@headlessui/react": "^1.7.7",
     "@headlessui/tailwindcss": "^0.1.1",
     "@splidejs/react-splide": "^0.7.12",
-    "@supabase/supabase-js": "^2.1.1",
+    "@supabase/supabase-js": "^2.4.0",
     "@vercel/analytics": "^0.1.6",
     "@vercel/og": "^0.0.21",
     "autoprefixer": "^10.4.12",
@@ -47,7 +47,7 @@
     "eslint-config-next": "^13.0.0",
     "prettier": "^2.8.1",
     "prettier-plugin-tailwindcss": "^0.2.1",
-    "supabase": "^1.27.9",
+    "supabase": "^1.30.0",
     "typescript": "4.9.4"
   }
 }
