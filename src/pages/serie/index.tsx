@@ -22,7 +22,7 @@ export default function SeriesList({
     <Layout>
       <div className="grid grid-cols-6 gap-6">
         {series.map((serie) => (
-          <h1>{serie.name}</h1>
+          <h1 key={serie.id}>{serie.name}</h1>
         ))}
       </div>
       {series.map((serie) => (
