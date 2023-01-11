@@ -173,18 +173,20 @@ export default function Serie({
                 <BsBoxArrowUp className="h-[20px] w-[20px]" />
                 Chia sẻ
               </Button>
-              <Button
-                href={`https://anilist.co/manga/${data.anilist}`}
-                className="text-bold bg-[#152232] text-white"
-              >
-                <Image
-                  src="/img/anilist-logo.png"
-                  height={20}
-                  width={20}
-                  alt="AniList logo"
-                />
-                AniList
-              </Button>
+              {data.anilist && (
+                <Button
+                  href={`https://anilist.co/manga/${data.anilist}`}
+                  className="text-bold bg-[#152232] text-white"
+                >
+                  <Image
+                    src="/img/anilist-logo.png"
+                    height={20}
+                    width={20}
+                    alt="AniList logo"
+                  />
+                  AniList
+                </Button>
+              )}
             </div>
           </div>
         </div>
