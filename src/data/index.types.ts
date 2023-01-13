@@ -1,39 +1,64 @@
-import { type getEntriesByGroup } from "@lib/supabase";
+import type {
+  Publication,
+  PublicationByDate,
+  Publisher,
+} from "@data/public.types";
+import { MonthNumbers } from "luxon";
 
-export interface MinimalInfo {
-  name: string;
-  publisherLabel: string;
-  price: string;
-  date: string;
-  image_url: string | null;
-  id: string;
-  edition: string | null;
+export type DateObj = {
+  year: number;
+  month: MonthNumbers;
+};
+
+// Slider type
+
+export interface SliderProps {
+  data: Publication[];
 }
 
-export interface ModalProps {
+// Publication types
+
+export type ReleasesProps = {
+  date: DateObj;
+  view: boolean;
+  filters: {
+    publishers: string[];
+  };
+  options: ModalMethods;
+};
+
+export type ReleasesView = {
+  releases: PublicationByDate[];
+  options: ModalMethods;
+};
+
+// Modal types
+
+export type ModalMethods = {
+  setModalOpen: (value: boolean) => void;
+  setModalData: (value: Publication) => void;
+};
+
+export type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
-}
+};
 
 export interface InfoModalProps extends ModalProps {
-  data: MinimalInfo;
+  data: Publication | undefined;
 }
 
 export interface FilterModalProps extends ModalProps {
-  values: {
-    id: string;
-    name: string;
-    color: string;
-  }[];
+  values: Publisher[];
+  statedValues: string[];
   handler: (checked: boolean, filterId: string) => void;
 }
 
-export interface SlideProps {
-  releases: MinimalInfo[];
-}
+// Pagination type
 
-export interface ReleasesView {
-  data: Awaited<ReturnType<typeof getEntriesByGroup>>;
-  setModalOpen: (value: boolean) => void;
-  setModalData: (value: MinimalInfo) => void;
-}
+export type PaginationProps = {
+  date: DateObj;
+  options: {
+    changeDate: (value: DateObj) => void;
+  };
+};

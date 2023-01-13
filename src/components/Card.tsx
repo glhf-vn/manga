@@ -35,11 +35,6 @@ export interface CardProps
   extends VariantProps<typeof cardStyles>,
     HTMLProps<HTMLDivElement> {
   children?: ReactNode;
-  entry?: {
-    name: string;
-    price: string;
-    publisher: string;
-  };
 }
 
 export default function Card({
@@ -49,7 +44,6 @@ export default function Card({
   cardSize,
   children,
   className,
-  entry,
   ...props
 }: CardProps): JSX.Element {
   return (
