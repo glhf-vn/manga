@@ -52,12 +52,12 @@ const Products = ({ site, category, page }: ListingSetting) => {
         {[...Array(24)].map((e, i) => (
           <div key={i}>
             <Card>
-              <div className="aspect-square h-full w-full bg-zinc-300"></div>
-              <div className="p-6 font-bold">
-                <div className="h-6 w-full rounded bg-zinc-300"></div>
-                <div className="mt-2 h-6 w-full rounded bg-zinc-300"></div>
+              <div className="aspect-square h-full w-full bg-zinc-300 dark:bg-zinc-700"></div>
+              <div className="p-6">
+                <div className="h-6 w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="mt-2 h-6 w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
                 <p className="mt-3">
-                  <div className="h-4 w-1/2 rounded bg-zinc-300"></div>
+                  <div className="h-4 w-1/2 rounded bg-zinc-300 dark:bg-zinc-700"></div>
                 </p>
               </div>
             </Card>
