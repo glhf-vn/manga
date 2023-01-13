@@ -1,23 +1,24 @@
 import type { InferGetStaticPropsType } from "next";
 import type {
-  MinimalInfo,
-  SlideProps,
+  SliderProps,
   FilterModalProps,
   InfoModalProps,
   ReleasesView,
+  ReleasesProps,
+  DateObj,
+  PaginationProps,
 } from "@data/index.types";
+import type { Publication, PublicationByDate } from "@data/public.types";
 
 import { getEntries, getEntriesByGroup, getPublishers } from "@lib/supabase";
 
-import { useRouter } from "next/router";
-import { isEmpty } from "lodash";
 import { useState } from "react";
 import { DateTime } from "luxon";
+import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
 import { Dialog, Menu, Switch, Transition } from "@headlessui/react";
 import { NextSeo } from "next-seo";
 import {
-  BsBoxArrowUp,
   BsBoxArrowUpRight,
   BsCalendar2CheckFill,
   BsChevronDown,
@@ -29,7 +30,6 @@ import {
   BsFillGridFill,
   BsListUl,
 } from "react-icons/bs";
-import Link from "next/link";
 import Image from "next/image";
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
 
@@ -43,7 +43,7 @@ import Modal from "@components/Modal";
 
 import "@splidejs/react-splide/css/core";
 
-const ReleasesSlide = ({ releases }: SlideProps) => {
+const Slider = ({ data }: SliderProps) => {
   return (
     <div className="relative">
       <div className="absolute inset-0 bottom-[30%] bg-zinc-100 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)] dark:bg-zinc-900"></div>
@@ -70,37 +70,35 @@ const ReleasesSlide = ({ releases }: SlideProps) => {
           <span className="font-kanit text-3xl font-bold">Phát hành</span>
         </div>
         <SplideTrack>
-          {releases.map((release) => {
-            return (
-              <SplideSlide key={release.id}>
-                <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6">
-                  <div className="cursor-default overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg sm:basis-72">
-                    <Cover
-                      entry={release}
-                      hero={true}
-                      sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
-                    />
-                  </div>
-                  <div className="sm:flex-1 sm:pt-20">
-                    <span className="hidden sm:inline">Phát hành </span>
-                    <span className="text-xl sm:text-base">
-                      <span className="capitalize">
-                        {DateTime.fromISO(release.date).toFormat("EEEE, D")}
-                      </span>
-                    </span>
-                    <h2 className="mt-3 mb-6 hidden font-kanit text-4xl font-bold sm:block">
-                      {release.name}
-                    </h2>
-                    <p className="hidden sm:block">
-                      <b>Nhà xuất bản/phát hành</b>: {release.publisherLabel}
-                      <br />
-                      <b>Giá dự kiến</b>: {release.price}
-                    </p>
-                  </div>
+          {data.map((release) => (
+            <SplideSlide key={release.id}>
+              <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6">
+                <div className="cursor-default overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg sm:basis-72">
+                  <Cover
+                    entry={release}
+                    hero={true}
+                    sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
+                  />
                 </div>
-              </SplideSlide>
-            );
-          })}
+                <div className="sm:flex-1 sm:pt-20">
+                  <span className="hidden sm:inline">Phát hành </span>
+                  <span className="text-xl sm:text-base">
+                    <span className="capitalize">
+                      {DateTime.fromISO(release.date).toFormat("EEEE, D")}
+                    </span>
+                  </span>
+                  <h2 className="mt-3 mb-6 hidden font-kanit text-4xl font-bold sm:block">
+                    {release.name}
+                  </h2>
+                  <p className="hidden sm:block">
+                    <b>Nhà xuất bản/phát hành</b>: {release.publisher.name}
+                    <br />
+                    <b>Giá dự kiến</b>: {release.price}
+                  </p>
+                </div>
+              </div>
+            </SplideSlide>
+          ))}
         </SplideTrack>
 
         <div className="splide__arrows absolute top-1/2 left-0 right-0 mx-6 flex -translate-y-1/2 transform justify-between">
@@ -120,22 +118,25 @@ const ReleasesSlide = ({ releases }: SlideProps) => {
   );
 };
 
-const MonthSelect = () => {
-  const lastMonth = DateTime.now().minus({ month: 1 });
+const MonthSelect = ({ date, options }: PaginationProps) => {
+  const { year, month } = date;
+  const { changeDate } = options;
+
+  const timeObj = DateTime.fromObject({
+    year: year,
+    month: month,
+  });
+
+  const prevMonth = DateTime.now().minus({ month: 1 });
   const thisMonth = DateTime.now();
   const nextMonth = DateTime.now().plus({ month: 1 });
-
-  const router = useRouter();
-  const path = router.query;
-
-  const pagedMonth = isEmpty(path) ? thisMonth.get("month") : path.month;
 
   return (
     <div className="z-10 flex items-center gap-3 font-kanit text-2xl font-bold">
       <span>Lịch phát hành</span>
       <Menu as="div" className="relative">
         <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2 dark:bg-zinc-700">
-          tháng {pagedMonth}
+          tháng {timeObj.month}
           <BsChevronDown className="text-sm" />
         </Menu.Button>
         <Transition
@@ -147,33 +148,26 @@ const MonthSelect = () => {
           leaveTo="transform scale-95 opacity-0"
         >
           <Menu.Items className="absolute right-0 mt-3 w-full overflow-hidden rounded-2xl bg-zinc-200 shadow-lg dark:bg-zinc-700">
-            <Menu.Item>
-              <Link
-                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
-                href={`/archive/${lastMonth.get("year")}/${lastMonth.get(
-                  "month"
-                )}`}
-              >
-                {lastMonth.toFormat("MMMM")}
-              </Link>
+            <Menu.Item
+              as="div"
+              onClick={() => changeDate(prevMonth)}
+              className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
+            >
+              {prevMonth.toFormat("MMMM")}
             </Menu.Item>
-            <Menu.Item>
-              <Link
-                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
-                href={`/`}
-              >
-                {thisMonth.toFormat("MMMM")}
-              </Link>
+            <Menu.Item
+              as="div"
+              onClick={() => changeDate(thisMonth)}
+              className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
+            >
+              {thisMonth.toFormat("MMMM")}
             </Menu.Item>
-            <Menu.Item>
-              <Link
-                className="transition-color block py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
-                href={`/archive/${nextMonth.get("year")}/${nextMonth.get(
-                  "month"
-                )}`}
-              >
-                {nextMonth.toFormat("MMMM")}
-              </Link>
+            <Menu.Item
+              as="div"
+              onClick={() => changeDate(nextMonth)}
+              className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
+            >
+              {nextMonth.toFormat("MMMM")}
             </Menu.Item>
           </Menu.Items>
         </Transition>
@@ -182,39 +176,36 @@ const MonthSelect = () => {
   );
 };
 
-const Pagination = () => {
-  const router = useRouter();
-  const params = router.query;
+const Pagination = ({ date, options }: PaginationProps) => {
+  const { year, month } = date;
+  const { changeDate } = options;
 
-  const year: number = params?.year ? +params.year : DateTime.now().year;
-  const month: number = params?.month ? +params.month : DateTime.now().month;
-
-  const pagedTime = DateTime.fromObject({
+  const timeObj = DateTime.fromObject({
     year: year,
     month: month,
   });
 
-  const lastMonth = pagedTime.minus({ month: 1 });
-  const nextMonth = pagedTime.plus({ month: 1 });
+  const prevMonth = timeObj.minus({ month: 1 });
+  const nextMonth = timeObj.plus({ month: 1 });
 
   return (
     <div className="flex justify-between">
-      <Button intent="secondary">
-        <Link
-          className="flex items-center justify-center gap-3"
-          href={`/archive/${lastMonth.year}/${lastMonth.month}`}
-        >
-          <BsChevronLeft /> Trước
-        </Link>
+      <Button
+        intent="secondary"
+        onClick={() =>
+          changeDate({ year: prevMonth.year, month: prevMonth.month })
+        }
+      >
+        <BsChevronLeft /> Trước
       </Button>
 
-      <Button intent="primary">
-        <Link
-          className="flex items-center justify-center gap-3"
-          href={`/archive/${nextMonth.year}/${nextMonth.month}`}
-        >
-          Sau <BsChevronRight />
-        </Link>
+      <Button
+        intent="primary"
+        onClick={() =>
+          changeDate({ year: nextMonth.year, month: nextMonth.month })
+        }
+      >
+        Sau <BsChevronRight />
       </Button>
     </div>
   );
@@ -225,6 +216,7 @@ const FilterModal = ({
   onClose,
   values,
   handler,
+  statedValues,
 }: FilterModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
@@ -236,8 +228,8 @@ const FilterModal = ({
           {values.map((value) => (
             <div key={value.id} className="flex items-center">
               <input
-                id={`${value.id}`}
-                defaultChecked={true}
+                id={value.id}
+                checked={statedValues.includes(value.id)}
                 type="checkbox"
                 className={`h-4 w-4 rounded border-gray-300 text-primary transition-all focus:ring-primary`}
                 onChange={({ target }) => handler(target.checked, value.id)}
@@ -257,232 +249,261 @@ const FilterModal = ({
 };
 
 const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
-  const handleShare = async () => {
-    if (navigator.share) {
-      try {
-        const fetchURL = `/api/og?name=${encodeURIComponent(
-          data.name
-        )}&date=${encodeURIComponent(data.date)}&publisher=${
-          data.publisherLabel
-        }&price=${data.price}${
-          data.image_url != null ? `&image_url=${data.image_url}` : ""
-        }${data.edition != null ? `&edition=${data.edition}` : ""}`;
-        const response = await fetch(fetchURL);
-        const blob = await response.blob();
-        const shareImage = [
-          new File([blob], `${data.name}.jpg`, {
-            type: "image/jpeg",
-            lastModified: new Date().getTime(),
-          }),
-        ];
-
-        await navigator.share({
-          title: data.name,
-          files: shareImage,
-        });
-      } catch (error) {
-        console.log(`An error occured with sharing module: ${error}`);
-      }
-    } else {
-      // fallback code
-      console.log(
-        "Web share is currently not supported on this browser. Please provide a callback"
-      );
-    }
-  };
-
-  return (
-    <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex flex-col sm:flex-row">
-        <div className="w-full sm:max-w-[250px]">
-          <Cover
-            entry={data}
-            sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
-            fit="full"
-          />
-        </div>
-        <div className="flex-1 p-6 sm:pt-9">
-          <div className="flex h-full flex-col justify-between">
-            <div>
-              <Dialog.Title className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
-                {data.name}
-              </Dialog.Title>
-              <Dialog.Description>
-                <b>Ngày phát hành</b>:{" "}
-                {DateTime.fromISO(data.date).toLocaleString(
-                  DateTime.DATE_SHORT
-                )}
-                <br />
-                {data.edition && (
-                  <>
-                    <b>Phiên bản</b>: {data.edition}
-                    <br />
-                  </>
-                )}
-                <br />
-                <b>Nhà xuất bản/phát hành</b>: {data.publisherLabel}
-                <br />
-                <b>Giá dự kiến</b>: {data.price}
-              </Dialog.Description>
-            </div>
-            <div className="mt-6">
-              <div className="mt-1 flex gap-2">
-                {/* TODO: hide button on unsupported browser */}
-                <Button onClick={handleShare} intent="secondary">
-                  <BsBoxArrowUp className="h-[20px] w-[20px]" />
-                </Button>
-                <Button className="bg-[#c92127] text-zinc-50">
-                  <a
-                    href={`https://fahasa.com/catalogsearch/result/?q=${data.name}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      src="/img/fahasa-logo.png"
-                      alt="FAHASA"
-                      width={107}
-                      height={20}
-                    />
-                  </a>
-                </Button>
-                <Button className="bg-[#1a94ff] text-zinc-50">
-                  <a
-                    href={`https://tiki.vn/search?q=${data.name}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      src="/img/tiki-logo.png"
-                      alt="Tiki"
-                      width={30}
-                      height={20}
-                    />
-                  </a>
-                </Button>
-                <Button className="bg-[#ff6633] text-zinc-50">
-                  <a
-                    href={`https://shopee.vn/search?keyword=${data.name}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <Image
-                      src="/img/shopee-logo.png"
-                      alt="Shopee"
-                      width={59}
-                      height={20}
-                    />
-                  </a>
-                </Button>
+  if (data)
+    return (
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <div className="flex flex-col sm:flex-row">
+          <div className="w-full sm:max-w-[250px]">
+            <Cover
+              entry={data}
+              sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
+              fit="full"
+            />
+          </div>
+          <div className="flex-1 p-6 sm:pt-9">
+            <div className="flex h-full flex-col justify-between">
+              <div>
+                <Dialog.Title className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
+                  {data.name}
+                </Dialog.Title>
+                <Dialog.Description>
+                  <b>Ngày phát hành</b>:{" "}
+                  {DateTime.fromISO(data.date).toLocaleString(
+                    DateTime.DATE_SHORT
+                  )}
+                  <br />
+                  {data.edition && (
+                    <>
+                      <b>Phiên bản</b>: {data.edition}
+                      <br />
+                    </>
+                  )}
+                  <br />
+                  <b>Nhà xuất bản/phát hành</b>: {data.publisher.name}
+                  <br />
+                  <b>Giá dự kiến</b>: {data.price}
+                </Dialog.Description>
+              </div>
+              <div className="mt-6">
+                <div className="mt-1 flex gap-2">
+                  <Button className="bg-[#c92127] text-zinc-50">
+                    <a
+                      href={`https://fahasa.com/catalogsearch/result/?q=${data.name}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Image
+                        src="/img/fahasa-logo.png"
+                        alt="FAHASA"
+                        width={107}
+                        height={20}
+                      />
+                    </a>
+                  </Button>
+                  <Button className="bg-[#1a94ff] text-zinc-50">
+                    <a
+                      href={`https://tiki.vn/search?q=${data.name}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Image
+                        src="/img/tiki-logo.png"
+                        alt="Tiki"
+                        width={30}
+                        height={20}
+                      />
+                    </a>
+                  </Button>
+                  <Button className="bg-[#ff6633] text-zinc-50">
+                    <a
+                      href={`https://shopee.vn/search?keyword=${data.name}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <Image
+                        src="/img/shopee-logo.png"
+                        alt="Shopee"
+                        width={59}
+                        height={20}
+                      />
+                    </a>
+                  </Button>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      </Modal>
+    );
+
+  return (
+    <Modal isOpen={isOpen} onClose={onClose}>
+      loading
     </Modal>
   );
 };
 
-const CardView = ({ setModalOpen, setModalData, data }: ReleasesView) => (
-  <>
-    {data.map((releaseDate) => {
-      let date = DateTime.fromISO(releaseDate.date);
-      let today = DateTime.now();
+const GridView = ({ releases, options }: ReleasesView) => {
+  const { setModalOpen, setModalData } = options;
 
-      return (
-        <div className="container mx-auto px-6" key={date.valueOf()}>
-          <div className={`mt-12 mb-3 flex items-center text-xl font-bold`}>
-            <span className="capitalize">{date.toFormat("EEEE - dd/MM")}</span>
-            {date < today && <Badge intent="success">Đã phát hành!</Badge>}
-          </div>
-          <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
-            {releaseDate.entries.map((release) => (
-              <Card
-                onClick={() => {
-                  setModalData(release);
-                  setModalOpen(true);
-                }}
-                key={release.id}
-                clickable={true}
-                entry={release}
-                cardSize={release.wide ? "wide" : "normal"}
-              >
-                {release.edition && (
-                  <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
-                    {release.edition}
-                  </Badge>
-                )}
-                <Cover entry={release} sizes="(max-width: 768px) 40vw, 200px" />
-              </Card>
-            ))}
-          </div>
-        </div>
-      );
-    })}
-  </>
-);
+  return (
+    <>
+      {releases.map((releaseGroup) => {
+        let date = DateTime.fromISO(releaseGroup.date);
+        let today = DateTime.now();
 
-const ListView = ({ setModalOpen, setModalData, data }: ReleasesView) => (
-  <div className="mx-auto overflow-scroll lg:container">
-    <div className="min-w-fit px-6">
-      <div className="mt-12 grid min-w-max grid-cols-6 overflow-hidden rounded-2xl border dark:border-zinc-600">
-        <span className="border-r p-3 text-center font-bold dark:border-zinc-600 dark:bg-zinc-700">
-          Ngày phát hành
-        </span>
-        <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">Tên</span>
-        <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
-        {data.map((releaseDate) => {
-          const date = DateTime.fromISO(releaseDate.date);
-          const today = DateTime.now();
-
-          return (
-            <>
-              <div
-                className="flex h-full items-center justify-center border-t border-r p-3 font-bold dark:border-zinc-600"
-                style={{
-                  gridRow: `span ${releaseDate.entries.length} / span ${releaseDate.entries.length}`,
-                }}
-              >
-                <span>{date.toFormat("dd/MM/yyyy")}</span>
-                {date < today && (
-                  <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-200" />
-                )}
-              </div>
-              {releaseDate.entries.map((release) => (
-                <>
-                  <div
-                    className="col-span-4 flex cursor-pointer items-center gap-3 border-t p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600"
-                    onClick={() => {
-                      setModalData(release);
-                      setModalOpen(true);
-                    }}
-                  >
-                    <span className="">{release.name}</span>
-                    {release.edition && (
-                      <Badge className="m-0 bg-amber-200/75 backdrop-blur-md">
-                        {release.edition}
-                      </Badge>
-                    )}
-                    <BsBoxArrowUpRight className="inline-block text-zinc-400" />
-                  </div>
-                  <span className="border-t p-3 dark:border-zinc-600">
-                    {release.price}
-                  </span>
-                </>
+        return (
+          <div className="container mx-auto px-6" key={date.valueOf()}>
+            <div className={`mt-12 mb-3 flex items-center text-xl font-bold`}>
+              <span className="capitalize">
+                {date.toFormat("EEEE - dd/MM")}
+              </span>
+              {date < today && <Badge intent="success">Đã phát hành!</Badge>}
+            </div>
+            <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
+              {releaseGroup.entries.map((release) => (
+                <Card
+                  onClick={() => {
+                    setModalData(release);
+                    setModalOpen(true);
+                  }}
+                  key={release.id}
+                  clickable={true}
+                  cardSize={release.wide ? "wide" : "normal"}
+                >
+                  {release.edition && (
+                    <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
+                      {release.edition}
+                    </Badge>
+                  )}
+                  <Cover
+                    entry={release}
+                    sizes="(max-width: 768px) 40vw, 200px"
+                  />
+                </Card>
               ))}
-            </>
-          );
-        })}
+            </div>
+          </div>
+        );
+      })}
+    </>
+  );
+};
+
+const ListView = ({ releases, options }: ReleasesView) => {
+  const { setModalOpen, setModalData } = options;
+
+  return (
+    <div className="mx-auto overflow-scroll lg:container">
+      <div className="min-w-fit px-6">
+        <div className="mt-12 grid min-w-max grid-cols-6 overflow-hidden rounded-2xl border dark:border-zinc-600">
+          <span className="border-r p-3 text-center font-bold dark:border-zinc-600 dark:bg-zinc-700">
+            Ngày phát hành
+          </span>
+          <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">Tên</span>
+          <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
+          {releases.map((releaseGroup) => {
+            const date = DateTime.fromISO(releaseGroup.date);
+            const today = DateTime.now();
+
+            return (
+              <>
+                <div
+                  className="flex h-full items-center justify-center border-t border-r p-3 font-bold dark:border-zinc-600"
+                  style={{
+                    gridRow: `span ${releaseGroup.entries.length} / span ${releaseGroup.entries.length}`,
+                  }}
+                >
+                  <span>{date.toFormat("dd/MM/yyyy")}</span>
+                  {date < today && (
+                    <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-200" />
+                  )}
+                </div>
+                {releaseGroup.entries.map((release) => (
+                  <>
+                    <div
+                      className="col-span-4 flex cursor-pointer items-center gap-3 border-t p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600"
+                      onClick={() => {
+                        setModalData(release);
+                        setModalOpen(true);
+                      }}
+                    >
+                      <span className="">{release.name}</span>
+                      {release.edition && (
+                        <Badge className="m-0 bg-amber-200/75 backdrop-blur-md">
+                          {release.edition}
+                        </Badge>
+                      )}
+                      <BsBoxArrowUpRight className="inline-block text-zinc-400" />
+                    </div>
+                    <span className="border-t p-3 dark:border-zinc-600">
+                      {release.price}
+                    </span>
+                  </>
+                ))}
+              </>
+            );
+          })}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
+
+const Releases = ({ date, view, filters, options }: ReleasesProps) => {
+  const { year, month } = date;
+  const { publishers } = filters;
+
+  const { releases, isLoading, isError } = useReleases(year, month, publishers);
+
+  if (isLoading) return <span>loading</span>;
+
+  if (isError) return <span>error</span>;
+
+  if (view == true) return <GridView options={options} releases={releases} />;
+  else return <ListView options={options} releases={releases} />;
+};
+
+const useReleases = (
+  year = DateTime.now().year,
+  month = DateTime.now().month,
+  publishers?: string[]
+) => {
+  const { data, error, isLoading } = useSWR(
+    {
+      year,
+      month,
+      publishers,
+    },
+    async ({ year, month, publishers }) => {
+      const dateObj = DateTime.fromObject({ year, month });
+
+      let url = `/api/releases?start=${dateObj
+        .startOf("month")
+        .toISODate()}&end=${dateObj.endOf("month").toISODate()}`;
+
+      if (publishers)
+        url += `${publishers.map((publisher) => `&publisher=${publisher}`)}`;
+
+      return await fetch(url).then((res) => res.json());
+    }
+  );
+
+  return {
+    releases: data as PublicationByDate[],
+    isLoading,
+    isError: error,
+  };
+};
 
 export const getStaticProps = async () => {
+  const now = DateTime.now();
+
   const releases = await getEntriesByGroup();
 
-  const slideReleases = await getEntries(
-    DateTime.now().toISODate(),
-    DateTime.now().plus({ days: 3 }).toISODate()
+  const upcoming = await getEntries(
+    now.toISODate(),
+    now.plus({ days: 3 }).toISODate()
   );
 
   const publishers = await getPublishers();
@@ -490,32 +511,39 @@ export const getStaticProps = async () => {
   return {
     props: {
       publishers,
-      releases,
-      slideReleases,
+      upcoming,
+      fallback: {
+        [unstable_serialize({
+          year: now.year,
+          month: now.month,
+        })]: releases,
+      },
     },
-    revalidate: 600,
+    revalidate: 600, // revalidate every 10 minutes
   };
 };
 
-export const Releases = ({
+export default function Home({
   publishers,
-  releases,
-  slideReleases,
-}: InferGetStaticPropsType<typeof getStaticProps>) => {
-  // Set the open state & data for the modal
-  const [modalData, setModalData] = useState<MinimalInfo>({
-    name: "mangaGLHF",
-    publisherLabel: "đang cập nhật",
-    price: "đang cập nhật",
-    date: DateTime.now().toISODate(),
-    image_url: null,
-    id: "default",
-    edition: null,
-  });
+  upcoming,
+  fallback,
+}: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [modalData, setModalData] = useState<Publication | undefined>();
 
+  const [filterOpen, setFilterOpen] = useState(false);
   const [filterPublishers, changeFilterPublishers] = useState(
     publishers.map((publisher) => publisher.id)
   );
+
+  const [currentView, changeCurrentView] = useState(true); // true = card, false = list
+
+  const now = DateTime.now();
+
+  const [currentDate, changeDate] = useState<DateObj>({
+    year: now.year,
+    month: now.month,
+  });
 
   const toggleFilterPublishers = (checked: boolean, filterId: string) => {
     if (!checked) {
@@ -528,17 +556,7 @@ export const Releases = ({
     }
   };
 
-  const [modalOpen, setModalOpen] = useState(false);
-  const [filterOpen, setFilterOpen] = useState(false);
-
-  releases = releases.map(({ date, entries }) => ({
-    date: date,
-    entries: entries.filter(({ publisher }) =>
-      filterPublishers.includes(publisher)
-    ),
-  }));
-
-  const [view, toggleView] = useState(true); // true = card, false = list
+  console.log(filterPublishers);
 
   return (
     <Layout>
@@ -548,23 +566,24 @@ export const Releases = ({
       />
 
       <InfoModal
+        data={modalData}
         isOpen={modalOpen}
         onClose={() => setModalOpen(false)}
-        data={modalData}
       />
 
       <FilterModal
         isOpen={filterOpen}
         onClose={() => setFilterOpen(false)}
         values={publishers}
+        statedValues={filterPublishers}
         handler={toggleFilterPublishers}
       />
 
-      <ReleasesSlide releases={slideReleases} />
+      <Slider data={upcoming} />
 
       <div className="container mx-auto px-6">
         <div className="flex flex-col justify-between gap-6 sm:flex-row">
-          <MonthSelect />
+          <MonthSelect date={currentDate} options={{ changeDate }} />
           <div className="grid grid-cols-2 gap-6 sm:flex">
             <Button
               className="rounded-2xl px-2 text-xl sm:text-2xl lg:text-3xl"
@@ -575,14 +594,14 @@ export const Releases = ({
               <BsFilter />
             </Button>
             <Switch
-              checked={view}
-              onChange={toggleView}
+              checked={currentView}
+              onChange={changeCurrentView}
               className="relative overflow-hidden rounded-2xl bg-zinc-200 dark:bg-zinc-700"
             >
               <span className="sr-only">Thay đổi layout</span>
               <div
                 className={`${
-                  view ? "translate-x-0" : "translate-x-full"
+                  currentView ? "translate-x-0" : "translate-x-full"
                 } absolute top-0 h-full w-1/2 transform bg-primary transition-transform duration-200 ease-in-out`}
               ></div>
               <div className="relative grid w-full grid-cols-2 items-center">
@@ -598,37 +617,18 @@ export const Releases = ({
         </div>
       </div>
 
-      {view ? (
-        <CardView
-          setModalOpen={setModalOpen}
-          setModalData={setModalData}
-          data={releases}
+      <SWRConfig value={{ fallback }}>
+        <Releases
+          date={currentDate}
+          view={currentView}
+          filters={{ publishers: filterPublishers }}
+          options={{ setModalOpen, setModalData }}
         />
-      ) : (
-        <ListView
-          setModalOpen={setModalOpen}
-          setModalData={setModalData}
-          data={releases}
-        />
-      )}
+      </SWRConfig>
 
       <div className="container mx-auto mt-12 px-6">
-        <Pagination />
+        <Pagination date={currentDate} options={{ changeDate }} />
       </div>
     </Layout>
-  );
-};
-
-export default function Home({
-  publishers,
-  releases,
-  slideReleases,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
-  return (
-    <Releases
-      publishers={publishers}
-      releases={releases}
-      slideReleases={slideReleases}
-    />
   );
 }
