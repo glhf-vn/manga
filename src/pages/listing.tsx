@@ -1,5 +1,5 @@
 import useSWR, { Fetcher } from "swr";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 import Image from "next/image";
 import { Listbox, Transition } from "@headlessui/react";
@@ -33,20 +33,20 @@ type FilterParams = {
     id: number;
     name: string;
   }>;
-  onChange: any;
+  onChange: (e: any) => void;
 };
 
 const Products = ({ site, category, page }: ListingSetting) => {
   const fetcher: Fetcher<ListingResponse[], string> = (url) =>
     fetch(url).then((res) => res.json());
 
-  const { data, error } = useSWR(
+  const { data, error, isLoading } = useSWR(
     `/api/${site}?category=${category}&page=${page}`,
     fetcher
   );
 
   if (error) return <div>Đã có lỗi xảy ra, vui lòng thử lại sau</div>;
-  if (!data)
+  if (isLoading)
     return (
       <div className="grid animate-pulse grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
         {[...Array(24)].map((e, i) => (
@@ -73,46 +73,48 @@ const Products = ({ site, category, page }: ListingSetting) => {
 
   return (
     <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      {data.map(({ id, name, url, image, price, original_price, discount }) => (
-        <li key={id} className="relative">
-          <Card>
-            <a href={url} target="_blank" rel="noreferrer">
-              {discount != 0 && (
-                <div className="absolute top-1 right-1">
-                  <Badge intent="success">-{discount}%</Badge>
-                </div>
-              )}
-              <Image
-                src={image}
-                alt={name}
-                width={280}
-                height={280}
-                unoptimized={true}
-                className="h-full w-full"
-              />
-              <div className="p-6 font-bold">
-                <h3>{name}</h3>
-                <p className="mt-3">
-                  {price < original_price ? (
-                    <>
-                      <span className="text-green-400">
+      {data!.map(
+        ({ id, name, url, image, price, original_price, discount }) => (
+          <li key={id} className="relative">
+            <Card>
+              <a href={url} target="_blank" rel="noreferrer">
+                {discount != 0 && (
+                  <div className="absolute top-1 right-1">
+                    <Badge intent="success">-{discount}%</Badge>
+                  </div>
+                )}
+                <Image
+                  src={image}
+                  alt={name}
+                  width={280}
+                  height={280}
+                  unoptimized={true}
+                  className="h-full w-full"
+                />
+                <div className="p-6 font-bold">
+                  <h3>{name}</h3>
+                  <p className="mt-3">
+                    {price < original_price ? (
+                      <>
+                        <span className="text-green-400">
+                          {currencyFormatter.format(price)}
+                        </span>{" "}
+                        <span className="text-sm text-red-400 line-through">
+                          {currencyFormatter.format(original_price)}
+                        </span>
+                      </>
+                    ) : (
+                      <span className="text-primary">
                         {currencyFormatter.format(price)}
-                      </span>{" "}
-                      <span className="text-sm text-red-400 line-through">
-                        {currencyFormatter.format(original_price)}
                       </span>
-                    </>
-                  ) : (
-                    <span className="text-primary">
-                      {currencyFormatter.format(price)}
-                    </span>
-                  )}
-                </p>
-              </div>
-            </a>
-          </Card>
-        </li>
-      ))}
+                    )}
+                  </p>
+                </div>
+              </a>
+            </Card>
+          </li>
+        )
+      )}
     </ul>
   );
 };
@@ -155,21 +157,20 @@ export default function Listing() {
   );
   const [currentPage, changeCurrentPage] = useState(1);
 
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }, [currentPage]);
+
   // functions
-  const handlePageChange = (page: typeof currentPage) => {
-    document.getElementById("__next")?.scrollIntoView({
-      behavior: "smooth",
-    });
-    changeCurrentPage(page);
-  };
   const handleCategoryChange = (category: typeof currentCategory) => {
     changeCurrentCategory(category);
-    handlePageChange(1);
+    changeCurrentPage(1);
   };
+
   const handleSiteChange = (site: typeof currentSite) => {
     changeCurrentSite(site); // change current site to selection
     changeCurrentCategory(site.categories[0]); // change to the 1st category of that selection
-    handlePageChange(1); // reset page to 1
+    changeCurrentPage(1); // reset page to 1
   };
 
   return (
@@ -197,10 +198,22 @@ export default function Listing() {
           page={currentPage}
         />
 
+        {/* preload next page */}
+        <div style={{ display: "none" }}>
+          <Products
+            site={currentSite.value}
+            category={currentCategory.id}
+            page={currentPage + 1}
+          />
+        </div>
+
         <ul className="mt-6 flex justify-between">
           {currentPage > 1 && (
             <li className="mr-3">
-              <Button onClick={() => handlePageChange(currentPage - 1)}>
+              <Button
+                intent="secondary"
+                onClick={() => changeCurrentPage(currentPage - 1)}
+              >
                 <BsChevronLeft /> Trước
               </Button>
             </li>
@@ -208,7 +221,7 @@ export default function Listing() {
           <li className="ml-auto">
             <Button
               intent="primary"
-              onClick={() => handlePageChange(currentPage + 1)}
+              onClick={() => changeCurrentPage(currentPage + 1)}
             >
               Sau <BsChevronRight />
             </Button>
