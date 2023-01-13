@@ -25,9 +25,6 @@ export default function SeriesList({
           <h1 key={serie.id}>{serie.name}</h1>
         ))}
       </div>
-      {series.map((serie) => (
-        <h1>{serie.name}</h1>
-      ))}
     </Layout>
   );
 }
