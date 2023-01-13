@@ -29,6 +29,7 @@ export type ReleasesProps = {
 
 export type ReleasesView = {
   releases: PublicationByDate[];
+  isLoading: boolean;
   options: ModalMethods;
 };
 

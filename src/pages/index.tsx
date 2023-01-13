@@ -338,13 +338,82 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      loading
+      <div className="flex animate-pulse flex-col sm:flex-row">
+        <div className="w-full bg-zinc-200 dark:bg-zinc-700 sm:max-w-[250px]"></div>
+        <div className="flex-1 p-6 sm:pt-9">
+          <div className="flex h-full flex-col justify-between">
+            <div>
+              <Dialog.Title className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
+                <div className="dark:bg-zinc-7 h-6 w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="dark:bg-zinc-7 mt-3 h-6 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+              </Dialog.Title>
+              <Dialog.Description>
+                <div className="dark:bg-zinc-7 mt-6 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="dark:bg-zinc-7 mt-6 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="dark:bg-zinc-7 mt-3 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+              </Dialog.Description>
+            </div>
+            <div className="mt-6">
+              <div className="mt-1 flex gap-2">
+                <Button className="bg-[#c92127] text-zinc-50">
+                  <Image
+                    src="/img/fahasa-logo.png"
+                    alt="FAHASA"
+                    width={107}
+                    height={20}
+                  />
+                </Button>
+                <Button className="bg-[#1a94ff] text-zinc-50">
+                  <Image
+                    src="/img/tiki-logo.png"
+                    alt="Tiki"
+                    width={30}
+                    height={20}
+                  />
+                </Button>
+                <Button className="bg-[#ff6633] text-zinc-50">
+                  <Image
+                    src="/img/shopee-logo.png"
+                    alt="Shopee"
+                    width={59}
+                    height={20}
+                  />
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </Modal>
   );
 };
 
-const GridView = ({ releases, options }: ReleasesView) => {
+const GridView = ({ releases, isLoading, options }: ReleasesView) => {
   const { setModalOpen, setModalData } = options;
+
+  if (isLoading)
+    return (
+      <>
+        {[...Array(8)].map((e, i) => {
+          return (
+            <div className="container mx-auto animate-pulse px-6" key={i}>
+              <div className={`mt-12 mb-6 flex items-center text-xl font-bold`}>
+                <span className="capitalize">
+                  <div className="dark:bg-zinc-7 h-6 w-72 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                </span>
+              </div>
+              <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
+                {[...Array(6)].map((e, i) => (
+                  <Card key={i}>
+                    <div className="dark:bg-zinc-7 h-[240px] w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                  </Card>
+                ))}
+              </div>
+            </div>
+          );
+        })}
+      </>
+    );
 
   return (
     <>
@@ -390,8 +459,49 @@ const GridView = ({ releases, options }: ReleasesView) => {
   );
 };
 
-const ListView = ({ releases, options }: ReleasesView) => {
+const ListView = ({ releases, isLoading, options }: ReleasesView) => {
   const { setModalOpen, setModalData } = options;
+
+  if (isLoading)
+    return (
+      <div className="mx-auto overflow-scroll lg:container">
+        <div className="min-w-fit px-6">
+          <div className="mt-12 grid min-w-max animate-pulse grid-cols-6 overflow-hidden rounded-2xl border dark:border-zinc-600">
+            <span className="border-r p-3 text-center font-bold dark:border-zinc-600 dark:bg-zinc-700">
+              Ngày phát hành
+            </span>
+            <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">
+              Tên
+            </span>
+            <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
+            {[...Array(4)].map((e, i) => {
+              return (
+                <>
+                  <div
+                    className="flex h-full items-center justify-center border-t border-r p-3 font-bold dark:border-zinc-600"
+                    style={{
+                      gridRow: `span 5 / span 5`,
+                    }}
+                  >
+                    <div className="dark:bg-zinc-7 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                  </div>
+                  {[...Array(5)].map((e, i) => (
+                    <>
+                      <div className="col-span-4 flex cursor-pointer items-center gap-3 border-t p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600">
+                        <div className="dark:bg-zinc-7 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                      </div>
+                      <div className="border-t p-3 dark:border-zinc-600">
+                        <div className="dark:bg-zinc-7 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                      </div>
+                    </>
+                  ))}
+                </>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    );
 
   return (
     <div className="mx-auto overflow-scroll lg:container">
@@ -456,12 +566,28 @@ const Releases = ({ date, view, filters, options }: ReleasesProps) => {
 
   const { releases, isLoading, isError } = useReleases(year, month, publishers);
 
-  if (isLoading) return <span>loading</span>;
+  if (isError)
+    return (
+      <div className="container mx-auto mt-12 flex items-center justify-center px-3">
+        <div className="text-center">
+          <p>¯\_| ✖ 〜 ✖ |_/¯</p>
+          <h1 className="font-kanit text-6xl font-bold">Nani?</h1>
+          <p>
+            Chuyện kỳ quái gì đã xảy ra. Vui lòng tải lại trang hoặc liên hệ bọn
+            mình nhé.
+          </p>
+        </div>
+      </div>
+    );
 
-  if (isError) return <span>error</span>;
-
-  if (view == true) return <GridView options={options} releases={releases} />;
-  else return <ListView options={options} releases={releases} />;
+  if (view == true)
+    return (
+      <GridView isLoading={isLoading} options={options} releases={releases} />
+    );
+  else
+    return (
+      <ListView isLoading={isLoading} options={options} releases={releases} />
+    );
 };
 
 const useReleases = (
