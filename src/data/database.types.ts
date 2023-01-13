@@ -11,132 +11,126 @@ export interface Database {
     Tables: {
       licensed: {
         Row: {
-          id: string
-          name: string
-          source: string | null
           anilist: number | null
+          id: number
           image_url: string | null
+          name: string
           publisher: string
-          type: string
+          source: string | null
           timestamp: string
-          serie_id: number | null
+          type: string
         }
         Insert: {
-          id?: string
-          name: string
-          source?: string | null
           anilist?: number | null
+          id: number
           image_url?: string | null
+          name: string
           publisher: string
-          type: string
+          source?: string | null
           timestamp?: string
-          serie_id?: number | null
+          type: string
         }
         Update: {
-          id?: string
-          name?: string
-          source?: string | null
           anilist?: number | null
+          id?: number
           image_url?: string | null
+          name?: string
           publisher?: string
-          type?: string
+          source?: string | null
           timestamp?: string
-          serie_id?: number | null
+          type?: string
         }
       }
       publication: {
         Row: {
-          id: string
-          name: string
           date: string
-          publisher: string
-          price: number
-          image_url: string | null
           edition: string | null
-          wide: boolean
-          type: string | null
+          id: string
+          image_url: string | null
+          name: string
+          price: number
+          publisher: string
           serie_id: number | null
+          wide: boolean
         }
         Insert: {
-          id?: string
-          name: string
           date: string
-          publisher: string
-          price?: number
-          image_url?: string | null
           edition?: string | null
-          wide?: boolean
-          type?: string | null
+          id?: string
+          image_url?: string | null
+          name: string
+          price?: number
+          publisher: string
           serie_id?: number | null
+          wide?: boolean
         }
         Update: {
-          id?: string
-          name?: string
           date?: string
-          publisher?: string
-          price?: number
-          image_url?: string | null
           edition?: string | null
-          wide?: boolean
-          type?: string | null
+          id?: string
+          image_url?: string | null
+          name?: string
+          price?: number
+          publisher?: string
           serie_id?: number | null
+          wide?: boolean
         }
       }
       publisher: {
         Row: {
+          color: string
           id: string
           name: string
-          color: string
         }
         Insert: {
+          color: string
           id: string
           name: string
-          color: string
         }
         Update: {
+          color?: string
           id?: string
           name?: string
-          color?: string
         }
       }
       series: {
         Row: {
+          anilist: number | null
           id: number
           name: string
           publisher: string
           type: string
-          anilist: number | null
         }
         Insert: {
+          anilist?: number | null
           id?: number
           name: string
           publisher: string
           type: string
-          anilist?: number | null
         }
         Update: {
+          anilist?: number | null
           id?: number
           name?: string
           publisher?: string
           type?: string
-          anilist?: number | null
         }
       }
       type: {
         Row: {
+          color: string
           id: string
           name: string
-          color: string
         }
         Insert: {
+          color: string
           id: string
           name: string
-          color: string
         }
         Update: {
+          color?: string
           id?: string
           name?: string
-          color?: string
         }
       }
     }

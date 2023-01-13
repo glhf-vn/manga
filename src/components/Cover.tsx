@@ -34,7 +34,7 @@ export interface CoverProps {
   entry: {
     name: string;
     image_url: string | null;
-    id: string;
+    id: string | number;
   };
   loader?: boolean;
   sizes?: string;
@@ -58,7 +58,7 @@ export default function Cover({
         <Image
           loader={cloudinaryLoader}
           className={imageStyles({ fit })}
-          src={entry.id}
+          src={entry.id as string}
           alt={entry.name}
           width={300}
           height={450}
