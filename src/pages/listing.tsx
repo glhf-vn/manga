@@ -16,7 +16,7 @@ import Badge from "@components/Badge";
 import Header from "@components/Header";
 import Button from "@components/Button";
 
-import { siteList } from "@data/config";
+import { siteList, VND } from "@data/config";
 import type { ListingResponse } from "@data/api.types";
 
 type ListingSetting = {
@@ -66,11 +66,6 @@ const Products = ({ site, category, page }: ListingSetting) => {
       </div>
     );
 
-  const currencyFormatter = new Intl.NumberFormat("vi-VN", {
-    style: "currency",
-    currency: "VND",
-  });
-
   return (
     <ul className="grid grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
       {data!.map(
@@ -97,16 +92,14 @@ const Products = ({ site, category, page }: ListingSetting) => {
                     {price < original_price ? (
                       <>
                         <span className="text-green-400">
-                          {currencyFormatter.format(price)}
+                          {VND.format(price)}
                         </span>{" "}
                         <span className="text-sm text-red-400 line-through">
-                          {currencyFormatter.format(original_price)}
+                          {VND.format(original_price)}
                         </span>
                       </>
                     ) : (
-                      <span className="text-primary">
-                        {currencyFormatter.format(price)}
-                      </span>
+                      <span className="text-primary">{VND.format(price)}</span>
                     )}
                   </p>
                 </div>
