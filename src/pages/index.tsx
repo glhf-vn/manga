@@ -13,7 +13,7 @@ import type { Publication, PublicationByDate } from "@data/public.types";
 import { VND } from "@data/config";
 import { getEntries, getEntriesByGroup, getPublishers } from "@lib/supabase";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import useSWR, { SWRConfig, unstable_serialize } from "swr";
 
@@ -683,6 +683,15 @@ export default function Home({
   );
 
   const [currentView, changeCurrentView] = useState(true); // true = card, false = list
+  // load state if persist on browser
+  useEffect(() => {
+    const view = window.localStorage.getItem("RELEASES_VIEW");
+    if (view !== null) changeCurrentView(JSON.parse(view));
+  }, []);
+  // save view to browser
+  useEffect(() => {
+    window.localStorage.setItem("RELEASES_VIEW", JSON.stringify(currentView));
+  }, [currentView]);
 
   const now = DateTime.now();
 
