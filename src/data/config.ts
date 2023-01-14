@@ -17,6 +17,12 @@ export const seoConfig: DefaultSeoProps = {
   },
 };
 
+// Currency formatter
+export const VND = new Intl.NumberFormat("vi-VN", {
+  style: "currency",
+  currency: "VND",
+});
+
 // Site list for listing.tsx
 export const siteList = [
   {

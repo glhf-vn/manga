@@ -10,6 +10,7 @@ import type {
 } from "@data/index.types";
 import type { Publication, PublicationByDate } from "@data/public.types";
 
+import { VND } from "@data/config";
 import { getEntries, getEntriesByGroup, getPublishers } from "@lib/supabase";
 
 import { useState } from "react";
@@ -93,7 +94,7 @@ const Slider = ({ data }: SliderProps) => {
                   <p className="hidden sm:block">
                     <b>Nhà xuất bản/phát hành</b>: {release.publisher.name}
                     <br />
-                    <b>Giá dự kiến</b>: {release.price}
+                    <b>Giá dự kiến</b>: {VND.format(release.price)}
                   </p>
                 </div>
               </div>
@@ -224,14 +225,18 @@ const FilterModal = ({
         <Dialog.Title className="m-6 font-kanit text-2xl font-bold lg:text-3xl">
           Lọc theo nhà xuất bản/phát hành
         </Dialog.Title>
-        <Dialog.Description className="m-6 space-y-1">
+        <Dialog.Description
+          as="div"
+          className="m-6 grid space-y-1 sm:grid-cols-2"
+        >
           {values.map((value) => (
             <div key={value.id} className="flex items-center">
               <input
                 id={value.id}
                 checked={statedValues.includes(value.id)}
+                style={{ color: value.color }}
                 type="checkbox"
-                className={`h-4 w-4 rounded border-gray-300 text-primary transition-all focus:ring-primary`}
+                className={`h-4 w-4 rounded border-gray-300 transition-all focus:ring-zinc-400`}
                 onChange={({ target }) => handler(target.checked, value.id)}
               />
               <label
@@ -281,7 +286,7 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
                   <br />
                   <b>Nhà xuất bản/phát hành</b>: {data.publisher.name}
                   <br />
-                  <b>Giá dự kiến</b>: {data.price}
+                  <b>Giá dự kiến</b>: {VND.format(data.price)}
                 </Dialog.Description>
               </div>
               <div className="mt-6">
@@ -547,7 +552,7 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
                       <BsBoxArrowUpRight className="inline-block text-zinc-400" />
                     </div>
                     <span className="border-t p-3 dark:border-zinc-600">
-                      {release.price}
+                      {VND.format(release.price)}
                     </span>
                   </>
                 ))}
@@ -570,12 +575,25 @@ const Releases = ({ date, view, filters, options }: ReleasesProps) => {
     return (
       <div className="container mx-auto mt-12 flex items-center justify-center px-3">
         <div className="text-center">
-          <p>¯\_| ✖ 〜 ✖ |_/¯</p>
-          <h1 className="font-kanit text-6xl font-bold">Nani?</h1>
+          <p>{"＼(º □ º l|l)/"}</p>
+          <h1 className="my-3 font-kanit text-4xl font-bold">Nani?</h1>
           <p>
             Chuyện kỳ quái gì đã xảy ra. Vui lòng tải lại trang hoặc liên hệ bọn
             mình nhé.
           </p>
+        </div>
+      </div>
+    );
+
+  if (!isLoading && releases.length == 0)
+    return (
+      <div className="container mx-auto mt-12 flex items-center justify-center px-3">
+        <div className="text-center">
+          <p>{"~(>_<~)"}</p>
+          <h1 className="my-3 font-kanit text-4xl font-bold">
+            Không tìm thấy!
+          </h1>
+          <p>Có thể lịch phát hành tháng này chưa có, quay lại sau nhé!</p>
         </div>
       </div>
     );
@@ -614,6 +632,8 @@ const useReleases = (
       return await fetch(url).then((res) => res.json());
     }
   );
+
+  console.log(data);
 
   return {
     releases: data as PublicationByDate[],
@@ -681,8 +701,6 @@ export default function Home({
       changeFilterPublishers([...filterPublishers, filterId]); // add filterId to array
     }
   };
-
-  console.log(filterPublishers);
 
   return (
     <Layout>
