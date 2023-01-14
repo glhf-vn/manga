@@ -43,8 +43,11 @@ import Cover from "@components/Cover";
 import Modal from "@components/Modal";
 
 import "@splidejs/react-splide/css/core";
+import Header from "@components/Header";
 
 const Slider = ({ data }: SliderProps) => {
+  if (data.length == 0) return <Header>Lịch phát hành</Header>;
+
   return (
     <div className="relative">
       <div className="absolute inset-0 bottom-[30%] bg-zinc-100 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)] dark:bg-zinc-900"></div>
@@ -531,7 +534,7 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
                 >
                   <span>{date.toFormat("dd/MM/yyyy")}</span>
                   {date < today && (
-                    <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-200" />
+                    <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-700 dark:text-green-200" />
                   )}
                 </div>
                 {releaseGroup.entries.map((release) => (
@@ -632,8 +635,6 @@ const useReleases = (
       return await fetch(url).then((res) => res.json());
     }
   );
-
-  console.log(data);
 
   return {
     releases: data as PublicationByDate[],
