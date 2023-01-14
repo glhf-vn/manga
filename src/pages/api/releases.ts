@@ -20,7 +20,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       });
 
       if (entries) {
-        // Get data from your database
+        // Get data from your database, also cache on Vercel's network for 2 hours
+        res.setHeader("Cache-Control", "max-age=0, s-maxage=7200");
         res.status(200).json(entries);
       } else {
         res.status(204).end();
