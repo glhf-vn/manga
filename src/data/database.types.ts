@@ -99,6 +99,7 @@ export interface Database {
           id: number
           name: string
           publisher: string
+          status: Database["public"]["Enums"]["status"]
           type: string
         }
         Insert: {
@@ -106,6 +107,7 @@ export interface Database {
           id?: number
           name: string
           publisher: string
+          status?: Database["public"]["Enums"]["status"]
           type: string
         }
         Update: {
@@ -113,6 +115,7 @@ export interface Database {
           id?: number
           name?: string
           publisher?: string
+          status?: Database["public"]["Enums"]["status"]
           type?: string
         }
       }
@@ -141,14 +144,7 @@ export interface Database {
       [_ in never]: never
     }
     Enums: {
-      continents:
-        | "Africa"
-        | "Antarctica"
-        | "Asia"
-        | "Europe"
-        | "Oceania"
-        | "North America"
-        | "South America"
+      status: "Licensed" | "Published" | "Finished"
     }
   }
 }
