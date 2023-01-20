@@ -15,3 +15,13 @@ export type PublicationByDate = {
 };
 
 export type Type = Database["public"]["Tables"]["type"]["Row"];
+
+export type Serie = Omit<
+  Database["public"]["Tables"]["series"]["Row"],
+  "type" | "publisher"
+> & {
+  type: Pick<Type, "name" | "id">;
+  publisher: Pick<Publisher, "name" | "id">;
+};
+
+export type Status = Database["public"]["Enums"]["status"];

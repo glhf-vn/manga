@@ -106,41 +106,26 @@ export const getStaticPaths = async () => {
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   const data = await getSerie(parseInt(context.params!.id as string));
 
-  const date_difference = DateTime.now().diff(
-    DateTime.fromISO(data.licensed!.timestamp),
-    "days"
-  ).days;
-
   const image_url =
     (data.publication![0] && data.publication![0].image_url) ||
-    data.licensed!.image_url ||
+    data.licensed?.image_url ||
     null;
-
-  const status = data.publication![0]
-    ? DateTime.fromISO(data.publication![0].date).diffNow("days").days < 0
-      ? 3
-      : 2
-    : 1;
 
   return {
     props: {
       data: {
         ...data,
         id: String(data.id),
-        licensed: {
-          ...data.licensed,
-          date_difference: date_difference.toFixed(0),
-        },
         image_url,
+        status:
+          data.status == "Finished" ? 3 : data.status == "Published" ? 2 : 1,
       },
-      status,
     },
   };
 };
 
 export default function Serie({
   data,
-  status,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { publication, licensed, publisher, type } = data;
 
@@ -202,57 +187,66 @@ export default function Serie({
           </div>
           <div
             className={`${
-              status >= 2
+              data.status > 1
                 ? "before:bg-green-300 dark:before:bg-green-700"
                 : "before:bg-zinc-200 dark:before:bg-zinc-700"
             } relative flex flex-col items-center before:absolute before:left-[calc(-50%+2.25rem)] before:top-6 before:h-1 before:w-[calc(100%-4.5rem)] `}
           >
             <div
               className={`${
-                status >= 2
+                data.status > 1
                   ? "bg-green-300 dark:bg-green-700"
                   : "bg-zinc-200 dark:bg-zinc-700"
               } flex h-14 w-14 items-center justify-center rounded-full  p-3 text-xl`}
             >
               <BsCalendarCheck />
             </div>
-            <span className="mt-3">Đã có lịch phát hành</span>
+            <span className="mt-3">Đã phát hành</span>
           </div>
           <div
             className={`${
-              status >= 3
+              data.status > 2
                 ? "before:bg-green-300 dark:before:bg-green-700"
                 : "before:bg-zinc-200 dark:before:bg-zinc-700"
             } relative flex flex-col items-center before:absolute before:left-[calc(-50%+2.25rem)] before:top-6 before:h-1 before:w-[calc(100%-4.5rem)] `}
           >
             <div
               className={`${
-                status >= 3
+                data.status > 2
                   ? "bg-green-300 dark:bg-green-700"
                   : "bg-zinc-200 dark:bg-zinc-700"
               } flex h-14 w-14 items-center justify-center rounded-full p-3 text-xl`}
             >
               <BsBookmarkCheck />
             </div>
-            <span className="mt-3">Đã phát hành</span>
+            <span className="mt-3">Đã hoàn thành</span>
           </div>
         </div>
 
-        <h3 className="mb-6 px-6 font-kanit text-2xl font-bold">
-          Thông tin bản quyền
-        </h3>
-        <p className="mb-12 px-6">
-          Bộ truyện được mua bản quyền bởi <b>{publisher!.name}</b> vào ngày{" "}
-          <b>{DateTime.fromISO(licensed.timestamp!).toLocaleString()}</b>.{" "}
-          {status == 1 && (
-            <>
-              Hiện tại đã được... <b>{licensed.date_difference} ngày</b> kể từ
-              hôm ấy o(TヘTo)
-            </>
-          )}
-        </p>
+        {licensed && (
+          <>
+            <h3 className="mb-6 px-6 font-kanit text-2xl font-bold">
+              Thông tin bản quyền
+            </h3>
+            <p className="mb-12 px-6">
+              Bộ truyện được mua bản quyền bởi <b>{publisher!.name}</b> vào ngày{" "}
+              <b>{DateTime.fromISO(licensed.timestamp).toLocaleString()}</b>.{" "}
+              {data.status == 1 && (
+                <>
+                  Hiện tại đã được...{" "}
+                  <b>
+                    {DateTime.now()
+                      .diff(DateTime.fromISO(licensed.timestamp), "days")
+                      .toHuman()}
+                  </b>{" "}
+                  kể từ hôm ấy o(TヘTo)
+                </>
+              )}
+            </p>
+          </>
+        )}
 
-        {status >= 2 && (
+        {data.status >= 2 && (
           <>
             <h3 className="mb-6 px-6 font-kanit text-2xl font-bold">
               Lịch phát hành
