@@ -3,10 +3,8 @@ import { DateTime } from "luxon";
 import _ from "lodash";
 
 import type { Database } from "@data/database.types";
-import { ServerResponse } from "http";
-import { DatabaseFilter } from "@data/api.types";
 
-import type { Publication } from "@data/public.types";
+import type { Publication, Serie } from "@data/public.types";
 
 // Create a single supabase client for interacting with your database
 const client = createClient<Database>(
@@ -197,11 +195,15 @@ export async function getSerie(id: number) {
     type(*),
     publisher(*),
     publication(id,name,edition,price,image_url,date),
-    licensed(source,image_url,timestamp)
+    licensed(source,image_url,timestamp),
+    status
     `
     )
     .eq("id", id)
+    .order("date", { foreignTable: "publication", ascending: true })
+    .order("edition", { foreignTable: "publication", ascending: false })
     .limit(1, { foreignTable: "type" })
+    .limit(1, { foreignTable: "publisher" })
     .limit(1)
     .single();
 
@@ -225,19 +227,48 @@ export async function getSerie(id: number) {
   };
 }
 
-export async function getSeries() {
-  const { data, error } = await client.from("series").select(`
-    *,
-    publisher(name),
-    publication(id,name,edition,price,image_url,date),
-    licensed(name,source,image_url)
+export async function getSeries(filter?: {
+  publishers?: string | string[];
+  types?: string | string[];
+  status?: Serie | Serie[];
+}) {
+  let query = client.from("series").select(`
+  *,
+  licensed(image_url),
+  publication(image_url),
+  publisher(id,name),
+  type(id,name)
   `);
+
+  if (filter?.publishers) {
+    query = query.in("publisher", [filter.publishers]);
+  }
+
+  if (filter?.types) {
+    query = query.in("type", [filter.types]);
+  }
+
+  if (filter?.status) {
+    query = query.in("status", [filter.status]);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     throw error;
   }
 
-  return data;
+  return data.map((data) => ({
+    ...data,
+    image_url:
+      Array.isArray(data.publication) &&
+      data.publication.length > 0 &&
+      data.publication[0].image_url
+        ? data.publication[0].image_url
+        : data.licensed
+        ? (data.licensed as { image_url: string }).image_url
+        : null,
+  }));
 }
 
 export async function getSeriesId() {
