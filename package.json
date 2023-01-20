@@ -36,7 +36,7 @@
   },
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
-    "@types/lodash": "^4.14.186",
+    "@types/lodash": "^4.14.191",
     "@types/luxon": "^3.2.0",
     "@types/node": "18.11.18",
     "@types/papaparse": "^5.3.7",
