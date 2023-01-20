@@ -222,6 +222,15 @@ const FilterModal = ({
   handler,
   statedValues,
 }: FilterModalProps) => {
+  const setFilter = (checked: boolean, filterId: string) => {
+    if (!checked) {
+      // if uncheck
+      handler(statedValues.filter((value) => value != filterId)); //remove filterId from array
+    } else {
+      handler([...statedValues, filterId]); // add filterId to array
+    }
+  };
+
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div>
@@ -240,7 +249,7 @@ const FilterModal = ({
                 style={{ color: value.color }}
                 type="checkbox"
                 className={`h-4 w-4 rounded border-gray-300 transition-all focus:ring-zinc-400`}
-                onChange={({ target }) => handler(target.checked, value.id)}
+                onChange={({ target }) => setFilter(target.checked, value.id)}
               />
               <label
                 htmlFor={`${value.id}`}
@@ -568,6 +577,37 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
   );
 };
 
+const useReleases = (
+  year = DateTime.now().year,
+  month = DateTime.now().month,
+  publishers?: string[]
+) => {
+  const { data, error, isLoading } = useSWR(
+    {
+      year,
+      month,
+      publishers,
+    },
+    async ({ year, month, publishers }) => {
+      const dateObj = DateTime.fromObject({ year, month });
+
+      let url = `/api/releases?start=${dateObj
+        .startOf("month")
+        .toISODate()}&end=${dateObj.endOf("month").toISODate()}`;
+
+      publishers?.map((publisher) => (url += `&publisher=${publisher}`));
+
+      return await fetch(url).then((res) => res.json());
+    }
+  );
+
+  return {
+    releases: data as PublicationByDate[],
+    isLoading,
+    isError: error,
+  };
+};
+
 const Releases = ({ date, view, filters, options }: ReleasesProps) => {
   const { year, month } = date;
   const { publishers } = filters;
@@ -609,38 +649,6 @@ const Releases = ({ date, view, filters, options }: ReleasesProps) => {
     return (
       <ListView isLoading={isLoading} options={options} releases={releases} />
     );
-};
-
-const useReleases = (
-  year = DateTime.now().year,
-  month = DateTime.now().month,
-  publishers?: string[]
-) => {
-  const { data, error, isLoading } = useSWR(
-    {
-      year,
-      month,
-      publishers,
-    },
-    async ({ year, month, publishers }) => {
-      const dateObj = DateTime.fromObject({ year, month });
-
-      let url = `/api/releases?start=${dateObj
-        .startOf("month")
-        .toISODate()}&end=${dateObj.endOf("month").toISODate()}`;
-
-      if (publishers)
-        url += `${publishers.map((publisher) => `&publisher=${publisher}`)}`;
-
-      return await fetch(url).then((res) => res.json());
-    }
-  );
-
-  return {
-    releases: data as PublicationByDate[],
-    isLoading,
-    isError: error,
-  };
 };
 
 export const getStaticProps = async () => {
@@ -692,17 +700,6 @@ export default function Home({
     month: now.month,
   });
 
-  const toggleFilterPublishers = (checked: boolean, filterId: string) => {
-    if (!checked) {
-      // if uncheck
-      changeFilterPublishers(
-        filterPublishers.filter((publisher) => publisher != filterId)
-      ); //remove filterId from array
-    } else {
-      changeFilterPublishers([...filterPublishers, filterId]); // add filterId to array
-    }
-  };
-
   return (
     <Layout>
       <NextSeo
@@ -721,7 +718,7 @@ export default function Home({
         onClose={() => setFilterOpen(false)}
         values={publishers}
         statedValues={filterPublishers}
-        handler={toggleFilterPublishers}
+        handler={changeFilterPublishers}
       />
 
       <Slider data={upcoming} />

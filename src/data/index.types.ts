@@ -52,7 +52,7 @@ export interface InfoModalProps extends ModalProps {
 export interface FilterModalProps extends ModalProps {
   values: Publisher[];
   statedValues: string[];
-  handler: (checked: boolean, filterId: string) => void;
+  handler: (value: string[]) => void;
 }
 
 // Pagination type
