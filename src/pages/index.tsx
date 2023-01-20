@@ -11,11 +11,11 @@ import type {
 import type { Publication, PublicationByDate } from "@data/public.types";
 
 import { VND } from "@data/config";
-import { getEntries, getEntriesByGroup, getPublishers } from "@lib/supabase";
+import { getEntries, getPublishers } from "@lib/supabase";
 
 import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
-import useSWR, { SWRConfig, unstable_serialize } from "swr";
+import useSWR from "swr";
 
 import { Dialog, Menu, Switch, Transition } from "@headlessui/react";
 import { NextSeo } from "next-seo";
@@ -646,8 +646,6 @@ const useReleases = (
 export const getStaticProps = async () => {
   const now = DateTime.now();
 
-  const releases = await getEntriesByGroup();
-
   const upcoming = await getEntries(
     now.toISODate(),
     now.plus({ days: 3 }).toISODate()
@@ -659,12 +657,6 @@ export const getStaticProps = async () => {
     props: {
       publishers,
       upcoming,
-      fallback: {
-        [unstable_serialize({
-          year: now.year,
-          month: now.month,
-        })]: releases,
-      },
     },
     revalidate: 600, // revalidate every 10 minutes
   };
@@ -673,7 +665,6 @@ export const getStaticProps = async () => {
 export default function Home({
   publishers,
   upcoming,
-  fallback,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState<Publication | undefined>();
@@ -771,14 +762,12 @@ export default function Home({
         </div>
       </div>
 
-      <SWRConfig value={{ fallback }}>
-        <Releases
-          date={currentDate}
-          view={currentView}
-          filters={{ publishers: filterPublishers }}
-          options={{ setModalOpen, setModalData }}
-        />
-      </SWRConfig>
+      <Releases
+        date={currentDate}
+        view={currentView}
+        filters={{ publishers: filterPublishers }}
+        options={{ setModalOpen, setModalData }}
+      />
 
       <div className="container mx-auto mt-12 px-6">
         <Pagination date={currentDate} options={{ changeDate }} />
