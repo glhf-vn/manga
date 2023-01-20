@@ -34,7 +34,7 @@ export interface ButtonProps
   href?: string;
 }
 
-export default function Card({
+export default function Button({
   intent,
   hoverable,
   children,
