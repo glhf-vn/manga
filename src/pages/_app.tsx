@@ -1,6 +1,6 @@
 import type { AppProps } from "next/app";
 
-import { DateTime, Settings } from "luxon";
+import { Settings } from "luxon";
 
 import NextNProgress from "nextjs-progressbar";
 import { DefaultSeo } from "next-seo";
