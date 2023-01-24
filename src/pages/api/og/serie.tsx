@@ -5,7 +5,7 @@ export const config = {
   runtime: "experimental-edge",
 };
 
-export default async function OG(req: NextRequest) {
+export default async function SerieOG(req: NextRequest) {
   /* Disable image-related eslint because of generating on edge */
   /* eslint-disable @next/next/no-img-element, jsx-a11y/alt-text */
 
@@ -13,10 +13,10 @@ export default async function OG(req: NextRequest) {
     const { searchParams } = new URL(req.url);
 
     const inter = await fetch(
-      new URL("../../../public/fonts/Inter-Regular.ttf", import.meta.url)
+      new URL("../../../../public/fonts/Inter-Regular.ttf", import.meta.url)
     ).then((res) => res.arrayBuffer());
     const interBold = await fetch(
-      new URL("../../../public/fonts/Inter-Bold.ttf", import.meta.url)
+      new URL("../../../../public/fonts/Inter-Bold.ttf", import.meta.url)
     ).then((res) => res.arrayBuffer());
 
     // query
