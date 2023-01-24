@@ -5,44 +5,27 @@ export const config = {
   runtime: "experimental-edge",
 };
 
-const kanit = fetch(
-  new URL("../../../public/fonts/Kanit-Bold.ttf", import.meta.url)
-).then((res) => res.arrayBuffer());
+export default async function OG(req: NextRequest) {
+  /* Disable image-related eslint because of generating on edge */
+  /* eslint-disable @next/next/no-img-element, jsx-a11y/alt-text */
 
-const inter = fetch(
-  new URL("../../../public/fonts/Inter-Regular.ttf", import.meta.url)
-).then((res) => res.arrayBuffer());
-
-const interBold = fetch(
-  new URL("../../../public/fonts/Inter-Bold.ttf", import.meta.url)
-).then((res) => res.arrayBuffer());
-
-export default async (req: NextRequest) => {
   try {
     const { searchParams } = new URL(req.url);
-    const kanitData = await kanit;
-    const interData = await inter;
-    const interBoldData = await interBold;
+
+    const inter = await fetch(
+      new URL("../../../public/fonts/Inter-Regular.ttf", import.meta.url)
+    ).then((res) => res.arrayBuffer());
+    const interBold = await fetch(
+      new URL("../../../public/fonts/Inter-Bold.ttf", import.meta.url)
+    ).then((res) => res.arrayBuffer());
 
     // query
-    const name = searchParams.has("name")
-      ? searchParams.get("name")?.slice(0, 100)
-      : "Đang cập nhật";
-    const date = searchParams.has("date")
-      ? searchParams.get("date")?.slice(0, 10)
-      : "Đang cập nhật";
-    const publisher = searchParams.has("publisher")
-      ? searchParams.get("publisher")?.slice(0, 100)
-      : "Đang cập nhật";
-    const price = searchParams.has("price")
-      ? searchParams.get("price")?.slice(0, 100)
-      : "Đang cập nhật";
-    const image_url = searchParams.has("image_url")
-      ? searchParams.get("image_url")
-      : null;
-    const edition = searchParams.has("edition")
-      ? searchParams.get("edition")
-      : null;
+    const name = searchParams.get("name")?.slice(0, 100) ?? "Đang cập nhật";
+    const publisher =
+      searchParams.get("publisher")?.slice(0, 100) ?? "Đang cập nhật";
+    const image_url = searchParams.get("image_url") ?? null;
+    const type = searchParams.get("type") ?? "Đang cập nhật";
+    const status = parseInt(searchParams.get("status") || "1");
 
     return new ImageResponse(
       (
@@ -57,8 +40,8 @@ export default async (req: NextRequest) => {
             backgroundColor: "#fafafa",
             fontSize: 28,
             fontWeight: 400,
-            lineHeight: 1.15,
-            fontFamily: '"Inter"',
+            lineHeight: 1.2,
+            fontFamily: "Inter",
           }}
         >
           <img
@@ -76,10 +59,7 @@ export default async (req: NextRequest) => {
                 />
               </div>
             ) : (
-              <div
-                tw="flex bg-zinc-200 p-6 text-zinc-500 h-[525px] w-[350px] items-center justify-center text-center font-bold text-4xl rounded-3xl shadow-md"
-                style={{ fontFamily: '"Kanit"' }}
-              >
+              <div tw="flex font-bold bg-zinc-200 p-6 text-zinc-500 h-[525px] w-[350px] items-center justify-center text-center font-bold text-4xl rounded-3xl shadow-md">
                 {name}
               </div>
             )}
@@ -93,32 +73,30 @@ export default async (req: NextRequest) => {
                   height={32}
                 />
                 <span tw="ml-3">/</span>
-                <span tw="ml-3">Lịch phát hành</span>
+                <span tw="ml-3">Thông tin bản quyền</span>
               </div>
-              <h1 tw="text-5xl mt-6 mb-9" style={{ fontFamily: '"Kanit"' }}>
-                {name}
-              </h1>
-              <span>
-                <b style={{ fontFamily: '"Inter Bold"' }}>Ngày phát hành</b>:{" "}
-                {date}
-              </span>
-              {edition && (
-                <span tw="mt-3">
-                  <b style={{ fontFamily: '"Inter Bold"' }}>Phiên bản</b>: Bản
-                  Đặc biệt
-                </span>
-              )}
-              <br tw="mb-9" />
+
+              <h1 tw="text-5xl my-6 font-bold leading-snug">{name}</h1>
 
               <span tw="mb-3">
-                <b style={{ fontFamily: '"Inter Bold"' }}>
-                  Nhà xuất bản/phát hành
-                </b>
-                : {publisher}
+                <b>Nhà xuất bản</b>: {publisher}
               </span>
-              <span>
-                <b style={{ fontFamily: '"Inter Bold"' }}>Giá dự kiến</b>:{" "}
-                {price}
+              <span tw="mb-6">
+                <b>Tình trạng</b>:{" "}
+                {status == 1
+                  ? "Đã mua bản quyền"
+                  : status == 2
+                  ? "Đã ra mắt"
+                  : "Đã hoàn thành"}
+              </span>
+              <span
+                tw="px-3 py-1.5 rounded-full text-base"
+                style={{
+                  color: "#ffffff",
+                  backgroundColor: "#f8b60b",
+                }}
+              >
+                {type}
               </span>
             </div>
           </div>
@@ -129,18 +107,15 @@ export default async (req: NextRequest) => {
         height: 630,
         fonts: [
           {
-            name: "Kanit",
-            data: kanitData,
+            name: "Inter",
+            data: inter,
+            weight: 400,
             style: "normal",
           },
           {
             name: "Inter",
-            data: interData,
-            style: "normal",
-          },
-          {
-            name: "Inter Bold",
-            data: interBoldData,
+            data: interBold,
+            weight: 700,
             style: "normal",
           },
         ],
@@ -152,4 +127,4 @@ export default async (req: NextRequest) => {
       status: 500,
     });
   }
-};
+}

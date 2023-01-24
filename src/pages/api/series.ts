@@ -2,7 +2,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getSeries } from "@lib/supabase";
 import { Serie } from "@data/public.types";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function Series(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const { query, method } = req;
 
   switch (method) {
@@ -31,4 +34,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.setHeader("Allow", ["GET"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-};
+}

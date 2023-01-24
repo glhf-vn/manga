@@ -41,9 +41,9 @@ import Button from "@components/Button";
 import Badge from "@components/Badge";
 import Cover from "@components/Cover";
 import Modal from "@components/Modal";
+import Header from "@components/Header";
 
 import "@splidejs/react-splide/css/core";
-import Header from "@components/Header";
 
 const Slider = ({ data }: SliderProps) => {
   if (data.length == 0) return <Header>Lịch phát hành</Header>;
@@ -422,7 +422,7 @@ const GridView = ({ releases, isLoading, options }: ReleasesView) => {
   if (isLoading)
     return (
       <>
-        {[...Array(8)].map((e, i) => {
+        {[...Array(8)].map((_, i) => {
           return (
             <div className="container mx-auto animate-pulse px-6" key={i}>
               <div className={`mt-12 mb-6 flex items-center text-xl font-bold`}>
@@ -431,7 +431,7 @@ const GridView = ({ releases, isLoading, options }: ReleasesView) => {
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
-                {[...Array(6)].map((e, i) => (
+                {[...Array(6)].map((_, i) => (
                   <Card key={i}>
                     <div className="dark:bg-zinc-7 h-[240px] w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
                   </Card>
@@ -502,7 +502,7 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
               Tên
             </span>
             <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
-            {[...Array(4)].map((e, i) => {
+            {[...Array(4)].map((_, i) => {
               return (
                 <>
                   <div
@@ -513,7 +513,7 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
                   >
                     <div className="dark:bg-zinc-7 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
                   </div>
-                  {[...Array(5)].map((e, i) => (
+                  {[...Array(5)].map((_, i) => (
                     <>
                       <div className="col-span-4 flex cursor-pointer items-center gap-3 border-t p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600">
                         <div className="dark:bg-zinc-7 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>

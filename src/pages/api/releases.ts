@@ -2,7 +2,10 @@ import type { NextApiRequest, NextApiResponse } from "next";
 import { getEntriesByGroup } from "@lib/supabase";
 import { DateTime } from "luxon";
 
-export default async (req: NextApiRequest, res: NextApiResponse) => {
+export default async function Releases(
+  req: NextApiRequest,
+  res: NextApiResponse
+) {
   const {
     query: {
       start = DateTime.now().startOf("month").toISODate(),
@@ -32,4 +35,4 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
       res.setHeader("Allow", ["GET"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-};
+}

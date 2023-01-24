@@ -1,10 +1,10 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import type { FahasaResponse, ListingResponse } from "@data/api.types";
 
-export default async (
+export default async function Fahasa(
   req: NextApiRequest,
   res: NextApiResponse<ListingResponse[]>
-) => {
+) {
   const {
     query: { category, page },
     method,
@@ -47,4 +47,4 @@ export default async (
       res.setHeader("Allow", ["GET"]);
       res.status(405).end(`Method ${method} Not Allowed`);
   }
-};
+}
