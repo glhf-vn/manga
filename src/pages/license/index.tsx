@@ -238,6 +238,20 @@ export default function SeriesList({
       <NextSeo
         title="Thông tin bản quyền"
         description="Xem thông tin manga/light-novel được mua bản quyền, cập nhật thường xuyên!"
+        openGraph={{
+          title: `Thông tin bản quyền`,
+          description: `Xem thông tin manga/light-novel được mua bản quyền, cập nhật thường xuyên!`,
+          images: [
+            {
+              url: encodeURI(
+                "https://manga.glhf.vn/api/og/?title=Thông tin bản quyền manga/LN"
+              ),
+              width: 1200,
+              height: 630,
+              alt: "Thông tin bản quyền",
+            },
+          ],
+        }}
       />
 
       <Header>Thông tin bản quyền</Header>

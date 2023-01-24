@@ -10,7 +10,24 @@ import Button from "@components/Button";
 export default function Donate() {
   return (
     <Layout>
-      <NextSeo title="Ủng hộ phát triển" />
+      <NextSeo
+        title="Ủng hộ phát triển"
+        description="Về dự án và các cách bạn có thể ủng hộ phát triển mangaGLHF."
+        openGraph={{
+          title: `Ủng hộ phát triển mangaGLHF`,
+          description: `Về dự án và các cách bạn có thể ủng hộ phát triển mangaGLHF.`,
+          images: [
+            {
+              url: encodeURI(
+                "https://manga.glhf.vn/api/og/?title=Ủng hộ phát triển"
+              ),
+              width: 1200,
+              height: 630,
+              alt: "Ủng hộ phát triển",
+            },
+          ],
+        }}
+      />
 
       <Header>Ủng hộ phát triển</Header>
 

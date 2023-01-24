@@ -8,6 +8,7 @@ import {
   BsChevronLeft,
   BsChevronRight,
 } from "react-icons/bs";
+import { NextSeo } from "next-seo";
 
 import Layout from "@layouts/Layout";
 
@@ -168,6 +169,25 @@ export default function Listing() {
 
   return (
     <Layout>
+      <NextSeo
+        title="Thông tin truyện mới"
+        description="Xem thông tin truyện manga/light-novel mới ra mắt từ các trang TMĐT!"
+        openGraph={{
+          title: `Thông tin truyện mới`,
+          description: `Xem thông tin truyện manga/light-novel mới ra mắt từ các trang TMĐT!`,
+          images: [
+            {
+              url: encodeURI(
+                "https://manga.glhf.vn/api/og/?title=Thông tin truyện mới"
+              ),
+              width: 1200,
+              height: 630,
+              alt: "Thông tin truyện mới",
+            },
+          ],
+        }}
+      />
+
       <Header>Thông tin truyện mới</Header>
       <div className="container mx-auto px-6">
         <div className="mb-6 flex items-center gap-3">

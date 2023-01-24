@@ -133,14 +133,16 @@ export default function Serie({
         title={`Bản quyền ${data.name}`}
         description={`Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`}
         openGraph={{
+          title: `Bản quyền ${data.name}`,
+          description: `Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`,
           images: [
             {
               url: encodeURI(
-                `https://manga.glhf.vn/api/og?name=${data.name}&publisher=${
-                  publisher!.name
-                }&type=${type!.name}&status=${data.status}${
-                  data.image_url ? `&image_url=${data.image_url}` : ""
-                }`
+                `https://manga.glhf.vn/api/og/serie?name=${
+                  data.name
+                }&publisher=${publisher!.name}&type=${type!.name}&status=${
+                  data.status
+                }${data.image_url ? `&image_url=${data.image_url}` : ""}`
               ),
               width: 1200,
               height: 630,
@@ -161,7 +163,7 @@ export default function Serie({
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
             />
           </div>
-          <div className="pt-8 sm:flex-1">
+          <div className="pt-20 sm:flex-1 sm:pt-8">
             <Badge className="m-0" style={{ backgroundColor: type!.color }}>
               {type!.name}
             </Badge>

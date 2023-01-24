@@ -6,7 +6,22 @@ import Layout from "@layouts/Layout";
 export default function Custom500() {
   return (
     <Layout>
-      <NextSeo title="Lỗi máy chủ" />
+      <NextSeo
+        title="Lỗi máy chủ"
+        description="Đã có chuyện gì đó xảy ra, vui lòng thử lại sau."
+        openGraph={{
+          title: `Lỗi máy chú`,
+          description: `Đã có chuyện gì đó xảy ra, vui lòng thử lại sau.`,
+          images: [
+            {
+              url: encodeURI("https://manga.glhf.vn/api/og/?title=Lỗi máy chủ"),
+              width: 1200,
+              height: 630,
+              alt: "500 - Lỗi máy chủ",
+            },
+          ],
+        }}
+      />
 
       <div className="container mx-auto flex h-screen items-center justify-center px-3">
         <div className="text-center">

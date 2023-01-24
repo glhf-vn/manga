@@ -6,7 +6,24 @@ import Layout from "@layouts/Layout";
 export default function Custom404() {
   return (
     <Layout>
-      <NextSeo title="Không tìm thấy trang" />
+      <NextSeo
+        title="Không tìm thấy trang"
+        description="Dường như đường dẫn không tồn tại."
+        openGraph={{
+          title: `Không tìm thấy trang`,
+          description: `Dường như đường dẫn không tồn tại.`,
+          images: [
+            {
+              url: encodeURI(
+                "https://manga.glhf.vn/api/og/?title=Không tìm thấy trang"
+              ),
+              width: 1200,
+              height: 630,
+              alt: "404 - Không tồn tại",
+            },
+          ],
+        }}
+      />
 
       <div className="container mx-auto flex h-screen items-center justify-center px-3">
         <div className="text-center">

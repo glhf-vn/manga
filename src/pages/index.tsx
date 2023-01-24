@@ -714,6 +714,20 @@ export default function Home({
       <NextSeo
         title="Lịch phát hành"
         description="Xem lịch phát hành chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
+        openGraph={{
+          title: `Lịch phát hành`,
+          description: `Xem lịch phát hành chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!`,
+          images: [
+            {
+              url: encodeURI(
+                "https://manga.glhf.vn/api/og/?title=Lịch phát hành"
+              ),
+              width: 1200,
+              height: 630,
+              alt: "Lịch phát hành",
+            },
+          ],
+        }}
       />
 
       <InfoModal
