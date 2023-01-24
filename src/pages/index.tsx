@@ -237,10 +237,21 @@ const FilterModal = ({
         <Dialog.Title className="m-6 font-kanit text-2xl font-bold lg:text-3xl">
           Lọc theo nhà xuất bản/phát hành
         </Dialog.Title>
-        <Dialog.Description
-          as="div"
-          className="m-6 grid space-y-1 sm:grid-cols-2"
-        >
+        <Dialog.Description as="div" className="m-6 grid gap-1 sm:grid-cols-2">
+          <Button
+            intent="primary"
+            className="mb-3"
+            onClick={() => handler([...values.map((value) => value.id)])}
+          >
+            Chọn tất cả
+          </Button>
+          <Button
+            intent="secondary"
+            className="mb-3"
+            onClick={() => handler([])}
+          >
+            Bỏ chọn tất cả
+          </Button>
           {values.map((value) => (
             <div key={value.id} className="flex items-center">
               <input
@@ -678,9 +689,7 @@ export default function Home({
   const [modalData, setModalData] = useState<Publication | undefined>();
 
   const [filterOpen, setFilterOpen] = useState(false);
-  const [filterPublishers, changeFilterPublishers] = useState(
-    publishers.map((publisher) => publisher.id)
-  );
+  const [filterPublishers, changeFilterPublishers] = useState<string[]>([]);
 
   const [currentView, changeCurrentView] = useState(true); // true = card, false = list
   // load state if persist on browser
