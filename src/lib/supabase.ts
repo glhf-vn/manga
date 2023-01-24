@@ -4,7 +4,7 @@ import _ from "lodash";
 
 import type { Database } from "@data/database.types";
 
-import type { Publication, Serie } from "@data/public.types";
+import type { Publication, Serie, Status } from "@data/public.types";
 
 // Create a single supabase client for interacting with your database
 const client = createClient<Database>(
@@ -232,13 +232,20 @@ export async function getSeries(filter?: {
   types?: string | string[];
   status?: Serie | Serie[];
 }) {
-  let query = client.from("series").select(`
+  let query = client
+    .from("series")
+    .select(
+      `
   *,
   licensed(image_url),
   publication(image_url),
   publisher(id,name),
-  type(id,name)
-  `);
+  type(id,name,color)
+  `
+    )
+    .order("status", { ascending: true })
+    .order("publisher", { ascending: true })
+    .order("name", { ascending: true });
 
   if (filter?.publishers) {
     query = query.in("publisher", [filter.publishers]);
