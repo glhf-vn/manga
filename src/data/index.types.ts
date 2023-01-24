@@ -3,7 +3,7 @@ import type {
   PublicationByDate,
   Publisher,
 } from "@data/public.types";
-import { MonthNumbers } from "luxon";
+import type { MonthNumbers } from "luxon";
 
 export type DateObj = {
   year: number;

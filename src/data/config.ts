@@ -1,4 +1,4 @@
-import { DefaultSeoProps } from "next-seo";
+import type { DefaultSeoProps } from "next-seo";
 
 export const seoConfig: DefaultSeoProps = {
   titleTemplate: "%s - mangaGLHF",

@@ -1,4 +1,5 @@
-import { Status } from "./public.types";
+import type { Dispatch, SetStateAction } from "react";
+import type { Status } from "./public.types";
 
 export type SeriesProps = {
   filters: {
@@ -12,5 +13,5 @@ export type FilterProps = {
   title: string;
   values: { id: string; name: string; color: string }[];
   statedValues: string[];
-  handler: (value: string[]) => void;
+  handler: Dispatch<SetStateAction<string[]>>;
 };

@@ -20,7 +20,7 @@ export type Serie = Omit<
   Database["public"]["Tables"]["series"]["Row"],
   "type" | "publisher"
 > & {
-  type: Pick<Type, "name" | "id">;
+  type: Type;
   publisher: Pick<Publisher, "name" | "id">;
 };
 
