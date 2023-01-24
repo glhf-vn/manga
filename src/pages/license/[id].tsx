@@ -1,14 +1,11 @@
-// // Generates `/posts/1` and `/posts/2`
-// export async function getStaticPaths() {
-//   return {
-//     paths: [{ params: { id: "1" } }, { params: { id: "2" } }],
-//     fallback: false, // can also be true or 'blocking'
-//   };
-// }
+import type { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 
-import Layout from "@layouts/Layout";
 import { getSerie, getSeriesId } from "@lib/supabase";
-import { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+
+import { DateTime } from "luxon";
+
+import { NextSeo } from "next-seo";
+import Image from "next/image";
 import {
   BsBookmarkCheck,
   BsPencilSquare,
@@ -16,8 +13,9 @@ import {
   BsCalendar2CheckFill,
   BsBoxArrowUp,
 } from "react-icons/bs";
-import { DateTime } from "luxon";
-import Image from "next/image";
+
+import Layout from "@layouts/Layout";
+
 import Cover from "@components/Cover";
 import Card from "@components/Card";
 import Badge from "@components/Badge";
@@ -131,6 +129,27 @@ export default function Serie({
 
   return (
     <Layout>
+      <NextSeo
+        title={`Bản quyền ${data.name}`}
+        description={`Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`}
+        openGraph={{
+          images: [
+            {
+              url: encodeURI(
+                `/api/og?name=${data.name}&publisher=${publisher!.name}&type=${
+                  type!.name
+                }&status=${data.status}${
+                  data.image_url ? `&image_url=${data.image_url}` : ""
+                }`
+              ),
+              width: 1200,
+              height: 630,
+              alt: data.name,
+            },
+          ],
+        }}
+      />
+
       <div className="relative mb-12">
         <div className="absolute inset-0 bottom-1/4 bg-zinc-100 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)] dark:bg-zinc-900"></div>
         <div className="container relative mx-auto flex flex-col-reverse gap-6 px-6 sm:flex-row sm:gap-12 sm:pt-6">
@@ -142,7 +161,7 @@ export default function Serie({
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
             />
           </div>
-          <div className="pt-20 sm:flex-1">
+          <div className="pt-8 sm:flex-1">
             <Badge className="m-0" style={{ backgroundColor: type!.color }}>
               {type!.name}
             </Badge>

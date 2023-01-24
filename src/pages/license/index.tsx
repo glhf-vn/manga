@@ -1,15 +1,20 @@
-import Header from "@components/Header";
-import { Serie, Status } from "@data/public.types";
-import Layout from "@layouts/Layout";
+import type { Serie, Status } from "@data/public.types";
+import type { InferGetStaticPropsType } from "next";
+import type { FilterProps, SeriesProps } from "@data/licensed.types";
+
 import { getPublishers, getTypes } from "@lib/supabase";
-import { InferGetStaticPropsType } from "next";
-import { NextSeo } from "next-seo";
-import { useState } from "react";
-import { FilterProps, SeriesProps } from "@data/licensed.types";
 
 import useSWR from "swr";
+import { useState } from "react";
+
 import { Disclosure, Transition } from "@headlessui/react";
-import { BsPlus } from "react-icons/bs";
+import { NextSeo } from "next-seo";
+import { BsChevronRight, BsPlus } from "react-icons/bs";
+import Link from "next/link";
+
+import Layout from "@layouts/Layout";
+
+import Header from "@components/Header";
 import Card from "@components/Card";
 import Cover from "@components/Cover";
 import Badge from "@components/Badge";
@@ -50,7 +55,8 @@ const Filter = ({ title, values, handler, statedValues }: FilterProps) => {
                 <div key={value.id} className="flex items-center">
                   <input
                     id={`${value.id}`}
-                    defaultChecked={true}
+                    checked={statedValues.includes(value.id)}
+                    style={{ color: value.color }}
                     type="checkbox"
                     className={`h-4 w-4 rounded border-gray-300 text-primary transition-all focus:ring-primary`}
                     onChange={({ target }) =>
@@ -135,14 +141,34 @@ const Series = ({ filters }: SeriesProps) => {
     );
 
   if (isLoading) {
-    return <span>loading</span>;
+    return (
+      <ul className="grid animate-pulse grid-cols-1 gap-6 md:grid-cols-2">
+        {[...Array(8)].map((_, i) => (
+          <li key={i}>
+            <Card>
+              <div className="grid grid-cols-3">
+                <div className="col-span-1">
+                  <div className="h-[200px] w-full bg-zinc-400 dark:bg-zinc-600"></div>
+                </div>
+                <div className="relative col-span-2 flex flex-col justify-between">
+                  <div className="p-6">
+                    <div className="mb-3 h-5 w-12 rounded bg-zinc-400 dark:bg-zinc-600"></div>
+                    <div className="h-6 w-full rounded bg-zinc-400 dark:bg-zinc-600"></div>
+                  </div>
+                </div>
+              </div>
+            </Card>
+          </li>
+        ))}
+      </ul>
+    );
   }
 
   return (
     <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
-      {series.map((serie) => {
-        return (
-          <li key={serie.id}>
+      {series.map((serie) => (
+        <li key={serie.id}>
+          <Link href={`/license/${serie.id}`}>
             <Card>
               <div className="grid grid-cols-3">
                 <div className="col-span-1">
@@ -150,30 +176,23 @@ const Series = ({ filters }: SeriesProps) => {
                 </div>
                 <div className="relative col-span-2 flex flex-col justify-between">
                   <div className="absolute top-1 right-1">
-                    <Badge>{serie.type.name}</Badge>
+                    <Badge style={{ backgroundColor: serie.type.color }}>
+                      {serie.type.name}
+                    </Badge>
                   </div>
                   <div className="p-6">
                     <span className="text-sm">{serie.publisher.name}</span>
                     <h3 className="font-kanit text-2xl">{serie.name}</h3>
                   </div>
-                  <div className="border-t border-zinc-200 px-3 text-right text-zinc-600 dark:border-zinc-600 dark:text-zinc-200">
-                    {serie.anilist && (
-                      <a
-                        target="_blank"
-                        rel="noreferrer"
-                        href={`//anilist.co/manga/${serie.anilist}`}
-                        className="inline-block px-3 py-3"
-                      >
-                        AniList
-                      </a>
-                    )}
-                  </div>
+                  <span className="flex items-center justify-end gap-2 p-3 text-sm text-zinc-600 dark:border-zinc-600 dark:text-zinc-200">
+                    Chi tiết <BsChevronRight className="inline-block" />
+                  </span>
                 </div>
               </div>
             </Card>
-          </li>
-        );
-      })}
+          </Link>
+        </li>
+      ))}
     </ul>
   );
 };
@@ -195,6 +214,15 @@ export default function SeriesList({
   publishers,
   types,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const status = [
+    {
+      id: "Licensed",
+      name: "Đã mua bản quyền",
+      color: "#f8b60b",
+    },
+    { id: "Published", name: "Đã ra mắt", color: "#f8b60b" },
+    { id: "Finished", name: "Đã hoàn thành", color: "#f8b60b" },
+  ];
   const [filterPublishers, changeFilterPublishers] = useState(
     publishers.map((publisher) => publisher.id)
   );
@@ -203,7 +231,7 @@ export default function SeriesList({
     types.map((type) => type.id)
   );
 
-  const [filterStatus, changeFilterStatus] = useState<Status[]>(["Licensed"]);
+  const [filterStatus, changeFilterStatus] = useState(["Licensed"]);
 
   return (
     <Layout>
@@ -218,6 +246,15 @@ export default function SeriesList({
         <div className="basis-56 lg:basis-72">
           <h2 className="font-kanit text-2xl">Bộ lọc</h2>
           <br />
+
+          <Filter
+            title="Trạng thái"
+            values={status}
+            statedValues={filterStatus}
+            handler={changeFilterStatus}
+          />
+          <br />
+
           <Filter
             title="Loại truyện"
             values={types}
@@ -238,7 +275,7 @@ export default function SeriesList({
             filters={{
               publishers: filterPublishers,
               types: filterTypes,
-              status: filterStatus,
+              status: filterStatus as Status[],
             }}
           />
         </div>
