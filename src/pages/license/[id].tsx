@@ -258,8 +258,7 @@ export default function Serie({
                   <b>
                     {DateTime.now()
                       .diff(DateTime.fromISO(licensed.timestamp), "days")
-                      .toFormat("d")}{" "}
-                    ngày
+                      .toFormat("d 'ngày'")}{" "}
                   </b>{" "}
                   kể từ hôm ấy o(TヘTo)
                 </>
