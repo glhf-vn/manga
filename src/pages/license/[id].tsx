@@ -136,9 +136,9 @@ export default function Serie({
           images: [
             {
               url: encodeURI(
-                `/api/og?name=${data.name}&publisher=${publisher!.name}&type=${
-                  type!.name
-                }&status=${data.status}${
+                `https://manga.glhf.vn/api/og?name=${data.name}&publisher=${
+                  publisher!.name
+                }&type=${type!.name}&status=${data.status}${
                   data.image_url ? `&image_url=${data.image_url}` : ""
                 }`
               ),
