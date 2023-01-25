@@ -5,7 +5,7 @@ import type { FilterProps, SeriesProps } from "@data/licensed.types";
 import { getPublishers, getTypes } from "@lib/supabase";
 
 import useSWR from "swr";
-import { useState } from "react";
+import { HTMLProps, useState } from "react";
 
 import { Disclosure, Transition } from "@headlessui/react";
 import { NextSeo } from "next-seo";
@@ -18,19 +18,26 @@ import Header from "@components/Header";
 import Card from "@components/Card";
 import Cover from "@components/Cover";
 import Badge from "@components/Badge";
+import Button from "@components/Button";
 
-const Filter = ({ title, values, handler, statedValues }: FilterProps) => {
+const Filter = ({
+  title,
+  values,
+  checkedValues,
+  handler,
+  ...props
+}: FilterProps & Pick<HTMLProps<HTMLDivElement>, "className">) => {
   const setFilter = (checked: boolean, filterId: string) => {
     if (!checked) {
       // if uncheck
-      handler(statedValues.filter((value) => value != filterId)); //remove filterId from array
+      handler(checkedValues.filter((value) => value != filterId)); //remove filterId from array
     } else {
-      handler([...statedValues, filterId]); // add filterId to array
+      handler([...checkedValues, filterId]); // add filterId to array
     }
   };
 
   return (
-    <Disclosure as="div">
+    <Disclosure as="div" {...props}>
       {({ open }) => (
         <>
           <Disclosure.Button className="mb-3 flex w-full items-center justify-between">
@@ -55,7 +62,7 @@ const Filter = ({ title, values, handler, statedValues }: FilterProps) => {
                 <div key={value.id} className="flex items-center">
                   <input
                     id={`${value.id}`}
-                    checked={statedValues.includes(value.id)}
+                    checked={checkedValues.includes(value.id)}
                     style={{ color: value.color }}
                     type="checkbox"
                     className={`h-4 w-4 rounded border-gray-300 text-primary transition-all focus:ring-primary`}
@@ -233,6 +240,12 @@ export default function SeriesList({
 
   const [filterStatus, changeFilterStatus] = useState(["Licensed"]);
 
+  const [filters, changeFilters] = useState({
+    publishers: filterPublishers,
+    types: filterTypes,
+    status: filterStatus as Status[],
+  });
+
   return (
     <Layout>
       <NextSeo
@@ -259,39 +272,47 @@ export default function SeriesList({
       <div className="container mx-auto flex flex-col gap-6 px-6 md:flex-row-reverse">
         <div className="basis-56 lg:basis-72">
           <h2 className="font-kanit text-2xl">Bộ lọc</h2>
-          <br />
 
           <Filter
             title="Trạng thái"
             values={status}
-            statedValues={filterStatus}
+            checkedValues={filterStatus}
             handler={changeFilterStatus}
+            className="mt-6"
           />
-          <br />
 
           <Filter
             title="Loại truyện"
             values={types}
-            statedValues={filterTypes}
+            checkedValues={filterTypes}
             handler={changeFilterTypes}
+            className="mt-6"
           />
-          <br />
 
           <Filter
             title="Nhà xuất bản"
             values={publishers}
-            statedValues={filterPublishers}
+            checkedValues={filterPublishers}
             handler={changeFilterPublishers}
+            className="mt-6"
           />
+
+          <Button
+            intent="primary"
+            className="mt-6 w-full font-bold"
+            onClick={() =>
+              changeFilters({
+                publishers: filterPublishers,
+                types: filterTypes,
+                status: filterStatus as Status[],
+              })
+            }
+          >
+            Lọc
+          </Button>
         </div>
         <div className="flex-1">
-          <Series
-            filters={{
-              publishers: filterPublishers,
-              types: filterTypes,
-              status: filterStatus as Status[],
-            }}
-          />
+          <Series filters={filters} />
         </div>
       </div>
     </Layout>

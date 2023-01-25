@@ -219,15 +219,17 @@ const FilterModal = ({
   isOpen,
   onClose,
   values,
+  checkedValues,
   handler,
-  statedValues,
 }: FilterModalProps) => {
-  const setFilter = (checked: boolean, filterId: string) => {
+  const [currentValues, setCurrentValues] = useState<string[]>(checkedValues);
+
+  const changeCurrentValues = (checked: boolean, filterId: string) => {
     if (!checked) {
       // if uncheck
-      handler(statedValues.filter((value) => value != filterId)); //remove filterId from array
+      setCurrentValues(currentValues.filter((value) => value != filterId)); //remove filterId from array
     } else {
-      handler([...statedValues, filterId]); // add filterId to array
+      setCurrentValues([...currentValues, filterId]); // add filterId to array
     }
   };
 
@@ -237,39 +239,52 @@ const FilterModal = ({
         <Dialog.Title className="m-6 font-kanit text-2xl font-bold lg:text-3xl">
           Lọc theo nhà xuất bản/phát hành
         </Dialog.Title>
-        <Dialog.Description as="div" className="m-6 grid gap-1 sm:grid-cols-2">
+        <Dialog.Description as="div" className="m-6">
+          <div className="grid gap-x-3 gap-y-1 sm:grid-cols-2">
+            <Button
+              intent="secondary"
+              className="mb-3"
+              onClick={() =>
+                setCurrentValues([...values.map((value) => value.id)])
+              }
+            >
+              Chọn tất cả
+            </Button>
+            <Button
+              intent="none"
+              className="mb-3"
+              onClick={() => setCurrentValues([])}
+            >
+              Bỏ chọn tất cả
+            </Button>
+            {values.map((value) => (
+              <div key={value.id} className="flex items-center">
+                <input
+                  id={value.id}
+                  checked={currentValues.includes(value.id)}
+                  style={{ color: value.color }}
+                  type="checkbox"
+                  className={`h-4 w-4 rounded border-gray-300 transition-all focus:ring-zinc-400`}
+                  onChange={({ target }) =>
+                    changeCurrentValues(target.checked, value.id)
+                  }
+                />
+                <label
+                  htmlFor={`${value.id}`}
+                  className="ml-3 text-sm text-zinc-600 dark:text-zinc-400"
+                >
+                  {value.name}
+                </label>
+              </div>
+            ))}
+          </div>
           <Button
-            intent="primary"
-            className="mb-3"
-            onClick={() => handler([...values.map((value) => value.id)])}
+            onClick={() => handler(currentValues)}
+            intent={currentValues != checkedValues ? "primary" : "secondary"}
+            className="mt-3 w-full font-bold"
           >
-            Chọn tất cả
+            Lọc
           </Button>
-          <Button
-            intent="secondary"
-            className="mb-3"
-            onClick={() => handler([])}
-          >
-            Bỏ chọn tất cả
-          </Button>
-          {values.map((value) => (
-            <div key={value.id} className="flex items-center">
-              <input
-                id={value.id}
-                checked={statedValues.includes(value.id)}
-                style={{ color: value.color }}
-                type="checkbox"
-                className={`h-4 w-4 rounded border-gray-300 transition-all focus:ring-zinc-400`}
-                onChange={({ target }) => setFilter(target.checked, value.id)}
-              />
-              <label
-                htmlFor={`${value.id}`}
-                className="ml-3 text-sm text-zinc-600 dark:text-zinc-400"
-              >
-                {value.name}
-              </label>
-            </div>
-          ))}
         </Dialog.Description>
       </div>
     </Modal>
@@ -740,7 +755,7 @@ export default function Home({
         isOpen={filterOpen}
         onClose={() => setFilterOpen(false)}
         values={publishers}
-        statedValues={filterPublishers}
+        checkedValues={filterPublishers}
         handler={changeFilterPublishers}
       />
 
