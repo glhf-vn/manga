@@ -12,6 +12,6 @@ export type SeriesProps = {
 export type FilterProps = {
   title: string;
   values: { id: string; name: string; color: string }[];
-  statedValues: string[];
+  checkedValues: string[];
   handler: Dispatch<SetStateAction<string[]>>;
 };

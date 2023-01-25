@@ -3,6 +3,7 @@ import type {
   PublicationByDate,
   Publisher,
 } from "@data/public.types";
+import type { Dispatch, SetStateAction } from "react";
 import type { MonthNumbers } from "luxon";
 
 export type DateObj = {
@@ -36,13 +37,13 @@ export type ReleasesView = {
 // Modal types
 
 export type ModalMethods = {
-  setModalOpen: (value: boolean) => void;
-  setModalData: (value: Publication) => void;
+  setModalOpen: Dispatch<SetStateAction<boolean>>;
+  setModalData: Dispatch<SetStateAction<Publication | undefined>>;
 };
 
 export type ModalProps = {
   isOpen: boolean;
-  onClose: () => void;
+  onClose: Dispatch<SetStateAction<void>>;
 };
 
 export interface InfoModalProps extends ModalProps {
@@ -51,8 +52,8 @@ export interface InfoModalProps extends ModalProps {
 
 export interface FilterModalProps extends ModalProps {
   values: Publisher[];
-  statedValues: string[];
-  handler: (value: string[]) => void;
+  checkedValues: string[];
+  handler: Dispatch<SetStateAction<string[]>>;
 }
 
 // Pagination type
@@ -60,6 +61,6 @@ export interface FilterModalProps extends ModalProps {
 export type PaginationProps = {
   date: DateObj;
   options: {
-    changeDate: (value: DateObj) => void;
+    changeDate: Dispatch<SetStateAction<DateObj>>;
   };
 };
