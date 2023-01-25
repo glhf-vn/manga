@@ -230,9 +230,7 @@ export default function SeriesList({
     { id: "Published", name: "Đã ra mắt", color: "#f8b60b" },
     { id: "Finished", name: "Đã hoàn thành", color: "#f8b60b" },
   ];
-  const [filterPublishers, changeFilterPublishers] = useState(
-    publishers.map((publisher) => publisher.id)
-  );
+  const [filterPublishers, changeFilterPublishers] = useState<string[]>([]);
 
   const [filterTypes, changeFilterTypes] = useState(
     types.map((type) => type.id)
