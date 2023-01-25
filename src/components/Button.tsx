@@ -2,7 +2,7 @@ import type { HTMLProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonStyles = cva(
-  "h-fit cursor-pointer overflow-hidden rounded-xl py-2 px-3 inline-block",
+  "h-fit cursor-pointer overflow-hidden rounded-xl py-2 px-3 inline-block transition-all duration-150 ease-linear",
   {
     variants: {
       intent: {
@@ -14,8 +14,8 @@ const buttonStyles = cva(
         none: "",
       },
       hoverable: {
-        true: "hover:shadow-lg transition-shadow duration-150 ease-linear",
-        false: "hover:bg-zinc-300 transition-colors duration-150 ease-linear",
+        true: "hover:shadow-lg",
+        false: "hover:bg-zinc-300",
       },
     },
     defaultVariants: {
