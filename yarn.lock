@@ -2846,10 +2846,10 @@ stylis@4.1.3:
   resolved "https://registry.yarnpkg.com/stylis/-/stylis-4.1.3.tgz#fd2fbe79f5fed17c55269e16ed8da14c84d069f7"
   integrity sha512-GP6WDNWf+o403jrEp9c5jibKavrtLW+/qYGhFxFrG8maXhwTBI7gLLhiBb0o7uFccWN+EOS9aMO6cGHWAO07OA==
 
-supabase@^1.34.2:
-  version "1.34.2"
-  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.34.2.tgz#9d117d6e88081f767d15fef8f61bdfb66bdaa95a"
-  integrity sha512-54bu341RhV7vwH1mPF2DxXFRTjZr6moExdSHrYVjQ9mM8tS+EhC9UPZu6aOgdAzZoyN/unszKVWM6dDQh5odnQ==
+supabase@^1.34.5:
+  version "1.34.5"
+  resolved "https://registry.yarnpkg.com/supabase/-/supabase-1.34.5.tgz#9b2b127afb2028ccb8995154477820b4bf91261f"
+  integrity sha512-RBIIZTwCB+Ap13p47XwM6eDq7kW+r8QiJyyVlL0NHPnwZv75Q51O12pQnvUCgmlQ0Xy3VDbJhxKkYLHMwLqxjw==
   dependencies:
     bin-links "^4.0.1"
     node-fetch "^3.2.10"
