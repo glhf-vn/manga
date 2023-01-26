@@ -3,6 +3,7 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 import { getSerie, getSeriesId } from "@lib/supabase";
 
 import { DateTime } from "luxon";
+import { useRouter } from "next/router";
 
 import { NextSeo } from "next-seo";
 import Image from "next/image";
@@ -97,34 +98,61 @@ export const getStaticPaths = async () => {
 
   return {
     paths: series.map((serie) => ({ params: { id: String(serie.id) } })),
-    fallback: false,
+    fallback: true,
   };
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
-  const data = await getSerie(parseInt(context.params!.id as string));
+  try {
+    const data = await getSerie(parseInt(context.params!.id as string));
 
-  const image_url =
-    (data.publication![0] && data.publication![0].image_url) ||
-    data.licensed?.image_url ||
-    null;
+    if (!data) {
+      return { notFound: true };
+    }
 
-  return {
-    props: {
-      data: {
-        ...data,
-        id: String(data.id),
-        image_url,
-        status:
-          data.status == "Finished" ? 3 : data.status == "Published" ? 2 : 1,
+    const image_url =
+      (data.publication![0] && data.publication![0].image_url) ||
+      data.licensed?.image_url ||
+      null;
+
+    return {
+      props: {
+        data: {
+          ...data,
+          id: String(data.id),
+          image_url,
+          status:
+            data.status == "Finished" ? 3 : data.status == "Published" ? 2 : 1,
+        },
       },
-    },
-  };
+      revalidate: 86400, // revalidate per day
+    };
+  } catch (error) {
+    return { notFound: true };
+  }
 };
 
 export default function Serie({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const router = useRouter();
+
+  if (router.isFallback) {
+    return (
+      <Layout>
+        <NextSeo title="Đang tải..." />
+
+        <div className="container mx-auto flex h-screen items-center justify-center px-3">
+          <div className="animate-bounce text-center">
+            <p>{"(っ˘ω˘ς )"}</p>
+            <h1 className="my-3 font-kanit text-6xl font-bold">Đang tải...</h1>
+            <p>Bạn chờ xíu nhé!</p>
+          </div>
+        </div>
+      </Layout>
+    );
+  }
+
   const { publication, licensed, publisher, type } = data;
 
   return (
