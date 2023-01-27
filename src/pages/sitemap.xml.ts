@@ -22,6 +22,9 @@ function generateSiteMap(series: Serie[]) {
      <url>
        <loc>https://manga.glhf.vn/license</loc>
      </url>
+     <url>
+       <loc>https://manga.glhf.vn/events</loc>
+     </url>
      ${series
        .map(({ id }) => {
          return `
