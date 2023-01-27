@@ -3,7 +3,8 @@ export interface DatabaseFilter {
   types?: "*" | string;
 }
 
-export interface TikiResponse {
+// api/fahasa.ts && api/tiki.ts
+export type TikiResponse = {
   data?: {
     id: number;
     name: string;
@@ -13,9 +14,9 @@ export interface TikiResponse {
     original_price: number;
     discount: number;
   }[];
-}
+};
 
-export interface FahasaResponse {
+export type FahasaResponse = {
   product_list?: {
     product_id: number;
     product_name: string;
@@ -25,9 +26,9 @@ export interface FahasaResponse {
     product_price: number;
     discount: number;
   }[];
-}
+};
 
-export interface ListingResponse {
+export type ListingResponse = {
   id: number;
   name: string;
   image: string;
@@ -35,4 +36,26 @@ export interface ListingResponse {
   price: number;
   original_price: number;
   discount: number;
-}
+};
+
+// api/events.ts
+export type DiscordGuildEventsResponse = {
+  description: string;
+  entity_metadata: {
+    location: string;
+  };
+  id: string;
+  image: string;
+  name: string;
+  scheduled_end_time: string;
+  scheduled_start_time: string;
+};
+
+export type EventsResponse = {
+  description: string;
+  location: string;
+  image: string | null;
+  name: string;
+  scheduled_end_time: string;
+  scheduled_start_time: string;
+};
