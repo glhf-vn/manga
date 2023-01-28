@@ -159,7 +159,9 @@ export default function Serie({
     <Layout>
       <NextSeo
         title={`Bản quyền ${data.name}`}
-        description={`Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`}
+        description={`${data.name} hiện đã được mua bản quyền bởi ${
+          data.publisher!.name
+        }, xem thêm thông tin trên mangaGLHF!`}
         openGraph={{
           title: `Bản quyền ${data.name}`,
           description: `Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`,

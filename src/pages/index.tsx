@@ -727,11 +727,11 @@ export default function Home({
   return (
     <Layout>
       <NextSeo
-        title="Lịch phát hành"
-        description="Xem lịch phát hành chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!"
+        title="Lịch phát hành manga/light-novel"
+        description="Xem lịch phát hành manga/light-novel từ NXB Kim Đồng, NXB Trẻ, IPM và các công ty phát hành khác."
         openGraph={{
-          title: `Lịch phát hành`,
-          description: `Xem lịch phát hành chưa bao giờ là dễ hơn, nay được tổng hợp từ nhiều NXB khác nhau!`,
+          title: `Lịch phát hành manga/light-novel`,
+          description: `Xem lịch phát hành manga/light-novel từ các nhà xuất bản.`,
           images: [
             {
               url: encodeURI(
