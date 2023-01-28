@@ -55,6 +55,7 @@ export type EventsResponse = {
   description: string;
   location: string;
   image: string | null;
+  id: string;
   name: string;
   scheduled_end_time: string;
   scheduled_start_time: string;

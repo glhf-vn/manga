@@ -54,6 +54,7 @@ export default async function Events(
             }) => ({
               description,
               location: entity_metadata.location,
+              id,
               image: image
                 ? `https://cdn.discordapp.com/guild-events/${id}/${image}.jpg?size=2048`
                 : null,
