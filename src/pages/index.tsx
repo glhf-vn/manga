@@ -141,47 +141,47 @@ const MonthSelect = ({ date, options }: PaginationProps) => {
   const nextMonth = DateTime.now().plus({ month: 1 });
 
   return (
-    <div className="z-10 flex items-center gap-3 font-kanit text-2xl font-bold">
-      <span>Lịch phát hành</span>
-      <Menu as="div" className="relative">
-        <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2 dark:bg-zinc-700">
-          tháng {timeObj.month}
-          <BsChevronDown className="text-sm" />
-        </Menu.Button>
-        <Transition
-          enter="transition duration-100 ease-out"
-          enterFrom="transform scale-95 opacity-0"
-          enterTo="transform scale-100 opacity-100"
-          leave="transition duration-75 ease-out"
-          leaveFrom="transform scale-100 opacity-100"
-          leaveTo="transform scale-95 opacity-0"
-        >
-          <Menu.Items className="absolute right-0 mt-3 w-full overflow-hidden rounded-2xl bg-zinc-200 shadow-lg dark:bg-zinc-700">
-            <Menu.Item
-              as="div"
-              onClick={() => changeDate(prevMonth)}
-              className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
-            >
-              {prevMonth.toFormat("MMMM")}
-            </Menu.Item>
-            <Menu.Item
-              as="div"
-              onClick={() => changeDate(thisMonth)}
-              className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
-            >
-              {thisMonth.toFormat("MMMM")}
-            </Menu.Item>
-            <Menu.Item
-              as="div"
-              onClick={() => changeDate(nextMonth)}
-              className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
-            >
-              {nextMonth.toFormat("MMMM")}
-            </Menu.Item>
-          </Menu.Items>
-        </Transition>
-      </Menu>
-    </div>
+    <Menu
+      as="div"
+      className="relative inline-block font-kanit text-2xl font-bold"
+    >
+      <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2 dark:bg-zinc-700">
+        tháng {timeObj.month}
+        <BsChevronDown className="text-sm" />
+      </Menu.Button>
+      <Transition
+        enter="transition duration-100 ease-out"
+        enterFrom="transform scale-95 opacity-0"
+        enterTo="transform scale-100 opacity-100"
+        leave="transition duration-75 ease-out"
+        leaveFrom="transform scale-100 opacity-100"
+        leaveTo="transform scale-95 opacity-0"
+      >
+        <Menu.Items className="absolute right-0 mt-3 w-full overflow-hidden rounded-2xl bg-zinc-200 shadow-lg dark:bg-zinc-700">
+          <Menu.Item
+            as="div"
+            onClick={() => changeDate(prevMonth)}
+            className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
+          >
+            {prevMonth.toFormat("MMMM")}
+          </Menu.Item>
+          <Menu.Item
+            as="div"
+            onClick={() => changeDate(thisMonth)}
+            className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
+          >
+            {thisMonth.toFormat("MMMM")}
+          </Menu.Item>
+          <Menu.Item
+            as="div"
+            onClick={() => changeDate(nextMonth)}
+            className="transition-color block cursor-pointer py-1 px-2 duration-75 ease-linear ui-active:bg-zinc-300 ui-active:dark:bg-zinc-600"
+          >
+            {nextMonth.toFormat("MMMM")}
+          </Menu.Item>
+        </Menu.Items>
+      </Transition>
+    </Menu>
   );
 };
 
@@ -766,12 +766,17 @@ export default function Home({
 
       <Slider data={upcoming} />
 
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col justify-between gap-6 sm:flex-row">
-          <MonthSelect date={currentDate} options={{ changeDate }} />
-          <div className="grid grid-cols-2 gap-6 sm:flex">
+      <div className="sticky top-0 z-10 bg-zinc-50/75 pb-3 pt-20 backdrop-blur-md dark:bg-zinc-800/75 sm:pt-4">
+        <div className="container mx-auto flex flex-row justify-between gap-6 px-6">
+          <div>
+            <span className="hidden font-kanit text-2xl font-bold sm:inline">
+              Lịch phát hành
+            </span>{" "}
+            <MonthSelect date={currentDate} options={{ changeDate }} />
+          </div>
+          <div className="flex gap-6">
             <Button
-              className="rounded-2xl px-2 text-xl sm:text-2xl lg:text-3xl"
+              className="rounded-2xl px-2 text-2xl sm:text-2xl lg:text-3xl"
               onClick={() => setFilterOpen(!filterOpen)}
               aria-label="Mở bộ lọc"
               intent="secondary"
@@ -788,7 +793,7 @@ export default function Home({
                 className={`${
                   currentView ? "translate-x-0" : "translate-x-full"
                 } absolute top-0 h-full w-1/2 transform bg-primary transition-transform duration-200 ease-in-out`}
-              ></div>
+              />
               <div className="relative grid w-full grid-cols-2 items-center">
                 <span className="flex h-full items-center justify-center px-3">
                   <BsFillGridFill />
