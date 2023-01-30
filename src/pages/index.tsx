@@ -127,17 +127,36 @@ const Slider = ({ data }: SliderProps) => {
   );
 };
 
-const MonthSelect = ({ date, options }: PaginationProps) => {
-  const { year, month } = date;
+const MonthSelect = ({
+  date,
+  options,
+  fallback,
+}: PaginationProps & { fallback: boolean }) => {
+  const { month } = date;
   const { changeDate } = options;
 
-  const timeObj = DateTime.fromObject({
-    year: year,
-    month: month,
-  });
+  const thisMonth = DateTime.now();
+
+  if (!fallback)
+    return (
+      <input
+        type="month"
+        id="monthSelector"
+        name="monthSelector"
+        defaultValue={thisMonth.toFormat("yyyy-MM")}
+        required={true}
+        className="relative inline-block rounded-2xl border-none bg-zinc-200 py-1  px-2 font-kanit text-2xl font-bold dark:bg-zinc-700"
+        onChange={(e) => {
+          const date = DateTime.fromISO(e.target.value);
+          changeDate({
+            year: date.year,
+            month: date.month,
+          });
+        }}
+      ></input>
+    );
 
   const prevMonth = DateTime.now().minus({ month: 1 });
-  const thisMonth = DateTime.now();
   const nextMonth = DateTime.now().plus({ month: 1 });
 
   return (
@@ -146,7 +165,7 @@ const MonthSelect = ({ date, options }: PaginationProps) => {
       className="relative inline-block font-kanit text-2xl font-bold"
     >
       <Menu.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2 dark:bg-zinc-700">
-        tháng {timeObj.month}
+        tháng {month}
         <BsChevronDown className="text-sm" />
       </Menu.Button>
       <Transition
@@ -722,6 +741,14 @@ export default function Home({
     window.localStorage.setItem("RELEASES_VIEW", JSON.stringify(currentView));
   }, [currentView]);
 
+  const [monthSelectFallback, setMonthSelectFallback] = useState(false);
+  useEffect(() => {
+    const input = document.createElement("input");
+    input.type = "month";
+
+    if (input.type === "text") setMonthSelectFallback(true);
+  }, []);
+
   const now = DateTime.now();
 
   const [currentDate, changeDate] = useState<DateObj>({
@@ -772,7 +799,11 @@ export default function Home({
             <span className="hidden font-kanit text-2xl font-bold sm:inline">
               Lịch phát hành
             </span>{" "}
-            <MonthSelect date={currentDate} options={{ changeDate }} />
+            <MonthSelect
+              date={currentDate}
+              options={{ changeDate }}
+              fallback={monthSelectFallback}
+            />
           </div>
           <div className="flex gap-6">
             <Button
