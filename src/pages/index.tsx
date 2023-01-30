@@ -77,7 +77,12 @@ const Slider = ({ data }: SliderProps) => {
           {data.map((release) => (
             <SplideSlide key={release.id}>
               <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6">
-                <div className="cursor-default overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg sm:basis-72">
+                <div className="relative cursor-default overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg sm:basis-72">
+                  {release.edition && (
+                    <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
+                      {release.edition}
+                    </Badge>
+                  )}
                   <Cover
                     entry={release}
                     hero={true}
