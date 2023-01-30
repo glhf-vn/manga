@@ -22,7 +22,6 @@ import { NextSeo } from "next-seo";
 import {
   BsBoxArrowUpRight,
   BsCalendar2CheckFill,
-  BsChevronDown,
   BsChevronLeft,
   BsChevronRight,
   BsChevronCompactLeft,
@@ -30,6 +29,7 @@ import {
   BsFilter,
   BsFillGridFill,
   BsListUl,
+  BsChevronDown,
 } from "react-icons/bs";
 import Image from "next/image";
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
@@ -127,37 +127,13 @@ const Slider = ({ data }: SliderProps) => {
   );
 };
 
-const MonthSelect = ({
-  date,
-  options,
-  fallback,
-}: PaginationProps & { fallback: boolean }) => {
+const MonthSelect = ({ date, options }: PaginationProps) => {
   const { month } = date;
   const { changeDate } = options;
 
   const thisMonth = DateTime.now();
-
-  if (!fallback)
-    return (
-      <input
-        type="month"
-        id="monthSelector"
-        name="monthSelector"
-        defaultValue={thisMonth.toFormat("yyyy-MM")}
-        required={true}
-        className="relative inline-block rounded-2xl border-none bg-zinc-200 py-1  px-2 font-kanit text-2xl font-bold dark:bg-zinc-700"
-        onChange={(e) => {
-          const date = DateTime.fromISO(e.target.value);
-          changeDate({
-            year: date.year,
-            month: date.month,
-          });
-        }}
-      ></input>
-    );
-
-  const prevMonth = DateTime.now().minus({ month: 1 });
-  const nextMonth = DateTime.now().plus({ month: 1 });
+  const prevMonth = thisMonth.minus({ month: 1 });
+  const nextMonth = thisMonth.plus({ month: 1 });
 
   return (
     <Menu
@@ -741,14 +717,6 @@ export default function Home({
     window.localStorage.setItem("RELEASES_VIEW", JSON.stringify(currentView));
   }, [currentView]);
 
-  const [monthSelectFallback, setMonthSelectFallback] = useState(false);
-  useEffect(() => {
-    const input = document.createElement("input");
-    input.type = "month";
-
-    if (input.type === "text") setMonthSelectFallback(true);
-  }, []);
-
   const now = DateTime.now();
 
   const [currentDate, changeDate] = useState<DateObj>({
@@ -793,19 +761,15 @@ export default function Home({
 
       <Slider data={upcoming} />
 
-      <div className="sticky top-0 z-10 bg-zinc-50/75 pb-3 pt-20 backdrop-blur-md dark:bg-zinc-800/75 sm:pt-4">
+      <div className="sticky top-0 z-10 bg-zinc-50/75 pb-3 pt-20 backdrop-blur-md dark:bg-zinc-800/75 lg:pt-4">
         <div className="container mx-auto flex flex-row justify-between gap-6 px-6">
           <div>
             <span className="hidden font-kanit text-2xl font-bold sm:inline">
               Lịch phát hành
             </span>{" "}
-            <MonthSelect
-              date={currentDate}
-              options={{ changeDate }}
-              fallback={monthSelectFallback}
-            />
+            <MonthSelect date={currentDate} options={{ changeDate }} />
           </div>
-          <div className="flex gap-6">
+          <div className="flex gap-3">
             <Button
               className="rounded-2xl px-2 text-2xl sm:text-2xl lg:text-3xl"
               onClick={() => setFilterOpen(!filterOpen)}
