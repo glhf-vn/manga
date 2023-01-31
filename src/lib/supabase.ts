@@ -21,7 +21,8 @@ export async function getEntries(
   end: string = lastDay,
   filter?: {
     publishers?: string | string[];
-  }
+  },
+  order: boolean = true
 ) {
   let query = client
     .from("publication")
@@ -32,7 +33,7 @@ export async function getEntries(
     .gte("date", start)
     .lte("date", end)
     .order("date", {
-      ascending: true,
+      ascending: order,
     })
     .order("wide", {
       ascending: false,
@@ -62,9 +63,10 @@ export async function getEntriesByGroup(
   end: string = lastDay,
   filter?: {
     publishers?: string | string[];
-  }
+  },
+  order?: boolean
 ) {
-  const events = await getEntries(start, end, filter);
+  const events = await getEntries(start, end, filter, order);
 
   let groupedEvents = _.groupBy(events, (element) => element.date);
   let mappedEvents = _.map(groupedEvents, (entries, date) => {
