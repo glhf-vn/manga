@@ -17,7 +17,7 @@ import { useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import useSWR from "swr";
 
-import { Dialog, Menu, Switch, Transition } from "@headlessui/react";
+import { Dialog, Menu, Transition } from "@headlessui/react";
 import { NextSeo } from "next-seo";
 import {
   BsBoxArrowUpRight,
@@ -27,9 +27,11 @@ import {
   BsChevronCompactLeft,
   BsChevronCompactRight,
   BsFilter,
-  BsFillGridFill,
+  BsColumnsGap,
   BsListUl,
   BsChevronDown,
+  BsArrowDownShort,
+  BsArrowUpShort,
 } from "react-icons/bs";
 import Image from "next/image";
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
@@ -382,7 +384,7 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div className="flex animate-pulse flex-col sm:flex-row">
-        <div className="w-full bg-zinc-200 dark:bg-zinc-700 sm:max-w-[250px]"></div>
+        <div className="h-[600px] w-full bg-zinc-200 dark:bg-zinc-700 sm:h-[400px] sm:max-w-[250px]"></div>
         <div className="flex-1 p-6 sm:pt-9">
           <div className="flex h-full flex-col justify-between">
             <div>
@@ -606,12 +608,14 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
 const useReleases = (
   year = DateTime.now().year,
   month = DateTime.now().month,
+  order: boolean,
   publishers?: string[]
 ) => {
   const { data, error, isLoading } = useSWR(
     {
       year,
       month,
+      order,
       publishers,
     },
     async ({ year, month, publishers }) => {
@@ -619,7 +623,9 @@ const useReleases = (
 
       let url = `/api/releases?start=${dateObj
         .startOf("month")
-        .toISODate()}&end=${dateObj.endOf("month").toISODate()}`;
+        .toISODate()}&end=${dateObj.endOf("month").toISODate()}&order=${
+        order ? "ascending" : "descending"
+      }`;
 
       publishers?.map((publisher) => (url += `&publisher=${publisher}`));
 
@@ -634,11 +640,16 @@ const useReleases = (
   };
 };
 
-const Releases = ({ date, view, filters, options }: ReleasesProps) => {
+const Releases = ({ date, view, filters, order, options }: ReleasesProps) => {
   const { year, month } = date;
   const { publishers } = filters;
 
-  const { releases, isLoading, isError } = useReleases(year, month, publishers);
+  const { releases, isLoading, isError } = useReleases(
+    year,
+    month,
+    order,
+    publishers
+  );
 
   if (isError)
     return (
@@ -717,6 +728,8 @@ export default function Home({
     window.localStorage.setItem("RELEASES_VIEW", JSON.stringify(currentView));
   }, [currentView]);
 
+  const [currentOrder, setCurrentOrder] = useState(true); // true = ascending, false = descending
+
   const now = DateTime.now();
 
   const [currentDate, changeDate] = useState<DateObj>({
@@ -771,33 +784,29 @@ export default function Home({
           </div>
           <div className="flex gap-3">
             <Button
-              className="rounded-2xl px-2 text-2xl sm:text-2xl lg:text-3xl"
-              onClick={() => setFilterOpen(!filterOpen)}
+              className="rounded-2xl px-2 text-2xl"
+              onClick={() => setCurrentOrder((order) => !order)}
+              aria-label="Đổi thứ tự"
+              intent="secondary"
+            >
+              {currentOrder ? <BsArrowDownShort /> : <BsArrowUpShort />}
+            </Button>
+            <Button
+              className="rounded-2xl px-2 text-2xl"
+              onClick={() => setFilterOpen((status) => !status)}
               aria-label="Mở bộ lọc"
               intent="secondary"
             >
               <BsFilter />
             </Button>
-            <Switch
-              checked={currentView}
-              onChange={changeCurrentView}
-              className="relative overflow-hidden rounded-2xl bg-zinc-200 dark:bg-zinc-700"
+            <Button
+              className="rounded-2xl px-2 text-2xl"
+              onClick={() => changeCurrentView((currentView) => !currentView)}
+              aria-label="Thay đổi layout"
+              intent="secondary"
             >
-              <span className="sr-only">Thay đổi layout</span>
-              <div
-                className={`${
-                  currentView ? "translate-x-0" : "translate-x-full"
-                } absolute top-0 h-full w-1/2 transform bg-primary transition-transform duration-200 ease-in-out`}
-              />
-              <div className="relative grid w-full grid-cols-2 items-center">
-                <span className="flex h-full items-center justify-center px-3">
-                  <BsFillGridFill />
-                </span>
-                <span className="flex h-full items-center justify-center px-3">
-                  <BsListUl />
-                </span>
-              </div>
-            </Switch>
+              {currentView ? <BsListUl /> : <BsColumnsGap />}
+            </Button>
           </div>
         </div>
       </div>
@@ -806,6 +815,7 @@ export default function Home({
         date={currentDate}
         view={currentView}
         filters={{ publishers: filterPublishers }}
+        order={currentOrder}
         options={{ setModalOpen, setModalData }}
       />
 

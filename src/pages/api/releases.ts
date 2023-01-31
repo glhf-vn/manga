@@ -11,16 +11,23 @@ export default async function Releases(
       start = DateTime.now().startOf("month").toISODate(),
       end = DateTime.now().endOf("month").toISODate(),
       publisher,
-      type,
+      order,
     },
     method,
   } = req;
 
+  let parsedOrder = order === "descending" ? false : true;
+
   switch (method) {
     case "GET":
-      const entries = await getEntriesByGroup(start as string, end as string, {
-        publishers: publisher,
-      });
+      const entries = await getEntriesByGroup(
+        start as string,
+        end as string,
+        {
+          publishers: publisher,
+        },
+        parsedOrder
+      );
 
       if (entries) {
         // Get data from your database, also cache on Vercel's network for 2 hours

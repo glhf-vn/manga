@@ -25,6 +25,7 @@ export type ReleasesProps = {
   filters: {
     publishers: string[];
   };
+  order: boolean;
   options: ModalMethods;
 };
 
