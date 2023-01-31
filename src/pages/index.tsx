@@ -774,7 +774,7 @@ export default function Home({
 
       <Slider data={upcoming} />
 
-      <div className="sticky top-0 z-10 bg-zinc-50/75 pb-3 pt-20 backdrop-blur-md dark:bg-zinc-800/75 lg:pt-4">
+      <div className="sticky top-0 z-10 bg-zinc-50/75 pb-4 pt-20 backdrop-blur-md dark:bg-zinc-800/75 lg:pt-4">
         <div className="container mx-auto flex flex-row justify-between gap-6 px-6">
           <div>
             <span className="hidden font-kanit text-2xl font-bold sm:inline">
