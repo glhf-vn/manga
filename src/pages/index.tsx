@@ -389,13 +389,13 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
           <div className="flex h-full flex-col justify-between">
             <div>
               <Dialog.Title className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
-                <div className="dark:bg-zinc-7 h-6 w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
-                <div className="dark:bg-zinc-7 mt-3 h-6 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="h-6 w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="mt-3 h-6 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
               </Dialog.Title>
               <Dialog.Description>
-                <div className="dark:bg-zinc-7 mt-6 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
-                <div className="dark:bg-zinc-7 mt-6 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
-                <div className="dark:bg-zinc-7 mt-3 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="mt-6 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="mt-6 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                <div className="mt-3 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
               </Dialog.Description>
             </div>
             <div className="mt-6">
@@ -444,13 +444,13 @@ const GridView = ({ releases, isLoading, options }: ReleasesView) => {
             <div className="container mx-auto animate-pulse px-6" key={i}>
               <div className={`mt-12 mb-6 flex items-center text-xl font-bold`}>
                 <span className="capitalize">
-                  <div className="dark:bg-zinc-7 h-6 w-72 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                  <div className="h-6 w-72 rounded bg-zinc-300 dark:bg-zinc-700"></div>
                 </span>
               </div>
               <div className="grid grid-cols-2 gap-6 md:grid-cols-4 lg:grid-cols-6">
                 {[...Array(6)].map((_, i) => (
                   <Card key={i}>
-                    <div className="dark:bg-zinc-7 h-[240px] w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                    <div className="h-[240px] w-full rounded bg-zinc-300 dark:bg-zinc-700"></div>
                   </Card>
                 ))}
               </div>
@@ -528,15 +528,15 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
                       gridRow: `span 5 / span 5`,
                     }}
                   >
-                    <div className="dark:bg-zinc-7 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                    <div className="h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
                   </div>
                   {[...Array(5)].map((_, i) => (
                     <>
                       <div className="col-span-4 flex cursor-pointer items-center gap-3 border-t p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600">
-                        <div className="dark:bg-zinc-7 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                        <div className="h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
                       </div>
                       <div className="border-t p-3 dark:border-zinc-600">
-                        <div className="dark:bg-zinc-7 h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                        <div className="h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
                       </div>
                     </>
                   ))}
