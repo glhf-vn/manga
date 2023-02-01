@@ -4,7 +4,7 @@ import _ from "lodash";
 
 import type { Database } from "@data/database.types";
 
-import type { Publication, Serie, Status } from "@data/public.types";
+import type { Publication, Serie } from "@data/public.types";
 
 // Create a single supabase client for interacting with your database
 const client = createClient<Database>(
