@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./public/img/logo.png" width="200" />
+  <img src="./public/img/logo.png" width="120" />
 </p>
 
 <p align="center">
@@ -9,20 +9,18 @@
 
 ## Getting started
 
-**As current state, the project has been moved from using Google Calendar (and Sheets) to Supabase Database for future scalability**
-
-Clone it first, then create an environment variable file contain two of these values: `SUPABASE_URL` and `SUPABASE_ANON_KEY`.
+Clone the repository, then create an environment variable file consists two of these values: `SUPABASE_URL` and `SUPABASE_ANON_KEY`.
 
 Also, remember to install the packages first:
 
 ```bash
-yarn
+pnpm install
 ```
 
 Then, run the development server:
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
@@ -32,13 +30,13 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 There're plenty of ways to start customizing, but first start with `src/data/`
 
 ```tree
-data
-├── bookTypes.json
-├── publishers.json
+src/data
+├── api.types.ts
+├── config.ts -- Start with this
 ├── database.types.ts
-├── indexFilterStyles.ts
-├── next-seo.ts
-└── selectStyles.ts
+├── index.types.ts
+├── licensed.types.ts
+└── public.types.ts
 ```
 
 ## Side notes
