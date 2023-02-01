@@ -549,7 +549,7 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
     );
 
   return (
-    <div className="mx-auto overflow-scroll lg:container">
+    <div className="mx-auto overflow-auto lg:container">
       <div className="min-w-fit px-6">
         <div className="mt-12 grid min-w-max grid-cols-6 overflow-hidden rounded-2xl border dark:border-zinc-600">
           <span className="border-r p-3 text-center font-bold dark:border-zinc-600 dark:bg-zinc-700">
