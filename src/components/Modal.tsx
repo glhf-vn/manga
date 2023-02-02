@@ -18,12 +18,12 @@ export default function Modal({
       <Dialog onClose={onClose}>
         <Transition.Child
           as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0"
-          enterTo="opacity-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100"
-          leaveTo="opacity-0"
+          enter="transition ease-out duration-300"
+          enterFrom="transform opacity-0"
+          enterTo="transform opacity-100"
+          leave="transition ease-in duration-200"
+          leaveFrom="transform opacity-100"
+          leaveTo="transform opacity-0"
         >
           <div
             className="fixed inset-0 z-[1300] bg-black/30"
