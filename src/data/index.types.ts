@@ -44,7 +44,7 @@ export type ModalMethods = {
 
 export type ModalProps = {
   isOpen: boolean;
-  onClose: Dispatch<SetStateAction<void>>;
+  onClose(): void;
 };
 
 export interface InfoModalProps extends ModalProps {
