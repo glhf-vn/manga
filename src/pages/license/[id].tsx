@@ -157,15 +157,20 @@ export default function Serie({
   }
 
   const handleShare = async () => {
-    try {
-      await navigator.share({
-        title: `Bản quyền ${data.name}`,
-        text: `Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`,
-        url: `/license/${data.id}`,
-      });
-    } catch (err) {
-      console.log(`Error: ${err}`);
-      navigator.clipboard.writeText(`https://manga.glhf.vn/license/${data.id}`);
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: `Bản quyền ${data.name}`,
+          text: `Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`,
+          url: `/license/${data.id}`,
+        });
+      } catch (err) {
+        console.log(`Error: ${err}`);
+      }
+    } else {
+      await navigator.clipboard.writeText(
+        `https://manga.glhf.vn/license/${data.id}`
+      );
       setCopied(true);
       setTimeout(() => setCopied(false), 3000);
     }
