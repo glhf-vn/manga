@@ -1,6 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
 import { DateTime } from "luxon";
-import _ from "lodash";
 
 import type { Database } from "@data/database.types";
 
@@ -66,17 +65,29 @@ export async function getEntriesByGroup(
   },
   order?: boolean
 ) {
+  type groups = {
+    [key: string]: Publication[];
+  };
+
   const events = await getEntries(start, end, filter, order);
 
-  let groupedEvents = _.groupBy(events, (element) => element.date);
-  let mappedEvents = _.map(groupedEvents, (entries, date) => {
+  const groupedEvents = events.reduce((events, event) => {
+    if (!events[event.date]) {
+      events[event.date] = [];
+    }
+    events[event.date].push(event);
+
+    return events;
+  }, {} as groups);
+
+  const groupedEventsArray = Object.keys(groupedEvents).map((date) => {
     return {
       date,
-      entries,
+      entries: groupedEvents[date],
     };
   });
 
-  return mappedEvents;
+  return groupedEventsArray;
 }
 
 export async function getEntriesById(id: number, count?: number) {
