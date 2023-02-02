@@ -4,6 +4,7 @@ import { getSerie, getSeriesId } from "@lib/supabase";
 
 import { DateTime } from "luxon";
 import { useRouter } from "next/router";
+import { useState } from "react";
 
 import { NextSeo } from "next-seo";
 import Image from "next/image";
@@ -13,6 +14,7 @@ import {
   BsCalendarCheck,
   BsCalendar2CheckFill,
   BsBoxArrowUp,
+  BsClipboardCheck,
 } from "react-icons/bs";
 
 import Layout from "@layouts/Layout";
@@ -136,6 +138,7 @@ export default function Serie({
   data,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
+  const [copied, setCopied] = useState(false);
 
   if (router.isFallback) {
     return (
@@ -152,6 +155,21 @@ export default function Serie({
       </Layout>
     );
   }
+
+  const handleShare = async () => {
+    try {
+      await navigator.share({
+        title: `Bản quyền ${data.name}`,
+        text: `Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`,
+        url: `/license/${data.id}`,
+      });
+    } catch (err) {
+      console.log(`Error: ${err}`);
+      navigator.clipboard.writeText(`https://manga.glhf.vn/license/${data.id}`);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 3000);
+    }
+  };
 
   const { publication, licensed, publisher, type } = data;
 
@@ -205,9 +223,18 @@ export default function Serie({
             </p>
 
             <div className="mt-6 space-x-3">
-              <Button intent="secondary">
-                <BsBoxArrowUp className="h-[20px] w-[20px]" />
-                Chia sẻ
+              <Button intent="secondary" onClick={handleShare}>
+                {copied ? (
+                  <>
+                    <BsClipboardCheck className="h-[20px] w-[20px]" />
+                    Đã sao chép
+                  </>
+                ) : (
+                  <>
+                    <BsBoxArrowUp className="h-[20px] w-[20px]" />
+                    Chia sẻ
+                  </>
+                )}
               </Button>
               {data.anilist && (
                 <Button
