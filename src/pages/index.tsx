@@ -146,7 +146,7 @@ const MonthSelect = ({ date, options }: PaginationProps) => {
 
   return (
     <Popover className="relative inline-block">
-      <Popover.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2 text-2xl font-bold transition-all duration-150 ease-linear hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600">
+      <Popover.Button className="flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-2 font-kanit text-2xl font-bold transition-all duration-150 ease-linear hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600">
         {month}/{year}
         <BsChevronDown className="text-sm" />
       </Popover.Button>
