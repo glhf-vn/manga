@@ -32,8 +32,10 @@ import {
   BsChevronDown,
   BsArrowDownShort,
   BsArrowUpShort,
+  BsInfoCircleFill,
 } from "react-icons/bs";
 import Image from "next/image";
+import Link from "next/link";
 import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
 
 import Layout from "@layouts/Layout";
@@ -359,7 +361,10 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
           <div className="flex-1 p-6 sm:pt-9">
             <div className="flex h-full flex-col justify-between">
               <div>
-                <Dialog.Title className="mb-3 font-kanit text-2xl font-bold lg:text-3xl">
+                <Dialog.Title
+                  as="div"
+                  className="mb-3 font-kanit text-2xl font-bold lg:text-3xl"
+                >
                   {data.name}
                 </Dialog.Title>
                 <Dialog.Description>
@@ -381,7 +386,16 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
                 </Dialog.Description>
               </div>
               <div className="mt-6">
-                <div className="mt-1 flex gap-2">
+                {data.serie_id && (
+                  <Link href={`/license/${data.serie_id}`}>
+                    <Button intent="secondary">
+                      <BsInfoCircleFill />
+                      <span>Thông tin trọn bộ</span>
+                    </Button>
+                  </Link>
+                )}
+                <br />
+                <div className="mt-1 flex items-center gap-2">
                   <Button className="bg-[#c92127] text-zinc-50">
                     <a
                       href={`https://fahasa.com/catalogsearch/result/?q=${data.name}`}
