@@ -50,7 +50,7 @@ export default function Footer() {
             <li>
               <a
                 href="https://github.com/glhf-vn"
-                className="transition-colors duration-100 ease-linear hover:text-[#161b22]"
+                className="transition-colors duration-100 ease-linear hover:text-[#161b22] dark:hover:text-[#f0f6fc]"
                 aria-label="GitHub"
               >
                 <BsGithub />

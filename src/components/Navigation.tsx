@@ -59,7 +59,7 @@ const MobileMenu = () => {
           </a>
           <a
             href="https://github.com/glhf"
-            className="transition-colors duration-100 ease-linear hover:text-[#ffffff]"
+            className="transition-colors duration-100 ease-linear hover:text-[#ffffff] dark:hover:text-[#f0f6fc]"
           >
             <BsGithub />
           </a>
