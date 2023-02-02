@@ -6,16 +6,16 @@ const buttonStyles = cva(
   {
     variants: {
       intent: {
-        primary: "bg-primary text-white",
-        secondary: "bg-zinc-200 dark:bg-zinc-700",
-        success: "bg-green-200",
-        error: "bg-red-200",
-        caution: "bg-orange-200",
+        primary: "bg-primary text-white hover:bg-primary/75",
+        secondary:
+          "bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600",
+        success: "bg-green-200 hover:bg-green-300",
+        error: "bg-red-200 hover:bg-red-300",
+        caution: "bg-orange-200 hover:bg-orange-200",
         none: "",
       },
       hoverable: {
         true: "hover:shadow-lg",
-        false: "hover:bg-zinc-300",
       },
     },
     defaultVariants: {
@@ -24,7 +24,6 @@ const buttonStyles = cva(
     },
   }
 );
-
 const buttonContainerStyles = cva("flex justify-center items-center gap-3");
 
 export interface ButtonProps
