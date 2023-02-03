@@ -15,7 +15,7 @@ export default function Modal({
 }: ModalProps): JSX.Element {
   return (
     <Transition show={isOpen} as={Fragment}>
-      <Dialog onClose={onClose}>
+      <Dialog onClose={onClose} className="relative">
         <Transition.Child
           as={Fragment}
           enter="transition ease-out duration-300"
@@ -31,16 +31,16 @@ export default function Modal({
           />
         </Transition.Child>
 
-        <Transition.Child
-          as={Fragment}
-          enter="ease-out duration-300"
-          enterFrom="opacity-0 scale-95"
-          enterTo="opacity-100 scale-100"
-          leave="ease-in duration-200"
-          leaveFrom="opacity-100 scale-100"
-          leaveTo="opacity-0 scale-95"
-        >
-          <div className="fixed inset-0 z-[1300] overflow-y-auto">
+        <div className="fixed inset-0 z-[1300] h-screen overflow-y-auto">
+          <Transition.Child
+            as={Fragment}
+            enter="ease-out duration-300"
+            enterFrom="opacity-0 scale-95"
+            enterTo="opacity-100 scale-100"
+            leave="ease-in duration-200"
+            leaveFrom="opacity-100 scale-100"
+            leaveTo="opacity-0 scale-95"
+          >
             <div className="flex min-h-full items-center justify-center p-6">
               <Dialog.Panel className="relative w-full max-w-[640px] overflow-hidden rounded-2xl bg-zinc-50 text-zinc-800 dark:bg-zinc-800 dark:text-zinc-50">
                 {children}
@@ -51,8 +51,8 @@ export default function Modal({
                 />
               </Dialog.Panel>
             </div>
-          </div>
-        </Transition.Child>
+          </Transition.Child>
+        </div>
       </Dialog>
     </Transition>
   );
