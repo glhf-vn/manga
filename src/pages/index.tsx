@@ -204,11 +204,10 @@ const MonthSelect = ({ date, options }: PaginationProps) => {
                 hoverable={false}
                 intent={selectedMonth === i + 1 ? "primary" : "none"}
                 onClick={() => changeSelectedMonth((i + 1) as MonthNumbers)}
-                className={
-                  selectedMonth !== i + 1
-                    ? `hover:bg-zinc-200 dark:hover:bg-zinc-600`
-                    : ""
-                }
+                className={`${
+                  selectedMonth !== i + 1 &&
+                  "hover:bg-zinc-200 dark:hover:bg-zinc-600"
+                } ${month === i + 1 && "font-bold"}`}
               >
                 Tháng {i + 1}
               </Button>
@@ -350,7 +349,7 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
   if (data)
     return (
       <Modal isOpen={isOpen} onClose={onClose}>
-        <div className="flex flex-col sm:flex-row">
+        <div className="flex flex-col-reverse sm:flex-row">
           <div className="w-full sm:max-w-[250px]">
             <Cover
               entry={data}
@@ -448,7 +447,7 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div className="flex animate-pulse flex-col sm:flex-row">
+      <div className="flex animate-pulse flex-col-reverse sm:flex-row">
         <div className="h-[600px] w-full bg-zinc-200 dark:bg-zinc-700 sm:h-[400px] sm:max-w-[250px]"></div>
         <div className="flex-1 p-6 sm:pt-9">
           <div className="flex h-full flex-col justify-between">
@@ -839,7 +838,7 @@ export default function Home({
 
       <Slider data={upcoming} />
 
-      <div className="sticky top-0 z-10 bg-zinc-50/75 pb-4 pt-20 backdrop-blur-md dark:bg-zinc-800/75 lg:pt-4">
+      <div className="relative z-10 w-full bg-zinc-50 py-4 backdrop-blur-md dark:bg-zinc-800/75 lg:sticky lg:top-0">
         <div className="container mx-auto flex flex-row justify-between gap-6 px-6">
           <div>
             <span className="hidden font-kanit text-2xl font-bold sm:inline">
