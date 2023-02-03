@@ -18,15 +18,26 @@ const MobileMenu = () => {
 
   const [menuOpen, setMenuOpen] = useState(false);
 
-  useEffect(() => {
-    setMenuOpen(false); // Close the navigation panel on changing page
-  }, [router.pathname]);
-
   return (
     <>
       <Transition show={menuOpen} as={Fragment}>
-        <Dialog onClose={() => setMenuOpen(false)} className="relative z-50">
-          <div className="fixed inset-0 z-[1300] flex items-center justify-center">
+        <Dialog onClose={() => setMenuOpen(false)} className="relative">
+          <Transition.Child
+            as={Fragment}
+            enter="transition ease-out duration-300"
+            enterFrom="transform opacity-0"
+            enterTo="transform opacity-100"
+            leave="transition ease-in duration-200"
+            leaveFrom="transform opacity-100"
+            leaveTo="transform opacity-0"
+          >
+            <div
+              className="fixed inset-0 z-[1300] bg-black/30"
+              aria-hidden="true"
+            />
+          </Transition.Child>
+
+          <div className="fixed inset-0 z-[1300] flex h-screen items-center justify-end">
             <Transition.Child
               as={Fragment}
               enter="transition duration-500 ease-in-out"
@@ -36,7 +47,7 @@ const MobileMenu = () => {
               leaveFrom="transform translate-x-0"
               leaveTo="transform translate-x-full"
             >
-              <Dialog.Panel className="min-h-screen w-full bg-zinc-800">
+              <Dialog.Panel className="h-full w-3/4 bg-zinc-800">
                 <div
                   onClick={() => setMenuOpen(false)}
                   className="fixed top-6 right-6 z-20 cursor-pointer text-3xl text-zinc-50 sm:hidden"
@@ -44,24 +55,31 @@ const MobileMenu = () => {
                   <BsX />
                 </div>
                 <div className="px-6 pt-20 text-gray-200">
-                  <Link href="/" className="mb-3 block font-kanit text-2xl">
+                  <Link
+                    href="/"
+                    className="mb-3 block font-kanit text-2xl"
+                    onClick={() => setMenuOpen(false)}
+                  >
                     Lịch phát hành
                   </Link>
                   <Link
                     href="/license"
                     className="mb-3 block font-kanit text-2xl"
+                    onClick={() => setMenuOpen(false)}
                   >
                     Thông tin bản quyền
                   </Link>
                   <Link
                     href="/listing"
                     className="mb-3 block font-kanit text-2xl"
+                    onClick={() => setMenuOpen(false)}
                   >
                     Mua truyện mới
                   </Link>
                   <Link
                     href="/donate"
                     className="mb-3 block font-kanit text-2xl"
+                    onClick={() => setMenuOpen(false)}
                   >
                     {"Ủng hộ <3"}
                   </Link>
