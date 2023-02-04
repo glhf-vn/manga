@@ -115,7 +115,7 @@ const Products = ({ site, category, page }: ListingSetting) => {
 
 const Filter = ({ value, contents, onChange }: FilterParams) => {
   return (
-    <Listbox as="div" className="z-10" value={value} onChange={onChange}>
+    <Listbox as="div" value={value} onChange={onChange}>
       <Listbox.Button className="relative flex items-center gap-3 rounded-2xl bg-zinc-200 py-1 px-3 dark:bg-zinc-700">
         {value.name} <BsChevronBarExpand />
       </Listbox.Button>

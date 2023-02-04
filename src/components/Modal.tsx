@@ -25,13 +25,10 @@ export default function Modal({
           leaveFrom="transform opacity-100"
           leaveTo="transform opacity-0"
         >
-          <div
-            className="fixed inset-0 z-[1300] bg-black/30"
-            aria-hidden="true"
-          />
+          <div className="fixed inset-0 z-50 bg-black/30" aria-hidden="true" />
         </Transition.Child>
 
-        <div className="fixed inset-0 z-[1300] h-screen overflow-y-auto">
+        <div className="fixed inset-0 z-50 h-screen overflow-y-auto">
           <Transition.Child
             as={Fragment}
             enter="ease-out duration-300"

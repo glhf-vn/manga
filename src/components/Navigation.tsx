@@ -32,12 +32,12 @@ const MobileMenu = () => {
             leaveTo="transform opacity-0"
           >
             <div
-              className="fixed inset-0 z-[1300] bg-black/30"
+              className="fixed inset-0 z-50 bg-black/30"
               aria-hidden="true"
             />
           </Transition.Child>
 
-          <div className="fixed inset-0 z-[1300] flex h-screen items-center justify-end">
+          <div className="fixed inset-0 z-50 flex h-screen items-center justify-end">
             <Transition.Child
               as={Fragment}
               enter="transition duration-500 ease-in-out"
@@ -50,7 +50,7 @@ const MobileMenu = () => {
               <Dialog.Panel className="h-full w-3/4 bg-zinc-800">
                 <div
                   onClick={() => setMenuOpen(false)}
-                  className="fixed top-6 right-6 z-20 cursor-pointer text-3xl text-zinc-50 sm:hidden"
+                  className="fixed top-6 right-6 cursor-pointer text-3xl text-zinc-50 sm:hidden"
                 >
                   <BsX />
                 </div>
@@ -191,7 +191,7 @@ export default function Navigation() {
   return (
     <>
       {/* logo */}
-      <div className="fixed top-6 left-6 z-[1200]">
+      <div className="fixed top-6 left-6 z-40">
         <Link href="/" scroll={false}>
           <Image src="/img/logo.png" width={64} height={32} alt="GLHF logo" />
         </Link>
