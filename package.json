@@ -16,6 +16,7 @@
     "@vercel/analytics": "^0.1.8",
     "@vercel/og": "^0.0.27",
     "class-variance-authority": "^0.4.0",
+    "lightgallery": "^2.7.1",
     "luxon": "^3.2.1",
     "next": "^13.1.6",
     "next-seo": "^5.15.0",

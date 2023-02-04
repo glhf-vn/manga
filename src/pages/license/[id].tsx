@@ -18,11 +18,18 @@ import {
 } from "react-icons/bs";
 
 import Layout from "@layouts/Layout";
+import LightGallery from "lightgallery/react";
 
 import Cover from "@components/Cover";
 import Card from "@components/Card";
 import Badge from "@components/Badge";
 import Button from "@components/Button";
+
+import "lightgallery/css/lightgallery.css";
+import "lightgallery/css/lg-zoom.css";
+import "lightgallery/css/lg-thumbnail.css";
+
+import lgZoom from "lightgallery/plugins/zoom";
 
 interface SerieReleasesView {
   data:
@@ -81,9 +88,20 @@ const ListView = ({ data }: SerieReleasesView) => (
 );
 
 const CoverView = ({ data }: SerieReleasesView) => (
-  <div className="grid grid-cols-2 gap-6 px-6 md:grid-cols-4 lg:grid-cols-6">
+  <LightGallery
+    speed={500}
+    plugins={[lgZoom]}
+    elementClassNames="grid grid-cols-2 gap-6 px-6 md:grid-cols-4 lg:grid-cols-6"
+  >
     {data?.map((entry) => (
-      <Card key={entry.id} clickable={false}>
+      <Card
+        key={entry.id}
+        clickable={true}
+        data-src={
+          entry.image_url ??
+          "https://manga.glhf.vn/api/og?title=%C4%90ang%20c%E1%BA%ADp%20nh%E1%BA%ADt"
+        }
+      >
         {entry.edition && (
           <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
             {entry.edition}
@@ -92,7 +110,7 @@ const CoverView = ({ data }: SerieReleasesView) => (
         <Cover entry={entry} sizes="(max-width: 768px) 40vw, 200px" />
       </Card>
     ))}
-  </div>
+  </LightGallery>
 );
 
 export const getStaticPaths = async () => {

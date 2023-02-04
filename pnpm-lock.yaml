@@ -15,6 +15,7 @@ specifiers:
   class-variance-authority: ^0.4.0
   eslint: 8.33.0
   eslint-config-next: ^13.1.6
+  lightgallery: ^2.7.1
   luxon: ^3.2.1
   next: ^13.1.6
   next-seo: ^5.15.0
@@ -41,6 +42,7 @@ dependencies:
   '@vercel/analytics': 0.1.8_react@18.2.0
   '@vercel/og': 0.0.27
   class-variance-authority: 0.4.0_typescript@4.9.5
+  lightgallery: 2.7.1
   luxon: 3.2.1
   next: 13.1.6_5mhhrw5dq6gnbuirj2awdzvyuu
   next-seo: 5.15.0_3vryta7zmbcsw4rrqf4axjqggm
@@ -2017,6 +2019,11 @@ packages:
       prelude-ls: 1.2.1
       type-check: 0.4.0
     dev: true
+
+  /lightgallery/2.7.1:
+    resolution: {integrity: sha512-NbXOzD2APY1OhOOn464jDsBZBaCRahUoLvBxhDFxvwJeC8hCkCIPYSjGgGTYINxVK09DKMsNDJzRr1ngH5nDdg==}
+    engines: {node: '>=6.0.0'}
+    dev: false
 
   /lilconfig/2.0.6:
     resolution: {integrity: sha512-9JROoBW7pobfsx+Sq2JsASvCo6Pfo6WWoUW79HuB1BCoBXD4PLWJPqDF6fNj67pqBYTbAHkE57M1kS/+L1neOg==}
