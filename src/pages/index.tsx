@@ -13,7 +13,7 @@ import type { Publication, PublicationByDate } from "@data/public.types";
 import { VND } from "@data/config";
 import { getEntries, getPublishers } from "@lib/supabase";
 
-import { useEffect, useState } from "react";
+import { MutableRefObject, useEffect, useRef, useState } from "react";
 import { DateTime, type MonthNumbers } from "luxon";
 import useSWR from "swr";
 
@@ -36,7 +36,8 @@ import {
 } from "react-icons/bs";
 import Image from "next/image";
 import Link from "next/link";
-import { Splide, SplideTrack, SplideSlide } from "@splidejs/react-splide";
+import { Navigation, Pagination as SPagination, Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 
 import Layout from "@layouts/Layout";
 
@@ -47,41 +48,60 @@ import Cover from "@components/Cover";
 import Modal from "@components/Modal";
 import Header from "@components/Header";
 
-import "@splidejs/react-splide/css/core";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const Slider = ({ data }: SliderProps) => {
+  const progressSlider = useRef() as MutableRefObject<HTMLDivElement>;
+
+  const setProgress = (progress: number) => {
+    progressSlider.current.style.setProperty(
+      "width",
+      `${(1 - progress) * 100}%`
+    );
+  };
+
   if (data.length == 0) return <Header>Lịch phát hành</Header>;
 
   return (
-    <div className="relative">
-      <div className="absolute inset-0 bottom-[30%] bg-zinc-100 shadow-[inset_0_0_1rem_0_rgba(0,0,0,0.1)] dark:bg-zinc-900"></div>
-      <Splide
-        hasTrack={false}
-        options={{
-          autoplay: true,
-          interval: 5000,
-          rewind: true,
-          pagination: false,
-          speed: 500,
-          easing: "cubic-bezier(0.4, 0, 0.2, 1)",
-          breakpoints: {
-            640: {
-              arrows: false,
-              padding: "1.5rem",
-              gap: "1rem",
-            },
-          },
-        }}
-        className="pt-20 sm:pt-6"
-      >
-        <div className="block px-6 sm:hidden">
-          <span className="font-kanit text-3xl font-bold">Phát hành</span>
-        </div>
-        <SplideTrack>
+    <>
+      <div className="block bg-zinc-100 px-6 pt-20 dark:bg-zinc-900 sm:hidden">
+        <span className="font-kanit text-3xl font-bold">Phát hành</span>
+      </div>
+
+      <div className="relative">
+        <div className="absolute inset-0 bottom-[30%] bg-zinc-100 shadow-[inset_0_-1rem_1rem_-1rem_rgba(0,0,0,0.1)] dark:bg-zinc-900" />
+
+        <Swiper
+          modules={[Navigation, SPagination, Autoplay]}
+          navigation={{
+            nextEl: ".button-next",
+            prevEl: ".button-prev",
+          }}
+          pagination={{
+            clickable: true,
+            el: ".pagination",
+            type: "bullets",
+            bulletClass: "swiper-pagination-bullet dark:bg-white",
+          }}
+          autoplay={{
+            delay: 4000,
+            disableOnInteraction: false,
+            pauseOnMouseEnter: true,
+          }}
+          rewind={true}
+          centeredSlides={true}
+          slidesPerView={"auto"}
+          spaceBetween={12}
+          onAutoplayTimeLeft={(_, __, percentage) => setProgress(percentage)}
+        >
           {data.map((release) => (
-            <SplideSlide key={release.id}>
-              <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6">
-                <div className="relative cursor-default overflow-hidden rounded-2xl shadow-md transition-all ease-in-out hover:shadow-lg sm:basis-72">
+            <SwiperSlide
+              key={release.id}
+              style={{ width: "calc(100% - 48px)" }}
+            >
+              <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6 sm:pt-6">
+                <Card className="sm:basis-72">
                   {release.edition && (
                     <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
                       {release.edition}
@@ -92,7 +112,7 @@ const Slider = ({ data }: SliderProps) => {
                     hero={true}
                     sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
                   />
-                </div>
+                </Card>
                 <div className="sm:flex-1 sm:pt-20">
                   <span className="hidden sm:inline">Phát hành </span>
                   <span className="text-xl sm:text-base">
@@ -110,24 +130,28 @@ const Slider = ({ data }: SliderProps) => {
                   </p>
                 </div>
               </div>
-            </SplideSlide>
+            </SwiperSlide>
           ))}
-        </SplideTrack>
 
-        <div className="splide__arrows absolute top-1/2 left-0 right-0 mx-6 flex -translate-y-1/2 transform justify-between">
-          <button className="splide__arrow splide__arrow--prev text-4xl text-zinc-500">
+          <button className="button-prev absolute top-[40%] left-6 z-10 hidden -translate-y-[40%] transform text-4xl text-zinc-500 md:block">
             <BsChevronCompactLeft />
           </button>
-          <button className="splide__arrow splide__arrow--next text-4xl text-zinc-500">
+          <button className="button-next absolute top-[40%] right-6 z-10 hidden -translate-y-[40%] transform text-4xl text-zinc-500 md:block">
             <BsChevronCompactRight />
           </button>
-        </div>
 
-        <div className="splide__progress absolute top-[70%] left-0 right-0 -z-10 hidden sm:block">
-          <div className="splide__progress__bar h-1 bg-primary" />
-        </div>
-      </Splide>
-    </div>
+          <div
+            className="pagination container absolute z-20 mx-auto hidden -translate-x-1/2 transform p-6 text-right sm:block"
+            style={{ height: "min-content", left: "50%" }}
+          />
+
+          <div
+            className="progress absolute top-[70%] left-0 h-1 bg-primary"
+            ref={progressSlider}
+          />
+        </Swiper>
+      </div>
+    </>
   );
 };
 
@@ -287,60 +311,58 @@ const FilterModal = ({
 
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
-      <div>
-        <Dialog.Title className="m-6 font-kanit text-2xl font-bold lg:text-3xl">
-          Lọc theo nhà xuất bản/phát hành
-        </Dialog.Title>
-        <Dialog.Description as="div" className="m-6">
-          <div className="grid gap-x-3 gap-y-1 sm:grid-cols-2">
-            <Button
-              intent="secondary"
-              hoverable={false}
-              className="mb-3"
-              onClick={() =>
-                setCurrentValues([...values.map((value) => value.id)])
-              }
-            >
-              Chọn tất cả
-            </Button>
-            <Button
-              intent="none"
-              className="mb-3"
-              hoverable={false}
-              onClick={() => setCurrentValues([])}
-            >
-              Bỏ chọn tất cả
-            </Button>
-            {values.map((value) => (
-              <div key={value.id} className="flex items-center">
-                <input
-                  id={value.id}
-                  checked={currentValues.includes(value.id)}
-                  style={{ color: value.color }}
-                  type="checkbox"
-                  className={`h-4 w-4 rounded border-gray-300 transition-all focus:ring-zinc-400`}
-                  onChange={({ target }) =>
-                    changeCurrentValues(target.checked, value.id)
-                  }
-                />
-                <label
-                  htmlFor={`${value.id}`}
-                  className="ml-3 text-sm text-zinc-600 dark:text-zinc-400"
-                >
-                  {value.name}
-                </label>
-              </div>
-            ))}
-          </div>
+      <Dialog.Title className="m-6 font-kanit text-2xl font-bold lg:text-3xl">
+        Lọc theo nhà xuất bản/phát hành
+      </Dialog.Title>
+      <Dialog.Description as="div" className="m-6">
+        <div className="grid gap-x-3 gap-y-1 sm:grid-cols-2">
           <Button
-            onClick={() => handler(currentValues)}
-            intent={currentValues != checkedValues ? "primary" : "secondary"}
-            className="mt-3 w-full font-bold"
+            intent="secondary"
+            hoverable={false}
+            className="mb-3"
+            onClick={() =>
+              setCurrentValues([...values.map((value) => value.id)])
+            }
           >
-            Lọc
+            Chọn tất cả
           </Button>
-        </Dialog.Description>
-      </div>
+          <Button
+            intent="none"
+            className="mb-3"
+            hoverable={false}
+            onClick={() => setCurrentValues([])}
+          >
+            Bỏ chọn tất cả
+          </Button>
+          {values.map((value) => (
+            <div key={value.id} className="flex items-center">
+              <input
+                id={value.id}
+                checked={currentValues.includes(value.id)}
+                style={{ color: value.color }}
+                type="checkbox"
+                className={`h-4 w-4 rounded border-gray-300 transition-all focus:ring-zinc-400`}
+                onChange={({ target }) =>
+                  changeCurrentValues(target.checked, value.id)
+                }
+              />
+              <label
+                htmlFor={`${value.id}`}
+                className="ml-3 text-sm text-zinc-600 dark:text-zinc-400"
+              >
+                {value.name}
+              </label>
+            </div>
+          ))}
+        </div>
+        <Button
+          onClick={() => handler(currentValues)}
+          intent={currentValues != checkedValues ? "primary" : "secondary"}
+          className="mt-3 w-full font-bold"
+        >
+          Lọc
+        </Button>
+      </Dialog.Description>
     </Modal>
   );
 };

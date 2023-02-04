@@ -3,7 +3,6 @@ lockfileVersion: 5.4
 specifiers:
   '@headlessui/react': ^1.7.8
   '@headlessui/tailwindcss': ^0.1.2
-  '@splidejs/react-splide': ^0.7.12
   '@supabase/supabase-js': ^2.7.0
   '@tailwindcss/forms': ^0.5.3
   '@types/luxon': ^3.2.0
@@ -30,6 +29,7 @@ specifiers:
   sass: ^1.58.0
   sharp: ^0.31.3
   supabase: ^1.36.2
+  swiper: ^9.0.2
   swr: ^2.0.3
   tailwindcss: ^3.2.4
   typescript: 4.9.5
@@ -37,7 +37,6 @@ specifiers:
 dependencies:
   '@headlessui/react': 1.7.8_biqbaboplfbrettd7655fr4n2y
   '@headlessui/tailwindcss': 0.1.2_tailwindcss@3.2.4
-  '@splidejs/react-splide': 0.7.12
   '@supabase/supabase-js': 2.7.0
   '@vercel/analytics': 0.1.8_react@18.2.0
   '@vercel/og': 0.0.27
@@ -51,6 +50,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
   sharp: 0.31.3
+  swiper: 9.0.2
   swr: 2.0.3_react@18.2.0
 
 devDependencies:
@@ -310,16 +310,6 @@ packages:
     dependencies:
       fflate: 0.7.4
       string.prototype.codepointat: 0.2.1
-    dev: false
-
-  /@splidejs/react-splide/0.7.12:
-    resolution: {integrity: sha512-UfXH+j47jsMc4x5HA/aOwuuHPqn6y9+ZTNYPWDRD8iLKvIVMZlzq2unjUEvyDAU+TTVPZOXkG2Ojeoz0P4AkZw==}
-    dependencies:
-      '@splidejs/splide': 4.1.4
-    dev: false
-
-  /@splidejs/splide/4.1.4:
-    resolution: {integrity: sha512-5I30evTJcAJQXt6vJ26g2xEkG+l1nXcpEw4xpKh0/FWQ8ozmAeTbtniVtVmz2sH1Es3vgfC4SS8B2X4o5JMptA==}
     dev: false
 
   /@supabase/functions-js/2.0.0:
@@ -2861,6 +2851,10 @@ packages:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}
     engines: {node: '>=0.10.0'}
 
+  /ssr-window/4.0.2:
+    resolution: {integrity: sha512-ISv/Ch+ig7SOtw7G2+qkwfVASzazUnvlDTwypdLoPoySv+6MqlOV10VwPSE6EWkGjhW50lUmghPmpYZXMu/+AQ==}
+    dev: false
+
   /stop-iteration-iterator/1.0.0:
     resolution: {integrity: sha512-iCGQj+0l0HOdZ2AEeBADlsRC+vsnDsZsbdSiH1yNSjcfKM7fdpCMfqAL/dwF5BLiw/XhRft/Wax6zQbhq2BcjQ==}
     engines: {node: '>= 0.4'}
@@ -2966,6 +2960,13 @@ packages:
   /supports-preserve-symlinks-flag/1.0.0:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
+
+  /swiper/9.0.2:
+    resolution: {integrity: sha512-6iGqr9OeEMU7KVfGxXNW+xhVWmqvVhtt+1nnqbZ0a0i1p/S1rXgr9cPD55k7DFxeOojVHkiEqmsubaP3NgWwUQ==}
+    engines: {node: '>= 4.7.0'}
+    dependencies:
+      ssr-window: 4.0.2
+    dev: false
 
   /swr/2.0.3_react@18.2.0:
     resolution: {integrity: sha512-sGvQDok/AHEWTPfhUWXEHBVEXmgGnuahyhmRQbjl9XBYxT/MSlAzvXEKQpyM++bMPaI52vcWS2HiKNaW7+9OFw==}
