@@ -28,9 +28,8 @@ const buttonContainerStyles = cva("flex justify-center items-center gap-3");
 
 export interface ButtonProps
   extends VariantProps<typeof buttonStyles>,
-    HTMLProps<HTMLDivElement> {
+    HTMLProps<HTMLAnchorElement> {
   children?: ReactNode;
-  href?: string;
 }
 
 export default function Button({
@@ -48,18 +47,16 @@ export default function Button({
         target="_blank"
         rel="noreferrer"
         className={buttonStyles({ intent, hoverable, className })}
+        {...props}
       >
         <div className={buttonContainerStyles()}>{children}</div>
       </a>
     );
   } else {
     return (
-      <div
-        className={buttonStyles({ intent, hoverable, className })}
-        {...props}
-      >
+      <a className={buttonStyles({ intent, hoverable, className })} {...props}>
         <div className={buttonContainerStyles()}>{children}</div>
-      </div>
+      </a>
     );
   }
 }
