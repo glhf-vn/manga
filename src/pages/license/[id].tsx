@@ -228,7 +228,7 @@ export default function Serie({
         <div className="container relative mx-auto flex flex-col-reverse gap-6 px-6 sm:flex-row sm:gap-12 sm:pt-6">
           <div className="overflow-hidden rounded-2xl shadow-md transition-shadow duration-150 ease-linear hover:shadow-lg sm:basis-72">
             <Cover
-              loader={false}
+              useLoader={false}
               entry={data}
               fit="full"
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"

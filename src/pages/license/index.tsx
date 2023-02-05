@@ -179,7 +179,7 @@ const Series = ({ filters }: SeriesProps) => {
             <Card>
               <div className="grid grid-cols-3">
                 <div className="col-span-1">
-                  <Cover loader={false} entry={serie} fit="full" />
+                  <Cover useLoader={false} entry={serie} fit="full" />
                 </div>
                 <div className="relative col-span-2 flex flex-col justify-between">
                   <div className="absolute top-1 right-1">
