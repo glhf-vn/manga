@@ -111,7 +111,7 @@ const Slider = ({ data }: SliderProps) => {
                     entry={release}
                     hero={true}
                     sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
-                    loading={index === 1 ? "eager" : "lazy"}
+                    loading={index < 3 ? "eager" : "lazy"}
                   />
                 </Card>
                 <div className="sm:flex-1 sm:pt-20">
