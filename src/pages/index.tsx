@@ -95,7 +95,7 @@ const Slider = ({ data }: SliderProps) => {
           spaceBetween={12}
           onAutoplayTimeLeft={(_, __, percentage) => setProgress(percentage)}
         >
-          {data.map((release) => (
+          {data.map((release, index) => (
             <SwiperSlide
               key={release.id}
               style={{ width: "calc(100% - 48px)" }}
@@ -111,6 +111,7 @@ const Slider = ({ data }: SliderProps) => {
                     entry={release}
                     hero={true}
                     sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
+                    loading={index === 1 ? "eager" : "lazy"}
                   />
                 </Card>
                 <div className="sm:flex-1 sm:pt-20">
