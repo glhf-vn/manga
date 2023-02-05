@@ -133,10 +133,16 @@ const Slider = ({ data }: SliderProps) => {
             </SwiperSlide>
           ))}
 
-          <button className="button-prev absolute top-[40%] left-6 z-10 hidden -translate-y-[40%] transform text-4xl text-zinc-500 md:block">
+          <button
+            aria-label="Trước"
+            className="button-prev absolute top-[40%] left-6 z-10 hidden -translate-y-[40%] transform text-4xl text-zinc-500 md:block"
+          >
             <BsChevronCompactLeft />
           </button>
-          <button className="button-next absolute top-[40%] right-6 z-10 hidden -translate-y-[40%] transform text-4xl text-zinc-500 md:block">
+          <button
+            aria-label="Sau"
+            className="button-next absolute top-[40%] right-6 z-10 hidden -translate-y-[40%] transform text-4xl text-zinc-500 md:block"
+          >
             <BsChevronCompactRight />
           </button>
 
@@ -873,6 +879,7 @@ export default function Home({
               className="rounded-2xl px-2 text-2xl"
               onClick={() => setCurrentOrder((order) => !order)}
               aria-label="Đổi thứ tự"
+              role="button"
               intent="secondary"
             >
               {currentOrder ? <BsArrowDownShort /> : <BsArrowUpShort />}
@@ -881,6 +888,7 @@ export default function Home({
               className="rounded-2xl px-2 text-2xl"
               onClick={() => setFilterOpen((status) => !status)}
               aria-label="Mở bộ lọc"
+              role="button"
               intent="secondary"
             >
               <BsFilter />
@@ -889,6 +897,7 @@ export default function Home({
               className="rounded-2xl px-2 text-2xl"
               onClick={() => changeCurrentView((currentView) => !currentView)}
               aria-label="Thay đổi layout"
+              role="button"
               intent="secondary"
             >
               {currentView ? <BsListUl /> : <BsColumnsGap />}
