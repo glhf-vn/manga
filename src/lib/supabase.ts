@@ -5,10 +5,13 @@ import type { Database } from "@data/database.types";
 
 import type { Publication, Serie } from "@data/public.types";
 
-// Create a single supabase client for interacting with your database
+if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
+  throw new Error("Undefined SUPABASE environment variables");
+}
+
 const client = createClient<Database>(
-  process.env.SUPABASE_URL || "",
-  process.env.SUPABASE_ANON_KEY || ""
+  process.env.SUPABASE_URL,
+  process.env.SUPABASE_ANON_KEY
 );
 
 // Default the range to current month
@@ -54,7 +57,10 @@ export async function getEntries(
     throw error;
   }
 
-  return data as Publication[];
+  return data.map((data) => ({
+    ...data,
+    image_url: data.image_url ? data.image_url[0] : null,
+  })) as Publication[];
 }
 
 export async function getEntriesByGroup(
@@ -90,77 +96,19 @@ export async function getEntriesByGroup(
   return groupedEventsArray;
 }
 
-export async function getEntriesById(id: number, count?: number) {
-  const response = client
-    .from("publication")
-    .select()
-    .eq("serie_id", id)
-    .order("date", {
-      ascending: true,
-    })
-    .order("edition", {
-      ascending: false,
-    });
-
-  const { data } = count ? await response.limit(count) : await response;
-
-  return data!;
-}
-
-export async function getLicensedInfo(id: number) {
+export async function getType(query: string) {
   const { data, error } = await client
-    .from("licensed")
+    .from("type")
     .select()
-    .eq("serie_id", id)
-    .limit(1);
+    .eq("id", query)
+    .limit(1)
+    .single();
 
   if (error) {
     throw error;
   }
 
   return data;
-}
-
-export async function getLicensed() {
-  const { data, error } = await client
-    .from("licensed")
-    .select()
-    .order("timestamp", {
-      ascending: false,
-    })
-    .order("publisher", {
-      ascending: true,
-    });
-
-  if (error) {
-    throw error;
-  }
-
-  const parsedData = await Promise.all(
-    data.map(async (entry) => {
-      return {
-        ...entry,
-        publisherLabel:
-          (await getPublisher(entry.publisher)).name || "đang cập nhật",
-      };
-    })
-  );
-
-  return parsedData;
-}
-
-export async function getType(query: string) {
-  const { data, error } = await client
-    .from("type")
-    .select()
-    .eq("id", query)
-    .limit(1);
-
-  if (error) {
-    throw error;
-  }
-
-  return data[0];
 }
 
 export async function getTypes() {
@@ -178,13 +126,14 @@ export async function getPublisher(query: string) {
     .from("publisher")
     .select()
     .eq("id", query)
-    .limit(1);
+    .limit(1)
+    .single();
 
   if (error) {
     throw error;
   }
 
-  return data[0];
+  return data;
 }
 
 export async function getPublishers() {
@@ -202,19 +151,22 @@ export async function getSerie(id: number) {
     .from("series")
     .select(
       `
-    id,
-    name,
-    anilist,
-    type(*),
-    publisher(*),
-    publication(id,name,edition,price,image_url,date),
-    licensed(source,image_url,timestamp),
-    status
-    `
+      id,
+      name,
+      anilist,
+      type(*),
+      publisher(*),
+      publication(id,name,edition,price,image_url,date),
+      licensed(source,image_url,timestamp),
+      status
+      `
     )
     .eq("id", id)
     .order("date", { foreignTable: "publication", ascending: true })
-    .order("edition", { foreignTable: "publication", ascending: false })
+    .order("edition", {
+      foreignTable: "publication",
+      ascending: false,
+    })
     .limit(1, { foreignTable: "type" })
     .limit(1, { foreignTable: "publisher" })
     .limit(1)
@@ -249,16 +201,17 @@ export async function getSeries(filter?: {
     .from("series")
     .select(
       `
-  *,
-  licensed(image_url),
-  publication(image_url),
-  publisher(id,name),
-  type(id,name,color)
-  `
+      *,
+      licensed(image_url),
+      publication(image_url),
+      publisher(id,name),
+      type(id,name,color)
+      `
     )
     .order("status", { ascending: true })
     .order("publisher", { ascending: true })
-    .order("name", { ascending: true });
+    .order("name", { ascending: true })
+    .order("name", { ascending: true, foreignTable: "publication" });
 
   if (filter?.publishers) {
     query = query.in("publisher", [filter.publishers]);
@@ -278,17 +231,28 @@ export async function getSeries(filter?: {
     throw error;
   }
 
-  return data.map((data) => ({
-    ...data,
-    image_url:
-      Array.isArray(data.publication) &&
-      data.publication.length > 0 &&
-      data.publication[0].image_url
-        ? data.publication[0].image_url
-        : data.licensed
-        ? (data.licensed as { image_url: string }).image_url
-        : null,
-  }));
+  return data.map((data) => {
+    const { publication, licensed } = data;
+    let image_url: string | null = null;
+
+    if (
+      Array.isArray(publication) &&
+      publication.length > 0 &&
+      publication[0].image_url
+    ) {
+      // get the first volume cover if exists on publication
+      image_url = publication[0].image_url[0];
+    } else if (Array.isArray(licensed)) {
+      image_url = licensed[0].image_url;
+    } else {
+      image_url = licensed?.image_url ?? null;
+    }
+
+    return {
+      ...data,
+      image_url,
+    };
+  });
 }
 
 export async function getSeriesId() {
