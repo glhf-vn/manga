@@ -39,7 +39,7 @@ interface SerieReleasesView {
         date: string;
         edition: string | null;
         price: number;
-        image_url: string | null;
+        image_url: string[] | null;
       }[]
     | null;
 }
@@ -93,23 +93,25 @@ const CoverView = ({ data }: SerieReleasesView) => (
     plugins={[lgZoom]}
     elementClassNames="grid grid-cols-2 gap-6 px-6 md:grid-cols-4 lg:grid-cols-6"
   >
-    {data?.map((entry) => (
-      <Card
-        key={entry.id}
-        clickable={true}
-        data-src={
-          entry.image_url ??
-          "https://manga.glhf.vn/api/og?title=%C4%90ang%20c%E1%BA%ADp%20nh%E1%BA%ADt"
-        }
-      >
-        {entry.edition && (
-          <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
-            {entry.edition}
-          </Badge>
-        )}
-        <Cover entry={entry} sizes="(max-width: 768px) 40vw, 200px" />
-      </Card>
-    ))}
+    {data?.map((entry) =>
+      entry.image_url?.map((image_url, i) => (
+        <Card key={`${entry.id}_${i}`} clickable={true} data-src={image_url}>
+          {entry.edition && (
+            <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
+              {entry.edition}
+            </Badge>
+          )}
+          <Image
+            src={image_url}
+            alt={entry.name}
+            unoptimized={true}
+            width={300}
+            height={450}
+            sizes="(max-width: 768px) 40vw, 200px"
+          />
+        </Card>
+      ))
+    )}
   </LightGallery>
 );
 
@@ -131,7 +133,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     }
 
     const image_url =
-      (data.publication![0] && data.publication![0].image_url) ||
+      (data.publication![0] && data.publication![0].image_url![0]) ||
       data.licensed?.image_url ||
       null;
 
@@ -194,7 +196,7 @@ export default function Serie({
     }
   };
 
-  const { publication, licensed, publisher, type } = data;
+  const { publication, licensed, publisher, type, image_url } = data;
 
   return (
     <Layout>
