@@ -11,34 +11,25 @@ export interface Database {
     Tables: {
       licensed: {
         Row: {
-          anilist: number | null
           id: number
           image_url: string | null
           name: string
-          publisher: string
           source: string | null
           timestamp: string
-          type: string
         }
         Insert: {
-          anilist?: number | null
           id: number
           image_url?: string | null
           name: string
-          publisher: string
           source?: string | null
           timestamp?: string
-          type: string
         }
         Update: {
-          anilist?: number | null
           id?: number
           image_url?: string | null
           name?: string
-          publisher?: string
           source?: string | null
           timestamp?: string
-          type?: string
         }
       }
       publication: {
@@ -46,7 +37,7 @@ export interface Database {
           date: string
           edition: string | null
           id: string
-          image_url: string | null
+          image_url: string[] | null
           name: string
           price: number
           publisher: string
@@ -57,7 +48,7 @@ export interface Database {
           date: string
           edition?: string | null
           id?: string
-          image_url?: string | null
+          image_url?: string[] | null
           name: string
           price?: number
           publisher: string
@@ -68,7 +59,7 @@ export interface Database {
           date?: string
           edition?: string | null
           id?: string
-          image_url?: string | null
+          image_url?: string[] | null
           name?: string
           price?: number
           publisher?: string

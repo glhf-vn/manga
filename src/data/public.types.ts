@@ -4,9 +4,10 @@ export type Publisher = Database["public"]["Tables"]["publisher"]["Row"];
 
 export type Publication = Omit<
   Database["public"]["Tables"]["publication"]["Row"],
-  "publisher"
+  "publisher" | "image_url"
 > & {
   publisher: Pick<Publisher, "name" | "id">;
+  image_url: string;
 };
 
 export type PublicationByDate = {
