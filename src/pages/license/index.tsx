@@ -110,7 +110,10 @@ const useSeries = (
   );
 
   return {
-    series: data as (Serie & { image_url: string | null })[],
+    series: data as (Serie & {
+      image_url: string | null;
+      use_loader: boolean;
+    })[],
     isLoading,
     isError: error,
   };
@@ -180,7 +183,11 @@ const Series = ({ filters }: SeriesProps) => {
             <Card>
               <div className="grid grid-cols-3">
                 <div className="col-span-1">
-                  <Cover useLoader={false} entry={serie} fit="full" />
+                  <Cover
+                    useLoader={serie.use_loader}
+                    entry={serie}
+                    fit="full"
+                  />
                 </div>
                 <div className="relative col-span-2 flex flex-col justify-between">
                   <div className="absolute top-1 right-1">

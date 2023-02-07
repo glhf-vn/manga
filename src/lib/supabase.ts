@@ -163,6 +163,7 @@ export async function getSerie(id: number) {
     )
     .eq("id", id)
     .order("date", { foreignTable: "publication", ascending: true })
+    .order("name", { foreignTable: "publication", ascending: true })
     .order("edition", {
       foreignTable: "publication",
       ascending: false,
@@ -176,19 +177,43 @@ export async function getSerie(id: number) {
     throw error;
   }
 
+  let publication = data.publication
+    ? Array.isArray(data.publication)
+      ? data.publication
+      : [data.publication]
+    : null;
+  let licensed = Array.isArray(data.licensed)
+    ? data.licensed[0]
+    : data.licensed;
+  let publisher = Array.isArray(data.publisher)
+    ? data.publisher[0]
+    : data.publisher;
+  let type = Array.isArray(data.type) ? data.type[0] : data.type;
+
+  let image_url: string | null = null;
+  let use_loader: boolean = true;
+
+  if (publication && publication.length > 0) {
+    if (publication[0].image_url) {
+      image_url = publication[0].image_url[0];
+      use_loader = true;
+    }
+  } else {
+    if (licensed) {
+      image_url = licensed.image_url ?? null;
+      use_loader = false;
+    }
+  }
+
   return {
     ...data,
+    image_url,
+    use_loader,
     // handle array cases
-    type: Array.isArray(data.type) ? data.type[0] : data.type,
-    publisher: Array.isArray(data.publisher)
-      ? data.publisher[0]
-      : data.publisher,
-    publication: data.publication
-      ? Array.isArray(data.publication)
-        ? data.publication
-        : [data.publication]
-      : null,
-    licensed: Array.isArray(data.licensed) ? data.licensed[0] : data.licensed,
+    type,
+    publisher,
+    publication,
+    licensed,
   };
 }
 
@@ -236,6 +261,7 @@ export async function getSeries(filter?: {
   return data.map((data) => {
     const { publication, licensed } = data;
     let image_url: string | null = null;
+    let use_loader: boolean = true;
 
     if (
       Array.isArray(publication) &&
@@ -244,15 +270,19 @@ export async function getSeries(filter?: {
     ) {
       // get the first volume cover if exists on publication
       image_url = publication[0].image_url[0];
+      use_loader = true;
     } else if (Array.isArray(licensed)) {
       image_url = licensed[0].image_url;
+      use_loader = false;
     } else {
       image_url = licensed?.image_url ?? null;
+      use_loader = false;
     }
 
     return {
       ...data,
       image_url,
+      use_loader,
     };
   });
 }

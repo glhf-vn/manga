@@ -1,4 +1,5 @@
 import type { DefaultSeoProps } from "next-seo";
+import type { ImageLoaderProps } from "next/image";
 
 export const seoConfig: DefaultSeoProps = {
   titleTemplate: "%s - mangaGLHF",
@@ -55,3 +56,9 @@ export const siteList = [
     ],
   },
 ];
+
+export const imageEndpoint = "https://ik.imagekit.io/glhf/";
+
+export const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
+  return `${imageEndpoint}tr:w-${width},q-${quality ?? 90},f-auto/${src}`;
+};

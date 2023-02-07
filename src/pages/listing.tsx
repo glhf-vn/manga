@@ -84,7 +84,6 @@ const Products = ({ site, category, page }: ListingSetting) => {
                   alt={name}
                   width={280}
                   height={280}
-                  unoptimized={true}
                   className="h-full w-full"
                 />
                 <div className="p-6 font-bold">

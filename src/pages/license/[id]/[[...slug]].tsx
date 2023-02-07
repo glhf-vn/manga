@@ -2,6 +2,8 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 
 import { getSerie, getSeriesId } from "@lib/supabase";
 
+import { imageEndpoint, imageLoader } from "@data/config";
+
 import { DateTime } from "luxon";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
@@ -96,7 +98,11 @@ const CoverView = ({ data }: SerieReleasesView) => (
   >
     {data?.map((entry) =>
       entry.image_url?.map((image_url, i) => (
-        <Card key={`${entry.id}_${i}`} clickable={true} data-src={image_url}>
+        <Card
+          key={`${entry.id}_${i}`}
+          clickable={true}
+          data-src={`${imageEndpoint}${image_url}`}
+        >
           {entry.edition && (
             <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
               {entry.edition}
@@ -104,8 +110,8 @@ const CoverView = ({ data }: SerieReleasesView) => (
           )}
           <Image
             src={image_url}
-            alt={entry.name}
-            unoptimized={true}
+            alt={`${entry.name}${entry.edition ? ` (${entry.edition})` : ""}`}
+            loader={imageLoader}
             width={300}
             height={450}
             sizes="(max-width: 768px) 40vw, 200px"
@@ -137,22 +143,11 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       return { notFound: true };
     }
 
-    let image_url: string | null = null;
-
-    if (data.publication && data.publication.length > 0) {
-      if (data.publication[0].image_url) {
-        image_url = data.publication[0].image_url[0];
-      }
-    } else {
-      if (data.licensed) image_url = data.licensed.image_url ?? null;
-    }
-
     return {
       props: {
         data: {
           ...data,
           id: String(data.id),
-          image_url,
           status:
             data.status == "Finished" ? 3 : data.status == "Published" ? 2 : 1,
         },
@@ -250,7 +245,7 @@ export default function Serie({
         <div className="container relative mx-auto flex flex-col-reverse gap-6 px-6 sm:flex-row sm:gap-12 sm:pt-6">
           <div className="overflow-hidden rounded-2xl shadow-md transition-shadow duration-150 ease-linear hover:shadow-lg sm:basis-72">
             <Cover
-              useLoader={false}
+              useLoader={data.use_loader}
               entry={data}
               fit="full"
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
