@@ -188,8 +188,9 @@ export default function Listing() {
       />
 
       <Header>Thông tin truyện mới</Header>
-      <div className="container mx-auto px-6">
-        <div className="mb-6 flex items-center gap-3">
+
+      <div className="sticky top-0 z-10 bg-zinc-50/75 pb-6 pt-20 backdrop-blur-md dark:bg-zinc-800/75 sm:pt-6">
+        <div className="container mx-auto flex items-center gap-3 px-6">
           <Filter
             value={currentSite}
             onChange={handleSiteChange}
@@ -203,7 +204,9 @@ export default function Listing() {
           />
           /<span>Trang {currentPage}</span>
         </div>
+      </div>
 
+      <div className="container mx-auto px-6">
         <Products
           site={currentSite.value}
           category={currentCategory.id}
