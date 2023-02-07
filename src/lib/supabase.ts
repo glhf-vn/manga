@@ -195,7 +195,9 @@ export async function getSerie(id: number) {
 export async function getSeries(filter?: {
   publishers?: string | string[];
   types?: string | string[];
-  status?: Serie | Serie[];
+  status?:
+    | Database["public"]["Enums"]["status"]
+    | Database["public"]["Enums"]["status"][];
 }) {
   let query = client
     .from("series")

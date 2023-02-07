@@ -1,6 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
+import { type Database } from "@data/database.types";
 import { getSeries } from "@lib/supabase";
-import { Serie } from "@data/public.types";
 
 export default async function Series(
   req: NextApiRequest,
@@ -13,7 +13,10 @@ export default async function Series(
       let entries;
 
       const { publisher, type } = query;
-      const status = query.status as Serie | Serie[] | undefined;
+      const status = query.status as
+        | Database["public"]["Enums"]["status"]
+        | Database["public"]["Enums"]["status"][]
+        | undefined;
 
       entries = await getSeries({
         publishers: publisher,
