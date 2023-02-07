@@ -132,10 +132,15 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       return { notFound: true };
     }
 
-    const image_url =
-      (data.publication![0] && data.publication![0].image_url![0]) ||
-      data.licensed?.image_url ||
-      null;
+    let image_url: string | null = null;
+
+    if (data.publication) {
+      if (data.publication[0].image_url) {
+        image_url = data.publication[0].image_url[0];
+      }
+    } else {
+      if (data.licensed) image_url = data.licensed.image_url;
+    }
 
     return {
       props: {
@@ -150,6 +155,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       revalidate: 86400, // revalidate per day
     };
   } catch (error) {
+    console.log(error);
     return { notFound: true };
   }
 };
@@ -196,7 +202,7 @@ export default function Serie({
     }
   };
 
-  const { publication, licensed, publisher, type, image_url } = data;
+  const { publication, licensed, publisher, type } = data;
 
   return (
     <Layout>
