@@ -6,6 +6,7 @@ import { getPublishers, getTypes } from "@lib/supabase";
 
 import useSWR from "swr";
 import { HTMLProps, useState } from "react";
+import slug from "slug";
 
 import { Disclosure, Transition } from "@headlessui/react";
 import { NextSeo } from "next-seo";
@@ -175,7 +176,7 @@ const Series = ({ filters }: SeriesProps) => {
     <ul className="grid grid-cols-1 gap-6 md:grid-cols-2">
       {series.map((serie) => (
         <li key={serie.id}>
-          <Link href={`/license/${serie.id}`}>
+          <Link href={`/license/${serie.id}/${slug(serie.name)}`}>
             <Card>
               <div className="grid grid-cols-3">
                 <div className="col-span-1">

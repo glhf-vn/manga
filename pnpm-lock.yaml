@@ -8,6 +8,7 @@ specifiers:
   '@types/luxon': ^3.2.0
   '@types/node': 18.11.18
   '@types/react': 18.0.27
+  '@types/slug': ^5.0.3
   '@vercel/analytics': ^0.1.8
   '@vercel/og': ^0.0.27
   autoprefixer: ^10.4.13
@@ -28,6 +29,7 @@ specifiers:
   react-icons: ^4.7.1
   sass: ^1.58.0
   sharp: ^0.31.3
+  slug: ^8.2.2
   supabase: ^1.36.2
   swiper: ^9.0.2
   swr: ^2.0.3
@@ -50,6 +52,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-icons: 4.7.1_react@18.2.0
   sharp: 0.31.3
+  slug: 8.2.2
   swiper: 9.0.2
   swr: 2.0.3_react@18.2.0
 
@@ -58,6 +61,7 @@ devDependencies:
   '@types/luxon': 3.2.0
   '@types/node': 18.11.18
   '@types/react': 18.0.27
+  '@types/slug': 5.0.3
   autoprefixer: 10.4.13_postcss@8.4.21
   eslint: 8.33.0
   eslint-config-next: 13.1.6_4vsywjlpuriuw3tl5oq6zy5a64
@@ -416,6 +420,10 @@ packages:
 
   /@types/scheduler/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
+    dev: true
+
+  /@types/slug/5.0.3:
+    resolution: {integrity: sha512-yPX0bb1SvrpaGlHuSiz6EicgRI4VBE+LO7IANlZagQwtaoKjLLcZc8y6s13vKp41mYvMCSzjtObxvU7/0JRPaA==}
     dev: true
 
   /@typescript-eslint/parser/5.49.0_4vsywjlpuriuw3tl5oq6zy5a64:
@@ -2846,6 +2854,11 @@ packages:
     resolution: {integrity: sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==}
     engines: {node: '>=12'}
     dev: true
+
+  /slug/8.2.2:
+    resolution: {integrity: sha512-5ByW6qXqPeG0Tmlkh24JhdXhvQsbaJSjVr3GgGxUV0BSskZKKBZZfFWxezap8+fh1vxBN9GVbqI1V6nqAFxlBg==}
+    hasBin: true
+    dev: false
 
   /source-map-js/1.0.2:
     resolution: {integrity: sha512-R0XvVJ9WusLiqTCEiGCmICCMplcCkIwwR11mOSD9CR5u+IXYdiseeEuXCVAjS54zqwkLcPNnmU4OeJ6tUrWhDw==}

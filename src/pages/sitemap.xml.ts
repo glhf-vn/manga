@@ -1,8 +1,9 @@
 // ref: https://nextjs.org/learn/seo/crawling-and-indexing/xml-sitemaps
 
 import type { GetServerSideProps } from "next";
+import type { Serie } from "@data/public.types";
 
-import { Serie } from "@data/public.types";
+import slug from "slug";
 
 const SERIES_DATA = "https://manga.glhf.vn/api/series";
 const SERIES_URL = "https://manga.glhf.vn/license";
@@ -22,14 +23,11 @@ function generateSiteMap(series: Serie[]) {
      <url>
        <loc>https://manga.glhf.vn/license</loc>
      </url>
-     <url>
-       <loc>https://manga.glhf.vn/events</loc>
-     </url>
      ${series
-       .map(({ id }) => {
+       .map(({ id, name }) => {
          return `
        <url>
-           <loc>${`${SERIES_URL}/${id}`}</loc>
+           <loc>${`${SERIES_URL}/${id}/${slug(name)}`}</loc>
        </url>
      `;
        })

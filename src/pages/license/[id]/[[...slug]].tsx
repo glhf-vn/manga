@@ -4,7 +4,8 @@ import { getSerie, getSeriesId } from "@lib/supabase";
 
 import { DateTime } from "luxon";
 import { useRouter } from "next/router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import slug from "slug";
 
 import { NextSeo } from "next-seo";
 import Image from "next/image";
@@ -119,14 +120,18 @@ export const getStaticPaths = async () => {
   let series = await getSeriesId();
 
   return {
-    paths: series.map((serie) => ({ params: { id: String(serie.id) } })),
+    paths: series.map((serie) => ({
+      params: { id: String(serie.id), slug: [slug(serie.name)] },
+    })),
     fallback: true,
   };
 };
 
 export const getStaticProps = async (context: GetStaticPropsContext) => {
   try {
-    const data = await getSerie(parseInt(context.params!.id as string));
+    const id = context.params!.id as string;
+
+    const data = await getSerie(parseInt(id));
 
     if (!data) {
       return { notFound: true };
@@ -134,12 +139,12 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
 
     let image_url: string | null = null;
 
-    if (data.publication) {
+    if (data.publication && data.publication.length > 0) {
       if (data.publication[0].image_url) {
         image_url = data.publication[0].image_url[0];
       }
     } else {
-      if (data.licensed) image_url = data.licensed.image_url;
+      if (data.licensed) image_url = data.licensed.image_url ?? null;
     }
 
     return {
@@ -155,7 +160,6 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
       revalidate: 86400, // revalidate per day
     };
   } catch (error) {
-    console.log(error);
     return { notFound: true };
   }
 };
@@ -165,6 +169,16 @@ export default function Serie({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   const router = useRouter();
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!router.isFallback) {
+      // Always do navigations after the first render
+      router.push(`/license/${data.id}/${slug(data.name)}`, undefined, {
+        shallow: true,
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data]);
 
   if (router.isFallback) {
     return (

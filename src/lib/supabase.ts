@@ -256,7 +256,7 @@ export async function getSeries(filter?: {
 }
 
 export async function getSeriesId() {
-  const { data, error } = await client.from("series").select(`id`);
+  const { data, error } = await client.from("series").select(`id, name`);
 
   if (error) {
     throw error;

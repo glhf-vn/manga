@@ -24,6 +24,7 @@
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
     "sharp": "^0.31.3",
+    "slug": "^8.2.2",
     "swiper": "^9.0.2",
     "swr": "^2.0.3"
   },
@@ -32,6 +33,7 @@
     "@types/luxon": "^3.2.0",
     "@types/node": "18.11.18",
     "@types/react": "18.0.27",
+    "@types/slug": "^5.0.3",
     "autoprefixer": "^10.4.13",
     "eslint": "8.33.0",
     "eslint-config-next": "^13.1.6",
