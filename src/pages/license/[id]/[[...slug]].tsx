@@ -202,14 +202,14 @@ export default function Serie({
         await navigator.share({
           title: `Bản quyền ${data.name}`,
           text: `Xem thông tin bản quyền và lịch xuất bản của ${data.name} trên mangaGLHF!`,
-          url: `/license/${data.id}`,
+          url: `/license/${data.id}/${slug(data.name)}`,
         });
       } catch (err) {
         console.log(`Error: ${err}`);
       }
     } else {
       await navigator.clipboard.writeText(
-        `https://manga.glhf.vn/license/${data.id}`
+        `https://manga.glhf.vn/license/${data.id}/${slug(data.name)}`
       );
       setCopied(true);
       setTimeout(() => setCopied(false), 3000);
