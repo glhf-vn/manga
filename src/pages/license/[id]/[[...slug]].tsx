@@ -230,7 +230,11 @@ export default function Serie({
                   data.name
                 }&publisher=${publisher!.name}&type=${type!.name}&status=${
                   data.status
-                }${data.image_url ? `&image_url=${data.image_url}` : ""}`
+                }${
+                  data.image_url
+                    ? `&image_url=${imageEndpoint}${data.image_url}`
+                    : ""
+                }`
               ),
               width: 1200,
               height: 630,
