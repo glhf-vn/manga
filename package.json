@@ -35,7 +35,7 @@
     "@types/react": "18.0.27",
     "@types/slug": "^5.0.3",
     "autoprefixer": "^10.4.13",
-    "eslint": "8.33.0",
+    "eslint": "8.34.0",
     "eslint-config-next": "^13.1.6",
     "postcss": "^8.4.21",
     "postcss-100vh-fix": "^1.0.2",
