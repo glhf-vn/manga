@@ -266,7 +266,7 @@ export default function Serie({
               <b>Nhà xuất bản/phát hành</b>: {publisher!.name}
             </p>
 
-            <div className="mt-6 space-x-3">
+            <div className="mt-6 flex space-x-3">
               <Button intent="secondary" onClick={handleShare}>
                 {copied ? (
                   <>
