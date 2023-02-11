@@ -1,4 +1,5 @@
 import type { Database } from "@data/database.types";
+import { getSeries } from "@lib/supabase";
 
 export type Publisher = Database["public"]["Tables"]["publisher"]["Row"];
 
@@ -24,5 +25,7 @@ export type Serie = Omit<
   type: Type;
   publisher: Pick<Publisher, "name" | "id">;
 };
+
+export type Series = Awaited<ReturnType<typeof getSeries>>;
 
 export type Status = Database["public"]["Enums"]["status"];

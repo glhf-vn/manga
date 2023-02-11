@@ -6,7 +6,9 @@ import type { Database } from "@data/database.types";
 import type { Publication } from "@data/public.types";
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
-  throw new Error("Undefined SUPABASE environment variables");
+  throw new Error(
+    "SUPABASE_URL and/or SUPABASE_ANON_KEY environment variable not found"
+  );
 }
 
 const client = createClient<Database>(
@@ -259,9 +261,14 @@ export async function getSeries(filter?: {
   }
 
   return data.map((data) => {
-    const { publication, licensed, id, name, publisher, type, status } = data;
+    const { publication, licensed, id, name, status } = data;
     let image_url: string | null = null;
     let use_loader: boolean = true;
+
+    let publisher = Array.isArray(data.publisher)
+      ? data.publisher[0]
+      : data.publisher;
+    let type = Array.isArray(data.type) ? data.type[0] : data.type;
 
     if (
       Array.isArray(publication) &&
