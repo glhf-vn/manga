@@ -103,7 +103,10 @@ const Slider = ({ data }: SliderProps) => {
               <div className="container mx-auto flex flex-col-reverse gap-6 pb-12 sm:flex-row sm:gap-12 sm:px-6 sm:pt-6">
                 <Card className="sm:basis-72">
                   {release.edition && (
-                    <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
+                    <Badge
+                      className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md"
+                      intent="none"
+                    >
                       {release.edition}
                     </Badge>
                   )}
@@ -423,7 +426,7 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
                   </Link>
                 )}
                 <br />
-                <div className="mt-1 flex items-center gap-2">
+                <div className="mt-3 flex items-center gap-2">
                   <Button className="bg-[#c92127] text-zinc-50">
                     <a
                       href={`https://fahasa.com/catalogsearch/result/?q=${data.name}`}
@@ -579,7 +582,10 @@ const GridView = ({ releases, isLoading, options }: ReleasesView) => {
                   cardSize={release.wide ? "wide" : "normal"}
                 >
                   {release.edition && (
-                    <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
+                    <Badge
+                      className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md"
+                      intent="none"
+                    >
                       {release.edition}
                     </Badge>
                   )}
@@ -676,9 +682,12 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
                         setModalOpen(true);
                       }}
                     >
-                      <span className="">{release.name}</span>
+                      <span>{release.name}</span>
                       {release.edition && (
-                        <Badge className="m-0 bg-amber-200/75 backdrop-blur-md">
+                        <Badge
+                          className="m-0 bg-amber-200/75 backdrop-blur-md"
+                          intent="none"
+                        >
                           {release.edition}
                         </Badge>
                       )}
@@ -871,7 +880,7 @@ export default function Home({
           </div>
           <div className="flex gap-3">
             <Button
-              className="rounded-2xl px-2 text-2xl"
+              className="text-2xl"
               onClick={() => setCurrentOrder((order) => !order)}
               aria-label="Đổi thứ tự"
               role="button"
@@ -880,7 +889,7 @@ export default function Home({
               {currentOrder ? <BsArrowDownShort /> : <BsArrowUpShort />}
             </Button>
             <Button
-              className="rounded-2xl px-2 text-2xl"
+              className="text-2xl"
               onClick={() => setFilterOpen((status) => !status)}
               aria-label="Mở bộ lọc"
               role="button"
@@ -889,7 +898,7 @@ export default function Home({
               <BsFilter />
             </Button>
             <Button
-              className="rounded-2xl px-2 text-2xl"
+              className="text-2xl"
               onClick={() => changeCurrentView((currentView) => !currentView)}
               aria-label="Thay đổi layout"
               role="button"

@@ -1,4 +1,4 @@
-import type { HTMLProps, ReactNode } from "react";
+import type { ButtonHTMLAttributes, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonStyles = cva(
@@ -28,7 +28,8 @@ const buttonContainerStyles = cva("flex justify-center items-center gap-3");
 
 export interface ButtonProps
   extends VariantProps<typeof buttonStyles>,
-    HTMLProps<HTMLAnchorElement> {
+    ButtonHTMLAttributes<HTMLButtonElement> {
+  href?: string;
   children?: ReactNode;
 }
 
@@ -47,16 +48,18 @@ export default function Button({
         target="_blank"
         rel="noreferrer"
         className={buttonStyles({ intent, hoverable, className })}
-        {...props}
       >
         <div className={buttonContainerStyles()}>{children}</div>
       </a>
     );
   } else {
     return (
-      <a className={buttonStyles({ intent, hoverable, className })} {...props}>
+      <button
+        className={buttonStyles({ intent, hoverable, className })}
+        {...props}
+      >
         <div className={buttonContainerStyles()}>{children}</div>
-      </a>
+      </button>
     );
   }
 }
