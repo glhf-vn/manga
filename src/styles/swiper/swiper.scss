@@ -1,0 +1,9 @@
+:root {
+  --swiper-pagination-color: #f8b60b;
+  --swiper-pagination-top: 70%;
+  --swiper-pagination-left: 50%;
+
+  @media (prefers-color-scheme: dark) {
+    --swiper-pagination-bullet-inactive-color: #fff;
+  }
+}
