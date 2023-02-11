@@ -3,7 +3,7 @@ import { DateTime } from "luxon";
 
 import type { Database } from "@data/database.types";
 
-import type { Publication, Serie } from "@data/public.types";
+import type { Publication } from "@data/public.types";
 
 if (!process.env.SUPABASE_URL || !process.env.SUPABASE_ANON_KEY) {
   throw new Error("Undefined SUPABASE environment variables");
@@ -259,7 +259,7 @@ export async function getSeries(filter?: {
   }
 
   return data.map((data) => {
-    const { publication, licensed } = data;
+    const { publication, licensed, id, name, publisher, type, status } = data;
     let image_url: string | null = null;
     let use_loader: boolean = true;
 
@@ -280,7 +280,11 @@ export async function getSeries(filter?: {
     }
 
     return {
-      ...data,
+      id,
+      name,
+      publisher,
+      type,
+      status,
       image_url,
       use_loader,
     };
