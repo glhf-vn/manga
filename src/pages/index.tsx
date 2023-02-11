@@ -705,24 +705,18 @@ const useReleases = (
   publishers?: string[]
 ) => {
   const { data, error, isLoading } = useSWR(
-    {
-      year,
-      month,
-      order,
-      publishers,
-    },
-    async ({ year, month, publishers }) => {
+    { url: `/api/releases`, args: { year, month, order, publishers } },
+    async ({ url, args }) => {
+      const { year, month, publishers, order } = args;
       const dateObj = DateTime.fromObject({ year, month });
 
-      let url = `/api/releases?start=${dateObj
-        .startOf("month")
-        .toISODate()}&end=${dateObj.endOf("month").toISODate()}&order=${
-        order ? "ascending" : "descending"
-      }`;
-
-      publishers?.map((publisher) => (url += `&publisher=${publisher}`));
-
-      return await fetch(url).then((res) => res.json());
+      return await fetch(
+        `${url}?start=${dateObj.startOf("month").toISODate()}&end=${dateObj
+          .endOf("month")
+          .toISODate()}&order=${order ? "ascending" : "descending"}&${publishers
+          ?.map((publisher) => `publisher=${publisher}`)
+          .join("&")}`
+      ).then((res) => res.json());
     }
   );
 
