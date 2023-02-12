@@ -17,6 +17,7 @@ import {
   ClearRefinements,
   RefinementList,
   Configure,
+  SortBy,
   SearchBox,
 } from "react-instantsearch-hooks-web";
 
@@ -61,6 +62,11 @@ const searchClass = {
   reset: "absolute top-0 right-0 h-full px-3",
   input:
     "flex-1 rounded-2xl bg-zinc-100 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-100 border-zinc-200 dark:border-zinc-600",
+};
+
+const sortByClass = {
+  select:
+    "w-full rounded-2xl bg-zinc-100 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-100 border-zinc-200 dark:border-zinc-600",
 };
 
 const Hit = ({ hit }: { hit: Hit<Series[0]> }) => (
@@ -144,14 +150,29 @@ export default function SeriesList({
 
       <Header>Thông tin bản quyền</Header>
 
-      <InstantSearch searchClient={searchClient} indexName="series">
+      <InstantSearch
+        searchClient={searchClient}
+        indexName="series:timestamp:desc"
+      >
         <Configure hitsPerPage={10} />
         <div className="container mx-auto px-6">
           <div className="flex flex-col gap-6 md:flex-row-reverse">
             <div className="basis-56 lg:basis-72">
               <div className="top-6 space-y-3 sm:sticky">
+                <h3 className="font-kanit text-2xl">Sắp xếp</h3>
+
+                <SortBy
+                  items={[
+                    { label: "Mới nhất", value: "series:timestamp:desc" },
+                    { label: "Cũ nhất", value: "series:timestamp:asc" },
+                    { label: "Tên (A-Z)", value: "series:name:asc" },
+                    { label: "Tên (Z-A)", value: "series:name:desc" },
+                  ]}
+                  classNames={sortByClass}
+                />
+
                 <div className="flex items-center gap-3">
-                  <h2 className="font-kanit text-2xl">Bộ lọc</h2>
+                  <h3 className="font-kanit text-2xl">Bộ lọc</h3>
                   <ClearRefinements
                     classNames={{
                       root: "inline-block",
