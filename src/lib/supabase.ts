@@ -297,7 +297,7 @@ export async function getSeries(filter?: {
       status,
       image_url,
       use_loader,
-      timestamp,
+      timestamp: timestamp ? Date.parse(timestamp) / 1000 : null,
     };
   });
 }
