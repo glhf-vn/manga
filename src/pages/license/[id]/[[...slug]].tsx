@@ -71,7 +71,10 @@ const ListView = ({ data }: SerieReleasesView) => (
               <div className="col-span-4 flex items-center gap-3 border-t p-3 decoration-primary decoration-2 dark:border-zinc-600">
                 <span>{entry.name}</span>
                 {entry.edition && (
-                  <Badge className="m-0 bg-amber-200/75 backdrop-blur-md">
+                  <Badge
+                    intent="none"
+                    className="m-0 bg-amber-200/75 backdrop-blur-md"
+                  >
                     {entry.edition}
                   </Badge>
                 )}
@@ -104,7 +107,10 @@ const CoverView = ({ data }: SerieReleasesView) => (
           data-src={`${imageEndpoint}${image_url}`}
         >
           {entry.edition && (
-            <Badge className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md">
+            <Badge
+              intent="none"
+              className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md"
+            >
               {entry.edition}
             </Badge>
           )}
