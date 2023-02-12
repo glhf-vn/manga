@@ -231,8 +231,8 @@ export async function getSeries(filter?: {
     .select(
       `
       *,
-      licensed(image_url),
-      publication(image_url),
+      licensed(image_url,timestamp),
+      publication(image_url,date),
       publisher(id,name),
       type(id,name,color)
       `
@@ -263,6 +263,7 @@ export async function getSeries(filter?: {
   return data.map((data) => {
     const { publication, licensed, id, name, status } = data;
     let image_url: string | null = null;
+    let timestamp: string | null = null;
     let use_loader: boolean = true;
 
     let publisher = Array.isArray(data.publisher)
@@ -270,19 +271,21 @@ export async function getSeries(filter?: {
       : data.publisher;
     let type = Array.isArray(data.type) ? data.type[0] : data.type;
 
-    if (
-      Array.isArray(publication) &&
-      publication.length > 0 &&
-      publication[0].image_url
-    ) {
+    if (Array.isArray(publication) && publication.length > 0) {
       // get the first volume cover if exists on publication
-      image_url = publication[0].image_url[0];
-      use_loader = true;
+      if (publication[0].image_url) {
+        image_url = publication[0].image_url[0];
+
+        use_loader = true;
+      }
+      timestamp = publication[0].date;
     } else if (Array.isArray(licensed)) {
       image_url = licensed[0].image_url;
+      timestamp = licensed[0].timestamp;
       use_loader = false;
     } else {
       image_url = licensed?.image_url ?? null;
+      timestamp = licensed?.timestamp ?? null;
       use_loader = false;
     }
 
@@ -294,6 +297,7 @@ export async function getSeries(filter?: {
       status,
       image_url,
       use_loader,
+      timestamp,
     };
   });
 }
