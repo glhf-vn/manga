@@ -11,7 +11,7 @@
   "dependencies": {
     "@headlessui/react": "^1.7.10",
     "@headlessui/tailwindcss": "^0.1.2",
-    "@meilisearch/instant-meilisearch": "0.10.1-multi-index-search.0",
+    "@meilisearch/instant-meilisearch": "0.11.0",
     "@supabase/supabase-js": "^2.7.1",
     "@vercel/analytics": "^0.1.8",
     "@vercel/og": "^0.1.0",
