@@ -77,7 +77,7 @@ const Hit = ({ hit }: { hit: Hit<Series[0]> }) => (
           <Cover useLoader={hit.use_loader} entry={hit} fit="full" />
         </div>
         <div className="relative col-span-2 flex flex-col justify-between">
-          <div className="absolute top-1 right-1">
+          <div className="absolute top-2 right-2">
             <Badge style={{ backgroundColor: hit.type.color }}>
               {hit.type.name}
             </Badge>

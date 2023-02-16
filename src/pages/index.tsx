@@ -104,7 +104,7 @@ const Slider = ({ data }: SliderProps) => {
                 <Card className="sm:basis-72">
                   {release.edition && (
                     <Badge
-                      className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md"
+                      className="absolute top-2 right-2 bg-amber-200/75 backdrop-blur-md"
                       intent="none"
                     >
                       {release.edition}
@@ -564,7 +564,7 @@ const GridView = ({ releases, isLoading, options }: ReleasesView) => {
 
         return (
           <div className="container mx-auto px-6" key={date.valueOf()}>
-            <div className={`mt-12 mb-3 flex items-center text-xl font-bold`}>
+            <div className="mt-12 mb-3 flex items-center gap-3 text-xl font-bold">
               <span className="capitalize">
                 {date.toFormat("EEEE - dd/MM")}
               </span>
@@ -583,7 +583,7 @@ const GridView = ({ releases, isLoading, options }: ReleasesView) => {
                 >
                   {release.edition && (
                     <Badge
-                      className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md"
+                      className="absolute top-2 right-2 bg-amber-200/75 backdrop-blur-md"
                       intent="none"
                     >
                       {release.edition}

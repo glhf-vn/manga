@@ -75,7 +75,7 @@ const Products = ({ site, category, page }: ListingSetting) => {
             <Card>
               <a href={url} target="_blank" rel="noreferrer">
                 {discount != 0 && (
-                  <div className="absolute top-1 right-1">
+                  <div className="absolute top-2 right-2">
                     <Badge intent="success">-{discount}%</Badge>
                   </div>
                 )}

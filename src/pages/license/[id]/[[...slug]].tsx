@@ -109,7 +109,7 @@ const CoverView = ({ data }: SerieReleasesView) => (
           {entry.edition && (
             <Badge
               intent="none"
-              className="absolute top-0 right-0 bg-amber-200/75 backdrop-blur-md"
+              className="absolute top-2 right-2 bg-amber-200/75 backdrop-blur-md"
             >
               {entry.edition}
             </Badge>

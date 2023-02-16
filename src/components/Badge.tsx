@@ -1,21 +1,24 @@
 import type { HTMLProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
-const buttonStyles = cva("m-2 rounded-lg py-0.5 px-1.5 text-xs text-zinc-800", {
-  variants: {
-    intent: {
-      primary: "bg-zinc-200",
-      success: "bg-green-200",
-      error: "bg-red-200",
-      caution: "bg-orange-200",
-      info: "bg-amber-200",
-      none: "",
+const buttonStyles = cva(
+  "block rounded-lg py-0.5 px-1.5 text-xs text-zinc-800 w-fit",
+  {
+    variants: {
+      intent: {
+        primary: "bg-zinc-200",
+        success: "bg-green-200",
+        error: "bg-red-200",
+        caution: "bg-orange-200",
+        info: "bg-amber-200",
+        none: "",
+      },
     },
-  },
-  defaultVariants: {
-    intent: "primary",
-  },
-});
+    defaultVariants: {
+      intent: "primary",
+    },
+  }
+);
 
 export interface BadgeProps
   extends VariantProps<typeof buttonStyles>,
