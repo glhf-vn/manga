@@ -174,7 +174,7 @@ export default function Serie({
   useEffect(() => {
     if (!router.isFallback) {
       // Always do navigations after the first render
-      router.push(`/license/${data.id}/${slug(data.name)}`, undefined, {
+      router.replace(`/license/${data.id}/${slug(data.name)}`, undefined, {
         shallow: true,
       });
     }
