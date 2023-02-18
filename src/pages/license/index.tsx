@@ -44,10 +44,8 @@ const hitsClass = {
 
 const paginationClass = {
   list: "flex gap-2 items-center justify-center",
-  item: "transition-all duration-150 ease-linear rounded-xl",
-  pageItem:
-    "bg-zinc-200 hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600",
-  selectedItem: "font-bold",
+  item: "transition-all duration-150 ease-linear rounded-xl hover:bg-zinc-300 dark:hover:bg-zinc-600",
+  selectedItem: "font-bold bg-primary",
   disabledItem: "cursor-not-allowed",
   link: "text-sm py-1.5 px-3 block",
 };
