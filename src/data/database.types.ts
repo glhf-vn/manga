@@ -42,7 +42,6 @@ export interface Database {
           price: number
           publisher: string
           serie_id: number | null
-          wide: boolean
         }
         Insert: {
           date: string
@@ -53,7 +52,6 @@ export interface Database {
           price?: number
           publisher: string
           serie_id?: number | null
-          wide?: boolean
         }
         Update: {
           date?: string
@@ -64,7 +62,6 @@ export interface Database {
           price?: number
           publisher?: string
           serie_id?: number | null
-          wide?: boolean
         }
       }
       publisher: {
@@ -136,6 +133,9 @@ export interface Database {
     }
     Enums: {
       status: "Licensed" | "Published" | "Finished"
+    }
+    CompositeTypes: {
+      [_ in never]: never
     }
   }
 }
