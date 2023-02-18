@@ -364,7 +364,18 @@ export default function Serie({
             </h3>
             <p className="mb-12 px-6">
               Bộ truyện được mua bản quyền bởi <b>{publisher!.name}</b> vào ngày{" "}
-              <b>{DateTime.fromISO(licensed.timestamp).toLocaleString()}</b>.{" "}
+              <b>{DateTime.fromISO(licensed.timestamp).toLocaleString()}</b>{" "}
+              {licensed.source && (
+                <a
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-primary hover:underline"
+                  href={licensed.source}
+                >
+                  {"(nguồn)"}
+                </a>
+              )}
+              .{" "}
               {data.status == 1 && (
                 <>
                   Hiện tại đã được...{" "}
