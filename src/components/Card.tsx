@@ -17,16 +17,11 @@ const cardStyles = cva(
       clickable: {
         true: "cursor-pointer",
       },
-      cardSize: {
-        wide: "col-span-2",
-        normal: "col-span-1",
-      },
     },
     defaultVariants: {
       intent: "primary",
       hoverable: true,
       clickable: false,
-      cardSize: "normal",
     },
   }
 );
@@ -41,7 +36,6 @@ export default function Card({
   intent,
   hoverable,
   clickable,
-  cardSize,
   children,
   className,
   ...props
@@ -52,7 +46,6 @@ export default function Card({
         intent,
         hoverable,
         clickable,
-        cardSize,
         className,
       })}
       {...props}

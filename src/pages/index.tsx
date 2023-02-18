@@ -579,7 +579,6 @@ const GridView = ({ releases, isLoading, options }: ReleasesView) => {
                   }}
                   key={release.id}
                   clickable={true}
-                  cardSize={release.wide ? "wide" : "normal"}
                 >
                   {release.edition && (
                     <Badge
@@ -610,39 +609,38 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
     return (
       <div className="mx-auto overflow-auto lg:container">
         <div className="min-w-fit px-6">
-          <div className="mt-12 grid min-w-max animate-pulse grid-cols-6 overflow-hidden rounded-2xl border dark:border-zinc-600">
-            <span className="border-r p-3 text-center font-bold dark:border-zinc-600 dark:bg-zinc-700">
-              Ngày phát hành
-            </span>
-            <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">
-              Tên
-            </span>
-            <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
-            {[...Array(4)].map((_, i) => {
-              return (
-                <>
-                  <div
-                    className="flex h-full items-center justify-center border-t border-r p-3 font-bold dark:border-zinc-600"
-                    style={{
-                      gridRow: `span 5 / span 5`,
-                    }}
-                  >
-                    <div className="h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
-                  </div>
-                  {[...Array(5)].map((_, i) => (
-                    <>
-                      <div className="col-span-4 flex cursor-pointer items-center gap-3 border-t p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600">
-                        <div className="h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
-                      </div>
-                      <div className="border-t p-3 dark:border-zinc-600">
-                        <div className="h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
-                      </div>
-                    </>
-                  ))}
-                </>
-              );
-            })}
-          </div>
+          <table className="mt-12 w-full min-w-fit animate-pulse overflow-hidden border dark:border-zinc-600">
+            <thead className="font-bold dark:bg-zinc-700">
+              <th className="w-40 border-r p-3 dark:border-zinc-600">
+                Ngày phát hành
+              </th>
+              <th className="w-full p-3 text-left">Tên</th>
+              <th className="p-3 text-left">Giá</th>
+            </thead>
+            <tbody>
+              {[...Array(4)].map((_) => {
+                return (
+                  <>
+                    {[...Array(5)].map((_, i) => (
+                      <tr key={i} className="border-t dark:border-zinc-600">
+                        {i === 0 && (
+                          <td rowSpan={5} className="whitespace-nowrap p-3">
+                            <div className="h-5 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                          </td>
+                        )}
+                        <td className="whitespace-nowrap border-l p-3 dark:border-zinc-600">
+                          <div className="h-5 w-2/3 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                        </td>
+                        <td className="whitespace-nowrap p-3">
+                          <div className="h-5 w-28 rounded bg-zinc-300 dark:bg-zinc-700"></div>
+                        </td>
+                      </tr>
+                    ))}
+                  </>
+                );
+              })}
+            </tbody>
+          </table>
         </div>
       </div>
     );
@@ -650,58 +648,69 @@ const ListView = ({ releases, isLoading, options }: ReleasesView) => {
   return (
     <div className="mx-auto overflow-auto lg:container">
       <div className="min-w-fit px-6">
-        <div className="mt-12 grid min-w-max grid-cols-6 overflow-hidden rounded-2xl border dark:border-zinc-600">
-          <span className="border-r p-3 text-center font-bold dark:border-zinc-600 dark:bg-zinc-700">
-            Ngày phát hành
-          </span>
-          <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">Tên</span>
-          <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
-          {releases.map((releaseGroup) => {
-            const date = DateTime.fromISO(releaseGroup.date);
-            const today = DateTime.now();
+        <table className="mt-12 w-full min-w-fit overflow-hidden border dark:border-zinc-600">
+          <thead className="font-bold dark:bg-zinc-700">
+            <th className="whitespace-nowrap border-r p-3 dark:border-zinc-600">
+              Ngày phát hành
+            </th>
+            <th className="w-full p-3 text-left">Tên</th>
+            <th className="p-3 text-left">Giá</th>
+          </thead>
+          <tbody>
+            {releases.map((releaseGroup) => {
+              const date = DateTime.fromISO(releaseGroup.date);
+              const today = DateTime.now();
 
-            return (
-              <>
-                <div
-                  className="flex h-full items-center justify-center border-t border-r p-3 font-bold dark:border-zinc-600"
-                  style={{
-                    gridRow: `span ${releaseGroup.entries.length} / span ${releaseGroup.entries.length}`,
-                  }}
-                >
-                  <span>{date.toFormat("dd/MM/yyyy")}</span>
-                  {date < today && (
-                    <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-700 dark:text-green-200" />
-                  )}
-                </div>
-                {releaseGroup.entries.map((release) => (
-                  <>
-                    <div
-                      className="col-span-4 flex cursor-pointer items-center gap-3 border-t p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600"
-                      onClick={() => {
-                        setModalData(release);
-                        setModalOpen(true);
-                      }}
+              return (
+                <>
+                  {releaseGroup.entries.map((release, i) => (
+                    <tr
+                      key={release.id}
+                      className="border-t dark:border-zinc-600"
                     >
-                      <span>{release.name}</span>
-                      {release.edition && (
-                        <Badge
-                          className="m-0 bg-amber-200/75 backdrop-blur-md"
-                          intent="none"
+                      {i === 0 && (
+                        <td
+                          rowSpan={releaseGroup.entries.length}
+                          className="whitespace-nowrap p-3 font-bold"
                         >
-                          {release.edition}
-                        </Badge>
+                          <div className="flex h-full items-center justify-center">
+                            <span>{date.toFormat("dd/MM/yyyy")}</span>
+                            {date < today && (
+                              <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-700 dark:text-green-200" />
+                            )}
+                          </div>
+                        </td>
                       )}
-                      <BsBoxArrowUpRight className="inline-block text-zinc-400" />
-                    </div>
-                    <span className="border-t p-3 dark:border-zinc-600">
-                      {VND.format(release.price)}
-                    </span>
-                  </>
-                ))}
-              </>
-            );
-          })}
-        </div>
+                      <td
+                        className="cursor-pointer gap-3 whitespace-nowrap border-l p-3 decoration-primary decoration-2 hover:underline dark:border-zinc-600"
+                        onClick={() => {
+                          setModalData(release);
+                          setModalOpen(true);
+                        }}
+                      >
+                        <div className="flex items-center gap-3">
+                          <span>{release.name}</span>
+                          {release.edition && (
+                            <Badge
+                              className="bg-amber-200/75 backdrop-blur-md"
+                              intent="none"
+                            >
+                              {release.edition}
+                            </Badge>
+                          )}
+                          <BsBoxArrowUpRight className="inline-block text-zinc-400" />
+                        </div>
+                      </td>
+                      <td className="whitespace-nowrap p-3">
+                        {VND.format(release.price)}
+                      </td>
+                    </tr>
+                  ))}
+                </>
+              );
+            })}
+          </tbody>
+        </table>
       </div>
     </div>
   );

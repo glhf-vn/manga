@@ -49,46 +49,52 @@ interface SerieReleasesView {
 
 const ListView = ({ data }: SerieReleasesView) => (
   <div className="mx-auto mb-12 overflow-scroll lg:container">
-    <div className="min-w-fit px-6">
-      <div className="grid min-w-max grid-cols-6 overflow-hidden rounded-2xl border dark:border-zinc-600">
-        <span className="border-r p-3 text-center font-bold dark:border-zinc-600 dark:bg-zinc-700">
-          Ngày phát hành
-        </span>
-        <span className="col-span-4 p-3 font-bold dark:bg-zinc-700">Tên</span>
-        <span className="p-3 font-bold dark:bg-zinc-700">Giá</span>
-        {data?.map((entry) => {
-          const date = DateTime.fromISO(entry.date);
-          const today = DateTime.now();
+    <div className="px-6">
+      <table className="w-full min-w-fit overflow-hidden border dark:border-zinc-600">
+        <thead className="font-bold dark:bg-zinc-700">
+          <tr>
+            <th className="p-3">Tên</th>
+            <th className="p-3">Ngày phát hành</th>
+            <th className="p-3">Giá</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data?.map((entry) => {
+            const date = DateTime.fromISO(entry.date);
+            const today = DateTime.now();
 
-          return (
-            <div className="col-span-full grid grid-cols-6" key={entry.id}>
-              <div className="flex h-full items-center justify-center border-t border-r p-3 font-bold dark:border-zinc-600">
-                <span>{date.toFormat("dd/MM/yyyy")}</span>
-                {date < today && (
-                  <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-200" />
-                )}
-              </div>
-              <div className="col-span-4 flex items-center gap-3 border-t p-3 decoration-primary decoration-2 dark:border-zinc-600">
-                <span>{entry.name}</span>
-                {entry.edition && (
-                  <Badge
-                    intent="none"
-                    className="m-0 bg-amber-200/75 backdrop-blur-md"
-                  >
-                    {entry.edition}
-                  </Badge>
-                )}
-              </div>
-              <span className="border-t p-3 dark:border-zinc-600">
-                {new Intl.NumberFormat("vi-VN", {
-                  style: "currency",
-                  currency: "VND",
-                }).format(entry.price)}
-              </span>
-            </div>
-          );
-        })}
-      </div>
+            return (
+              <tr className="border-t dark:border-zinc-600" key={entry.id}>
+                <td className="whitespace-nowrap p-3 decoration-primary decoration-2">
+                  <div className="flex items-center">
+                    <span>{entry.name}</span>
+                    {entry.edition && (
+                      <Badge
+                        intent="none"
+                        className="ml-3 bg-amber-200/75 backdrop-blur-md"
+                      >
+                        {entry.edition}
+                      </Badge>
+                    )}
+                  </div>
+                </td>
+                <td className="whitespace-nowrap p-3 text-center font-bold">
+                  <span>{date.toFormat("dd/MM/yyyy")}</span>
+                  {date < today && (
+                    <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-200" />
+                  )}
+                </td>
+                <td className="whitespace-nowrap p-3 text-center">
+                  {new Intl.NumberFormat("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  }).format(entry.price)}
+                </td>
+              </tr>
+            );
+          })}
+        </tbody>
+      </table>
     </div>
   </div>
 );
