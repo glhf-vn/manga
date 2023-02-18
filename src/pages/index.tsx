@@ -27,7 +27,7 @@ import {
   BsChevronCompactLeft,
   BsChevronCompactRight,
   BsFilter,
-  BsColumnsGap,
+  BsColumns,
   BsListUl,
   BsChevronDown,
   BsArrowDownShort,
@@ -913,7 +913,7 @@ export default function Home({
               role="button"
               intent="secondary"
             >
-              {currentView ? <BsListUl /> : <BsColumnsGap />}
+              {currentView ? <BsListUl /> : <BsColumns />}
             </Button>
           </div>
         </div>
