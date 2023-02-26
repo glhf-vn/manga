@@ -67,12 +67,12 @@ const sortByClass = {
     "w-full rounded-2xl bg-zinc-100 dark:bg-zinc-700 text-zinc-700 dark:text-zinc-100 border-zinc-200 dark:border-zinc-600",
 };
 
-const Hit = ({ hit }: { hit: Hit<Series[0]> }) => (
+const HitComponent = ({ hit }: { hit: Hit<Series[0]> }) => (
   <Link href={`/license/${hit.id}/${slug(hit.name)}`}>
     <Card>
       <div className="grid grid-cols-3">
         <div className="col-span-1">
-          <Cover useLoader={hit.use_loader} entry={hit} fit="full" />
+          <Cover entry={hit} fit="full" />
         </div>
         <div className="relative col-span-2 flex flex-col justify-between">
           <div className="absolute top-2 right-2">
@@ -89,6 +89,9 @@ const Hit = ({ hit }: { hit: Hit<Series[0]> }) => (
                 hit={hit}
               />
             </h3>
+            <div className="mt-3 text-sm text-zinc-600 dark:text-zinc-200">
+              Trạng thái: {hit.status}
+            </div>
           </div>
           <span className="flex items-center justify-end gap-2 p-3 text-sm text-zinc-600 dark:border-zinc-600 dark:text-zinc-200">
             Chi tiết <BsChevronRight className="inline-block" />
@@ -165,6 +168,8 @@ export default function SeriesList({
                     { label: "Cũ nhất", value: "series:timestamp:asc" },
                     { label: "Tên (A-Z)", value: "series:name:asc" },
                     { label: "Tên (Z-A)", value: "series:name:desc" },
+                    { label: "ID (tăng dần)", value: "series:id:asc" },
+                    { label: "ID (giảm dần)", value: "series:id:desc" },
                   ]}
                   classNames={sortByClass}
                 />
@@ -288,7 +293,7 @@ export default function SeriesList({
                 loadingIconComponent={() => <></>}
                 classNames={searchClass}
               />
-              <Hits classNames={hitsClass} hitComponent={Hit} />
+              <Hits classNames={hitsClass} hitComponent={HitComponent} />
             </div>
           </div>
           <div className="mt-6">

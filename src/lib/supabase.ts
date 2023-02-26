@@ -58,7 +58,7 @@ export async function getEntries(
 
   return data.map((data) => ({
     ...data,
-    image_url: data.image_url ? data.image_url[0] : null,
+    image_url: data.image_url ? `covers/${data.image_url[0]}` : null,
   })) as Publication[];
 }
 
@@ -190,24 +190,20 @@ export async function getSerie(id: number) {
   let type = Array.isArray(data.type) ? data.type[0] : data.type;
 
   let image_url: string | null = null;
-  let use_loader: boolean = true;
 
   if (publication && publication.length > 0) {
     if (publication[0].image_url) {
-      image_url = publication[0].image_url[0];
-      use_loader = true;
+      image_url = `covers/${publication[0].image_url[0]}`;
     }
   } else {
     if (licensed) {
-      image_url = licensed.image_url ?? null;
-      use_loader = false;
+      image_url = `raw-covers/${licensed.image_url}` ?? null;
     }
   }
 
   return {
     ...data,
     image_url,
-    use_loader,
     // handle array cases
     type,
     publisher,
@@ -261,7 +257,6 @@ export async function getSeries(filter?: {
     const { publication, licensed, id, name, status } = data;
     let image_url: string | null = null;
     let timestamp: string | null = null;
-    let use_loader: boolean = true;
 
     let publisher = Array.isArray(data.publisher)
       ? data.publisher[0]
@@ -270,20 +265,19 @@ export async function getSeries(filter?: {
 
     if (Array.isArray(publication) && publication.length > 0) {
       // get the first volume cover if exists on publication
-      if (publication[0].image_url) {
-        image_url = publication[0].image_url[0];
+      if (publication[0].image_url)
+        image_url = `covers/${publication[0].image_url[0]}`;
 
-        use_loader = true;
-      }
       timestamp = publication[0].date;
     } else if (Array.isArray(licensed)) {
-      image_url = licensed[0].image_url;
+      image_url = `raw-covers/${licensed[0].image_url}`;
       timestamp = licensed[0].timestamp;
-      use_loader = false;
+    } else if (licensed) {
+      image_url = `raw-covers/${licensed.image_url}`;
+      timestamp = licensed.timestamp;
     } else {
-      image_url = licensed?.image_url ?? null;
-      timestamp = licensed?.timestamp ?? null;
-      use_loader = false;
+      image_url = null;
+      timestamp = null;
     }
 
     return {
@@ -293,7 +287,6 @@ export async function getSeries(filter?: {
       type,
       status,
       image_url,
-      use_loader,
       timestamp: timestamp ? Date.parse(timestamp) / 1000 : null,
     };
   });

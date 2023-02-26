@@ -34,7 +34,7 @@ import "lightgallery/css/lg-thumbnail.css";
 
 import lgZoom from "lightgallery/plugins/zoom";
 
-interface SerieReleasesView {
+interface SerieEntries {
   data:
     | {
         id: string;
@@ -47,14 +47,14 @@ interface SerieReleasesView {
     | null;
 }
 
-const ListView = ({ data }: SerieReleasesView) => (
-  <div className="mx-auto mb-12 overflow-scroll lg:container">
+const Schedule = ({ data }: SerieEntries) => (
+  <div className="mx-auto mb-12 overflow-auto lg:container">
     <div className="px-6">
       <table className="w-full min-w-fit overflow-hidden border dark:border-zinc-600">
         <thead className="font-bold dark:bg-zinc-700">
           <tr>
             <th className="p-3">Tên</th>
-            <th className="p-3">Ngày phát hành</th>
+            <th className="whitespace-nowrap p-3">Ngày phát hành</th>
             <th className="p-3">Giá</th>
           </tr>
         </thead>
@@ -99,7 +99,7 @@ const ListView = ({ data }: SerieReleasesView) => (
   </div>
 );
 
-const CoverView = ({ data }: SerieReleasesView) => (
+const Covers = ({ data }: SerieEntries) => (
   <LightGallery
     speed={500}
     plugins={[lgZoom]}
@@ -152,7 +152,7 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
     const data = await getSerie(parseInt(id));
 
     if (!data) {
-      return { notFound: true };
+      return { notFound: true, revalidate: 3600 };
     }
 
     return {
@@ -164,10 +164,10 @@ export const getStaticProps = async (context: GetStaticPropsContext) => {
             data.status == "Finished" ? 3 : data.status == "Published" ? 2 : 1,
         },
       },
-      revalidate: 86400, // revalidate per day
+      revalidate: 3600, // revalidate per hour
     };
   } catch (error) {
-    return { notFound: true };
+    return { notFound: true, revalidate: 3600 };
   }
 };
 
@@ -261,7 +261,6 @@ export default function Serie({
         <div className="container relative mx-auto flex flex-col-reverse gap-6 px-6 sm:flex-row sm:gap-12 sm:pt-6">
           <div className="overflow-hidden rounded-2xl shadow-md transition-shadow duration-150 ease-linear hover:shadow-lg sm:basis-72">
             <Cover
-              useLoader={data.use_loader}
               entry={data}
               fit="full"
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
@@ -364,7 +363,7 @@ export default function Serie({
             </h3>
             <p className="mb-12 px-6">
               Bộ truyện được mua bản quyền bởi <b>{publisher!.name}</b> vào ngày{" "}
-              <b>{DateTime.fromISO(licensed.timestamp).toLocaleString()}</b>{" "}
+              <b>{DateTime.fromISO(licensed.timestamp).toLocaleString()}</b>
               {licensed.source && (
                 <a
                   target="_blank"
@@ -372,12 +371,13 @@ export default function Serie({
                   className="text-primary hover:underline"
                   href={licensed.source}
                 >
-                  {"(nguồn)"}
+                  {" (nguồn)"}
                 </a>
               )}
-              .{" "}
+              .
               {data.status == 1 && (
                 <>
+                  {" "}
                   Hiện tại đã được...{" "}
                   <b>
                     {DateTime.now()
@@ -396,10 +396,10 @@ export default function Serie({
             <h3 className="mb-6 px-6 font-kanit text-2xl font-bold">
               Lịch phát hành
             </h3>
-            <ListView data={publication} />
+            <Schedule data={publication} />
 
             <h3 className="mb-6 px-6 font-kanit text-2xl font-bold">Ảnh bìa</h3>
-            <CoverView data={publication} />
+            <Covers data={publication} />
           </>
         )}
       </div>

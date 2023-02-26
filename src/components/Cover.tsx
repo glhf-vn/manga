@@ -44,15 +44,13 @@ export default function Cover({
   entry,
   hero,
   fit,
-  useLoader = true,
   sizes = "(max-width: 768px) 50vw, (max-width: 1024px) 75vw, 100vw",
   ...props
 }: Props) {
   if (entry.image_url) {
     return (
       <Image
-        loader={useLoader ? imageLoader : undefined}
-        unoptimized={!useLoader ? true : undefined}
+        loader={imageLoader}
         className={imageStyles({ fit })}
         src={entry.image_url}
         alt={entry.name}
