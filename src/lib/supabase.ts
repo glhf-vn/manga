@@ -197,7 +197,9 @@ export async function getSerie(id: number) {
     }
   } else {
     if (licensed) {
-      image_url = `raw-covers/${licensed.image_url}` ?? null;
+      image_url = licensed.image_url
+        ? `raw-covers/${licensed.image_url}`
+        : null;
     }
   }
 
@@ -270,10 +272,14 @@ export async function getSeries(filter?: {
 
       timestamp = publication[0].date;
     } else if (Array.isArray(licensed)) {
-      image_url = `raw-covers/${licensed[0].image_url}`;
+      image_url = licensed[0].image_url
+        ? `raw-covers/${licensed[0].image_url}`
+        : null;
       timestamp = licensed[0].timestamp;
     } else if (licensed) {
-      image_url = `raw-covers/${licensed.image_url}`;
+      image_url = licensed.image_url
+        ? `raw-covers/${licensed.image_url}`
+        : null;
       timestamp = licensed.timestamp;
     } else {
       image_url = null;
