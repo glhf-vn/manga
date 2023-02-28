@@ -3,7 +3,7 @@ import type {
   PublicationByDate,
   Publisher,
 } from "@data/public.types";
-import type { Dispatch, SetStateAction } from "react";
+import type { Dispatch, MutableRefObject, SetStateAction } from "react";
 import type { MonthNumbers } from "luxon";
 
 export type DateObj = {
@@ -26,7 +26,9 @@ export type ReleasesProps = {
     publishers: string[];
   };
   order: boolean;
-  options: ModalMethods;
+  options: ModalMethods & {
+    setNearest: Dispatch<SetStateAction<string>>;
+  };
 };
 
 export type ReleasesView = {
