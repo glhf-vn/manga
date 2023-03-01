@@ -44,7 +44,7 @@ export default function Cover({
   entry,
   hero,
   fit,
-  sizes = "(max-width: 768px) 50vw, (max-width: 1024px) 75vw, 100vw",
+  sizes = "(max-width: 768px) 40vw, (max-width: 1024px) 300px, 200px",
   ...props
 }: Props) {
   if (entry.image_url) {

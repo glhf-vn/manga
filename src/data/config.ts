@@ -60,5 +60,5 @@ export const siteList = [
 export const imageEndpoint = "https://ik.imagekit.io/glhf";
 
 export const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
-  return `${imageEndpoint}/${src}?tr=w-${width},q-${quality ?? 90},f-auto`;
+  return `${imageEndpoint}/${src}?tr=w-${width},q-${quality ?? 80},f-auto`;
 };
