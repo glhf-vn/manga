@@ -46,7 +46,7 @@ export const GridView = ({ releases, isLoading, options }: ReleasesView) => {
         return (
           <div className="container mx-auto px-6" key={date.valueOf()}>
             <div
-              className="mt-12 mb-3 flex items-center gap-3 text-xl font-bold"
+              className="mt-12 mb-3 flex scroll-mt-6 items-center gap-3 text-xl font-bold lg:scroll-mt-20"
               id={date.toISODate()}
             >
               <span className="capitalize">
@@ -154,7 +154,7 @@ export const ListView = ({ releases, isLoading, options }: ReleasesView) => {
                   {releaseGroup.entries.map((release, i) => (
                     <tr
                       key={release.id}
-                      className="border-t dark:border-zinc-600"
+                      className="scroll-mt-6 border-t dark:border-zinc-600 lg:scroll-mt-20"
                       id={date.toISODate()}
                     >
                       {i === 0 && (
