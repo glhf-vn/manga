@@ -2,7 +2,7 @@ import type { GetStaticPropsContext, InferGetStaticPropsType } from "next";
 
 import { getSerie, getSeriesId } from "@lib/supabase";
 
-import { imageEndpoint, imageLoader } from "@data/config";
+import { imageEndpoint, imageLoader, s3CDNEndpoint } from "@data/config";
 
 import { DateTime } from "luxon";
 import { useRouter } from "next/router";
@@ -110,7 +110,7 @@ const Covers = ({ data }: SerieEntries) => (
         <Card
           key={`${entry.id}_${i}`}
           clickable={true}
-          data-src={`${imageEndpoint}${image_url}`}
+          data-src={`${s3CDNEndpoint}/covers/${image_url}`}
         >
           {entry.edition && (
             <Badge
@@ -121,7 +121,7 @@ const Covers = ({ data }: SerieEntries) => (
             </Badge>
           )}
           <Image
-            src={image_url}
+            src={`covers/${image_url}`}
             alt={`${entry.name}${entry.edition ? ` (${entry.edition})` : ""}`}
             loader={imageLoader}
             width={300}
