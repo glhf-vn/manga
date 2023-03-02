@@ -21,7 +21,6 @@ export interface SliderProps {
 
 export type ReleasesProps = {
   date: DateObj;
-  view: boolean;
   filters: {
     publishers: string[];
   };
@@ -53,7 +52,7 @@ export interface InfoModalProps extends ModalProps {
   data: Publication | undefined;
 }
 
-export interface FilterModalProps extends ModalProps {
+export interface FilterModalProps {
   values: Publisher[];
   checkedValues: string[];
   handler: Dispatch<SetStateAction<string[]>>;

@@ -4,25 +4,22 @@ import type { Publication, PublicationByDate } from "@data/public.types";
 
 import { getEntries, getPublishers } from "@lib/supabase";
 
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { DateTime } from "luxon";
 import useSWR from "swr";
 
 import { NextSeo } from "next-seo";
-import {
-  BsFilter,
-  BsColumns,
-  BsListUl,
-  BsArrowDownShort,
-  BsArrowUpShort,
-} from "react-icons/bs";
+import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
 
 import Layout from "@layouts/Layout";
+
+import { ViewContext, ViewProvider } from "@components/index/ViewProvider";
 
 import { ListView, GridView } from "@components/index/View";
 import Slideshow from "@components/index/Slideshow";
 import Pagination from "@components/index/Pagination";
 import MonthPicker from "@components/index/MonthPicker";
+import ChangeView from "@components/index/ChangeView";
 
 import FilterModal from "@components/index/FilterModal";
 import InfoModal from "@components/index/InfoModal";
@@ -58,7 +55,9 @@ const useReleases = (
   };
 };
 
-const Releases = ({ date, view, filters, order, options }: ReleasesProps) => {
+const Releases = ({ date, filters, order, options }: ReleasesProps) => {
+  const view = useContext(ViewContext);
+
   const { year, month } = date;
   const { publishers } = filters;
   const { setNearest } = options;
@@ -119,7 +118,7 @@ const Releases = ({ date, view, filters, order, options }: ReleasesProps) => {
     }
   }
 
-  if (view == true)
+  if (view == 1)
     return (
       <GridView isLoading={isLoading} options={options} releases={releases} />
     );
@@ -166,11 +165,7 @@ export default function Home({
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState<Publication | undefined>();
 
-  const [filterOpen, setFilterOpen] = useState(false);
   const [filterPublishers, changeFilterPublishers] = useState<string[]>([]);
-
-  // view states
-  const [currentView, changeCurrentView] = useState(true); // true = card, false = list
 
   // order states
   const [currentOrder, setCurrentOrder] = useState(true); // true = ascending, false = descending
@@ -179,13 +174,9 @@ export default function Home({
   useEffect(() => {
     const view = window.localStorage.getItem("RELEASES_VIEW");
     const order = window.localStorage.getItem("RELEASES_ORDER");
-    if (view !== null) changeCurrentView(JSON.parse(view));
     if (order !== null) setCurrentOrder(JSON.parse(order));
   }, []);
   // save to browser
-  useEffect(() => {
-    window.localStorage.setItem("RELEASES_VIEW", JSON.stringify(currentView));
-  }, [currentView]);
   useEffect(() => {
     window.localStorage.setItem("RELEASES_ORDER", JSON.stringify(currentOrder));
   }, [currentOrder]);
@@ -224,71 +215,52 @@ export default function Home({
         onClose={() => setModalOpen(false)}
       />
 
-      <FilterModal
-        isOpen={filterOpen}
-        onClose={() => setFilterOpen(false)}
-        values={publishers}
-        checkedValues={filterPublishers}
-        handler={changeFilterPublishers}
-      />
-
       <Slideshow data={upcoming} />
 
-      <div className="relative z-10 w-full bg-zinc-50 py-4 backdrop-blur-md dark:bg-zinc-800/75 lg:sticky lg:top-0">
-        <div className="container mx-auto flex flex-col gap-6 px-6 md:flex-row md:justify-between">
-          <div>
-            <span className="inline font-kanit text-2xl font-bold">
-              Lịch phát hành
-            </span>{" "}
-            <MonthPicker date={currentDate} options={{ changeDate }} />
-          </div>
-          <div className="flex gap-3">
-            <button
-              className="rounded-2xl bg-zinc-200 py-1 px-3 text-lg transition-all duration-150 ease-linear hover:bg-zinc-300 disabled:cursor-default disabled:text-zinc-500 dark:bg-zinc-700 dark:hover:bg-zinc-600"
-              onClick={jumpToNearest}
-              aria-label="Đổi thứ tự"
-              role="button"
-            >
-              Gần nhất
-            </button>
-            <Button
-              className="flex-1 text-2xl"
-              onClick={() => setCurrentOrder((order) => !order)}
-              aria-label="Đổi thứ tự"
-              role="button"
-              intent="secondary"
-            >
-              {currentOrder ? <BsArrowDownShort /> : <BsArrowUpShort />}
-            </Button>
-            <Button
-              className="flex-1 text-2xl"
-              onClick={() => setFilterOpen((status) => !status)}
-              aria-label="Mở bộ lọc"
-              role="button"
-              intent="secondary"
-            >
-              <BsFilter />
-            </Button>
-            <Button
-              className="flex-1 text-2xl"
-              onClick={() => changeCurrentView((currentView) => !currentView)}
-              aria-label="Thay đổi layout"
-              role="button"
-              intent="secondary"
-            >
-              {currentView ? <BsListUl /> : <BsColumns />}
-            </Button>
+      <ViewProvider>
+        <div className="relative z-10 w-full bg-zinc-50 py-4 backdrop-blur-md dark:bg-zinc-800/75 lg:sticky lg:top-0">
+          <div className="container mx-auto flex flex-col gap-6 px-6 md:flex-row md:justify-between">
+            <div>
+              <span className="inline font-kanit text-2xl font-bold">
+                Lịch phát hành
+              </span>{" "}
+              <MonthPicker date={currentDate} options={{ changeDate }} />
+            </div>
+            <div className="flex gap-3">
+              <button
+                className="rounded-2xl bg-zinc-200 py-1 px-3 text-lg transition-all duration-150 ease-linear hover:bg-zinc-300 disabled:cursor-default disabled:text-zinc-500 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+                onClick={jumpToNearest}
+                aria-label="Đến gần nhất"
+                role="button"
+              >
+                Gần nhất
+              </button>
+              <Button
+                className="flex-1 text-2xl"
+                onClick={() => setCurrentOrder((order) => !order)}
+                aria-label="Đổi thứ tự"
+                role="button"
+                intent="secondary"
+              >
+                {currentOrder ? <BsArrowDownShort /> : <BsArrowUpShort />}
+              </Button>
+              <FilterModal
+                values={publishers}
+                checkedValues={filterPublishers}
+                handler={changeFilterPublishers}
+              />
+              <ChangeView />
+            </div>
           </div>
         </div>
-      </div>
 
-      <Releases
-        date={currentDate}
-        view={currentView}
-        filters={{ publishers: filterPublishers }}
-        order={currentOrder}
-        options={{ setModalOpen, setModalData, setNearest }}
-      />
+        <Releases
+          date={currentDate}
+          filters={{ publishers: filterPublishers }}
+          order={currentOrder}
+          options={{ setModalOpen, setModalData, setNearest }}
+        />
+      </ViewProvider>
 
       <div className="container mx-auto mt-12 px-6">
         <Pagination date={currentDate} options={{ changeDate }} />
