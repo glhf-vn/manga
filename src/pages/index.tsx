@@ -98,13 +98,23 @@ const Releases = ({ date, view, filters, order, options }: ReleasesProps) => {
     );
 
   if (!isLoading) {
+    // set min as max (of month)
+    let min = DateTime.now().daysInMonth as number;
+
     for (const group of releases) {
       const date = DateTime.fromISO(group.date);
-      const today = DateTime.now();
+      const today = DateTime.now().startOf("day");
 
-      if (date.month == today.month && date.day >= today.day) {
+      if (
+        // only continue if on current month
+        date.month == today.month &&
+        // if it's possitive nearest
+        date.diffNow("days").days >= 0 &&
+        // and smaller than found min
+        date.diffNow("days").days < min
+      ) {
+        min = date.diffNow("days").days;
         setNearest(date.toISODate());
-        break;
       }
     }
   }
