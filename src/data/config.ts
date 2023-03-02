@@ -57,10 +57,9 @@ export const siteList = [
   },
 ];
 
-export const imageEndpoint = "https://ik.imagekit.io/glhf";
-export const s3CDNEndpoint =
-  "https://manga-glhf.sgp1.cdn.digitaloceanspaces.com";
+export const imageEndpoint = process.env.NEXT_PUBLIC_IMAGE_ENDPOINT || "";
+export const s3CDNEndpoint = process.env.NEXT_PUBLIC_S3CDN_ENDPOINT || "";
 
 export const imageLoader = ({ src, width, quality }: ImageLoaderProps) => {
-  return `${imageEndpoint}/${src}?tr=w-${width},q-${quality ?? 80},f-auto`;
+  return `${imageEndpoint}/${width}x0/filters:quality(${quality || 80})/${src}`;
 };

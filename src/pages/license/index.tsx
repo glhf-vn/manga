@@ -102,28 +102,19 @@ const HitComponent = ({ hit }: { hit: Hit<Series[0]> }) => (
   </Link>
 );
 
-export const getStaticProps = async () => {
-  if (!process.env.MEILI_SEARCH_URL || !process.env.MEILI_SEARCH_KEY) {
+export default function SeriesList() {
+  if (
+    !process.env.NEXT_PUBLIC_MEILI_SEARCH_URL ||
+    !process.env.NEXT_PUBLIC_MEILI_SEARCH_KEY
+  ) {
     throw new Error(
       "MEILI_SEARCH_URL and/or MEILI_SEARCH_KEY environment variable not found"
     );
   }
 
-  const meili_url = process.env.MEILI_SEARCH_URL;
-  const meili_key = process.env.MEILI_SEARCH_KEY;
+  const meili_url = process.env.NEXT_PUBLIC_MEILI_SEARCH_URL;
+  const meili_key = process.env.NEXT_PUBLIC_MEILI_SEARCH_KEY;
 
-  return {
-    props: {
-      meili_url,
-      meili_key,
-    },
-  };
-};
-
-export default function SeriesList({
-  meili_url,
-  meili_key,
-}: InferGetStaticPropsType<typeof getStaticProps>) {
   const searchClient = instantMeiliSearch(meili_url, meili_key, {
     finitePagination: true,
   });
