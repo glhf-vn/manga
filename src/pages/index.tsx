@@ -118,7 +118,7 @@ const Releases = ({ date, filters, order, options }: ReleasesProps) => {
     }
   }
 
-  if (view == 1)
+  if (view == 0)
     return (
       <GridView isLoading={isLoading} options={options} releases={releases} />
     );

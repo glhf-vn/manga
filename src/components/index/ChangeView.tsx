@@ -25,7 +25,7 @@ const ChangeView = () => {
       role="button"
       intent="secondary"
     >
-      {view ? <BsListUl /> : <BsColumns />}
+      {view == 0 ? <BsListUl /> : <BsColumns />}
     </Button>
   );
 };
