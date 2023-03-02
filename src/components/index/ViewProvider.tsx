@@ -1,8 +1,10 @@
+import { getLocalStorage, setLocalStorage } from "@lib/common";
 import {
   type Dispatch,
   type ReactNode,
   createContext,
   useReducer,
+  useEffect,
 } from "react";
 
 enum View {
@@ -25,7 +27,14 @@ export const ViewDispatchContext = createContext<Dispatch<ViewAction>>(
 );
 
 export function ViewProvider({ children }: Props) {
-  const [view, dispatch] = useReducer(viewReducer, View.Grid);
+  const [view, dispatch] = useReducer(
+    viewReducer,
+    getLocalStorage("RELEASES_VIEW", View.Grid)
+  );
+
+  useEffect(() => {
+    setLocalStorage("RELEASES_VIEW", view);
+  }, [view]);
 
   return (
     <ViewContext.Provider value={view}>
