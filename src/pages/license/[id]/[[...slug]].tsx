@@ -110,7 +110,7 @@ const Covers = ({ data }: SerieEntries) => (
         <Card
           key={`${entry.id}_${i}`}
           clickable={true}
-          data-src={`${s3CDNEndpoint}/covers/${image_url}`}
+          data-src={`${s3CDNEndpoint}/images/covers/${image_url}`}
         >
           {entry.edition && (
             <Badge
