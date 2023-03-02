@@ -54,11 +54,14 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
               </div>
               <div className="mt-6">
                 {data.serie_id && (
-                  <Link href={`/license/${data.serie_id}`}>
-                    <Button intent="secondary">
+                  <Link
+                    href={`/license/${data.serie_id}`}
+                    className="inline-block h-fit rounded-xl bg-zinc-200 py-2 px-3 transition-all duration-150 ease-linear hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+                  >
+                    <span className="flex items-center justify-center gap-3">
                       <BsInfoCircleFill />
-                      <span>Thông tin trọn bộ</span>
-                    </Button>
+                      Thông tin trọn bộ
+                    </span>
                   </Link>
                 )}
                 <br />
