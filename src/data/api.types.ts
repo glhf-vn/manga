@@ -28,6 +28,22 @@ export type FahasaResponse = {
   }[];
 };
 
+export type HikaruResponse = {
+  products?: {
+    id: number;
+    title: string;
+    handle: string;
+    images: {
+      id: number,
+      src: string;
+      filename: string;
+    }[];
+    variants: {
+      price: number;
+    }[]
+  }[]
+}
+
 export type ListingResponse = {
   id: number;
   name: string;

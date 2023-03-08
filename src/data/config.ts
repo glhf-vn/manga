@@ -27,6 +27,17 @@ export const VND = new Intl.NumberFormat("vi-VN", {
 export const siteList = [
   {
     id: 0,
+    name: "Hikaru",
+    value: "hikaru",
+    categories: [
+      {
+        id: "all",
+        name: "Tất cả",
+      },
+    ],
+  },
+  {
+    id: 1,
     name: "Tiki",
     value: "tiki",
     categories: [
@@ -41,7 +52,7 @@ export const siteList = [
     ],
   },
   {
-    id: 1,
+    id: 2,
     name: "FAHASA",
     value: "fahasa",
     categories: [

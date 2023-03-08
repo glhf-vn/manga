@@ -22,7 +22,7 @@ import type { ListingResponse } from "@data/api.types";
 
 type ListingSetting = {
   site: string;
-  category: number;
+  category: string | number;
   page: number;
 };
 
@@ -31,7 +31,7 @@ type FilterParams = {
     name: string;
   };
   contents: Array<{
-    id: number;
+    id: string | number;
     name: string;
   }>;
   onChange: (e: any) => void;
