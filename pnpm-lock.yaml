@@ -8,7 +8,7 @@ specifiers:
   '@supabase/supabase-js': ^2.8.0
   '@tailwindcss/forms': ^0.5.3
   '@types/luxon': ^3.2.0
-  '@types/node': 18.14.2
+  '@types/node': 18.15.6
   '@types/react': 18.0.28
   '@types/slug': ^5.0.3
   '@vercel/analytics': ^0.1.11
@@ -68,7 +68,7 @@ dependencies:
 devDependencies:
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
   '@types/luxon': 3.2.0
-  '@types/node': 18.14.2
+  '@types/node': 18.15.6
   '@types/react': 18.0.28
   '@types/slug': 5.0.3
   autoprefixer: 10.4.13_postcss@8.4.21
@@ -441,8 +441,8 @@ packages:
     resolution: {integrity: sha512-lGmaGFoaXHuOLXFvuju2bfvZRqxAqkHPx9Y9IQdQABrinJJshJwfNCKV+u7rR3kJbiqfTF/NhOkcxxAFrObyaA==}
     dev: true
 
-  /@types/node/18.14.2:
-    resolution: {integrity: sha512-1uEQxww3DaghA0RxqHx0O0ppVlo43pJhepY51OxuQIKHpjbnYLA7vcdwioNPzIqmC2u3I/dmylcqjlh0e7AyUA==}
+  /@types/node/18.15.6:
+    resolution: {integrity: sha512-YErOafCZpK4g+Rp3Q/PBgZNAsWKGunQTm9FA3/Pbcm0VCriTEzcrutQ/SxSc0rytAp0NoFWue669jmKhEtd0sA==}
     dev: true
 
   /@types/nprogress/0.2.0:
