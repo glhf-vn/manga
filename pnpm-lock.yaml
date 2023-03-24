@@ -12,7 +12,7 @@ specifiers:
   '@types/react': 18.0.28
   '@types/slug': ^5.0.3
   '@vercel/analytics': ^0.1.11
-  '@vercel/og': ^0.2.0
+  '@vercel/og': ^0.4.0
   autoprefixer: ^10.4.13
   class-variance-authority: ^0.4.0
   eslint: 8.36.0
@@ -48,7 +48,7 @@ dependencies:
   '@popperjs/core': 2.11.6
   '@supabase/supabase-js': 2.8.0
   '@vercel/analytics': 0.1.11_react@18.2.0
-  '@vercel/og': 0.2.0
+  '@vercel/og': 0.4.1
   class-variance-authority: 0.4.0_typescript@5.0.2
   lightgallery: 2.7.1
   luxon: 3.2.1
@@ -561,12 +561,12 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@vercel/og/0.2.0:
-    resolution: {integrity: sha512-nBxtwJpxeK52XQjzNKOlbT0XF6oTyrMHd1/heSUI2pdgjBf5rGS3nWpjlIurWoLGTHhtxwS7zxTgP45sX6Q29Q==}
+  /@vercel/og/0.4.1:
+    resolution: {integrity: sha512-N8SXkbmQQRK0iHpqwUe50Fe8JO3sx2ByV6hgPTi16ONiMdqOM9uzE4QMWoY1Oa0uYZuUVA30sEB84mVMn+gT3w==}
     engines: {node: '>=16'}
     dependencies:
       '@resvg/resvg-wasm': 2.4.1
-      satori: 0.4.0
+      satori: 0.4.1
       yoga-wasm-web: 0.3.0
     dev: false
 
@@ -2933,8 +2933,8 @@ packages:
       immutable: 4.2.4
       source-map-js: 1.0.2
 
-  /satori/0.4.0:
-    resolution: {integrity: sha512-ROtZJkBErgJ2HVMk5jDUrJ8B+FuOTFlHYjcNCfSHjwgEavkaZsDvxPwl/1VCa4XpdkHrPcMuUDF+36w+lUECUg==}
+  /satori/0.4.1:
+    resolution: {integrity: sha512-uQm4+vQj57E9PO/ASAlxsRb+78fHkRUmkNLBBmfuEeGNLGqJ9ufYU7TzYP4XH60PLHYt9Wz1jSsgcAe2cz7+ng==}
     engines: {node: '>=16'}
     dependencies:
       '@shuding/opentype.js': 1.4.0-beta.0
