@@ -27,7 +27,7 @@
     "react-icons": "^4.7.1",
     "react-instantsearch-hooks-web": "^6.40.1",
     "react-popper": "^2.3.0",
-    "sharp": "^0.31.3",
+    "sharp": "^0.32.0",
     "slug": "^8.2.2",
     "swiper": "^9.1.0",
     "swr": "^2.0.4"
