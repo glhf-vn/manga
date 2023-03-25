@@ -9,7 +9,7 @@ specifiers:
   '@tailwindcss/forms': ^0.5.3
   '@types/luxon': ^3.2.0
   '@types/node': 18.15.8
-  '@types/react': 18.0.28
+  '@types/react': 18.0.29
   '@types/slug': ^5.0.3
   '@vercel/analytics': ^0.1.11
   '@vercel/og': ^0.4.0
@@ -69,7 +69,7 @@ devDependencies:
   '@tailwindcss/forms': 0.5.3_tailwindcss@3.2.7
   '@types/luxon': 3.2.0
   '@types/node': 18.15.8
-  '@types/react': 18.0.28
+  '@types/react': 18.0.29
   '@types/slug': 5.0.3
   autoprefixer: 10.4.13_postcss@8.4.21
   eslint: 8.36.0
@@ -475,8 +475,8 @@ packages:
   /@types/qs/6.9.7:
     resolution: {integrity: sha512-FGa1F62FT09qcrueBA6qYTrJPVDzah9a+493+o2PCXsesWHIn27G98TsSMs3WPNbZIEj4+VJf6saSFpvD+3Zsw==}
 
-  /@types/react/18.0.28:
-    resolution: {integrity: sha512-RD0ivG1kEztNBdoAK7lekI9M+azSnitIn85h4iOiaLjaTrMjzslhaqCGaI4IyCJ1RljWiLCEu4jyrLLgqxBTew==}
+  /@types/react/18.0.29:
+    resolution: {integrity: sha512-wXHktgUABxplw1+UnljseDq4+uztQyp2tlWZRIxHlpchsCFqiYkvaDS8JR7eKOQm8wziTH/el5qL7D6gYNkYcw==}
     dependencies:
       '@types/prop-types': 15.7.5
       '@types/scheduler': 0.16.2
