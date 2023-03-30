@@ -35,7 +35,7 @@
   "devDependencies": {
     "@tailwindcss/forms": "^0.5.3",
     "@types/luxon": "^3.2.0",
-    "@types/node": "18.15.10",
+    "@types/node": "18.15.11",
     "@types/react": "18.0.30",
     "@types/slug": "^5.0.3",
     "autoprefixer": "^10.4.13",
