@@ -20,7 +20,7 @@
     "lightgallery": "^2.7.1",
     "luxon": "^3.2.1",
     "next": "^13.2.1",
-    "next-seo": "^5.15.0",
+    "next-seo": "^6.0.0",
     "nextjs-progressbar": "^0.0.16",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
