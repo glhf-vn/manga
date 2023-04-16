@@ -1,6 +1,5 @@
 import type { Series } from "@data/public.types";
 import type { Hit } from "instantsearch.js";
-import type { InferGetStaticPropsType } from "next";
 
 import slug from "slug";
 import { instantMeiliSearch } from "@meilisearch/instant-meilisearch";
