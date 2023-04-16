@@ -8,8 +8,8 @@ dependencies:
     specifier: ^0.1.2
     version: 0.1.2(tailwindcss@3.2.7)
   '@meilisearch/instant-meilisearch':
-    specifier: 0.12.0
-    version: 0.12.0
+    specifier: 0.11.1
+    version: 0.11.1
   '@popperjs/core':
     specifier: ^2.11.6
     version: 2.11.6
@@ -295,10 +295,10 @@ packages:
     resolution: {integrity: sha512-ZnQMnLV4e7hDlUvw8H+U8ASL02SS2Gn6+9Ac3wGGLIe7+je2AeAOxPY+izIPJDfFDb7eDjev0Us8MO1iFRN8hA==}
     dev: true
 
-  /@meilisearch/instant-meilisearch@0.12.0:
-    resolution: {integrity: sha512-DmiqrJvW5onR8pDxXWvg71p10rFx+4sLioZrteT3I033iOVyJbuOTglNMNUetHbRBiCaqJ4kNFx0Yj/fkGzzfg==}
+  /@meilisearch/instant-meilisearch@0.11.1:
+    resolution: {integrity: sha512-FOAp1Lh1CAoY1CIJ2aYBYqw3oHcgzYEOBarPcrNqBfw0wQXuj6rHgANGm21pSxl8BNHLyYX85ntyOcUfD5f03g==}
     dependencies:
-      meilisearch: 0.32.1
+      meilisearch: 0.31.1
     transitivePeerDependencies:
       - encoding
     dev: false
@@ -2296,8 +2296,8 @@ packages:
     engines: {node: '>=12'}
     dev: false
 
-  /meilisearch@0.32.1:
-    resolution: {integrity: sha512-ceC0TSKL7GF91b50y1Qb2lKUUF/d5uZ242Iry093cTDRO3KfL/lcSwXxNxKzluk71iBPH0A0cKAIy6v06sPriA==}
+  /meilisearch@0.31.1:
+    resolution: {integrity: sha512-ajMieU0e25lLkT+05J0snX0Ycow1UofxIy5sag03flERUbjXq8ouVwkrJkW27JsKftIeDeffRRRr89LasU9+0w==}
     dependencies:
       cross-fetch: 3.1.5
     transitivePeerDependencies:
