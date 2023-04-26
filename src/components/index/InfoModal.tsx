@@ -22,7 +22,6 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
             <Cover
               entry={data}
               sizes="(max-width: 768px) 80vw, (max-width: 1024px) 25vw, 15vw"
-              fit="full"
             />
           </div>
           <div className="flex-1 p-6 sm:pt-9">

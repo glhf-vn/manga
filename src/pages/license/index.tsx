@@ -71,7 +71,7 @@ const HitComponent = ({ hit }: { hit: Hit<Series[0]> }) => (
     <Card>
       <div className="grid grid-cols-3">
         <div className="col-span-1">
-          <Cover entry={hit} fit="full" />
+          <Cover entry={hit} />
         </div>
         <div className="relative col-span-2 flex flex-col justify-between">
           <div className="absolute top-2 right-2">
