@@ -9,7 +9,7 @@ import { DateTime } from "luxon";
 import useSWR from "swr";
 
 import { NextSeo } from "next-seo";
-import { BsArrowDownShort, BsArrowUpShort } from "react-icons/bs";
+import { BsArrowDownShort, BsArrowUp, BsArrowUpShort } from "react-icons/bs";
 
 import Layout from "@layouts/Layout";
 
@@ -161,6 +161,9 @@ export default function Home({
 
   const [nearest, setNearest] = useState<string>("");
 
+  // scroll to top button
+  const [showTopBtn, setShowTopBtn] = useState(false);
+
   // modal states
   const [modalOpen, setModalOpen] = useState(false);
   const [modalData, setModalData] = useState<Publication | undefined>();
@@ -171,11 +174,25 @@ export default function Home({
   const [currentOrder, setCurrentOrder] = useState(true); // true = ascending, false = descending
 
   // load state if persist on browser
+  // setup scroll to top button
   useEffect(() => {
-    const view = window.localStorage.getItem("RELEASES_VIEW");
     const order = window.localStorage.getItem("RELEASES_ORDER");
     if (order !== null) setCurrentOrder(JSON.parse(order));
+
+    window.addEventListener("scroll", () => {
+      if (
+        window.scrollY >
+        document.getElementById("scrollCatcher")!.getBoundingClientRect()
+          .bottom -
+          document.body.getBoundingClientRect().top
+      ) {
+        setShowTopBtn(true);
+      } else {
+        setShowTopBtn(false);
+      }
+    });
   }, []);
+
   // save to browser
   useEffect(() => {
     window.localStorage.setItem("RELEASES_ORDER", JSON.stringify(currentOrder));
@@ -217,6 +234,8 @@ export default function Home({
 
       <Slideshow data={upcoming} />
 
+      <span id="scrollCatcher" />
+
       <ViewProvider>
         <div className="relative z-10 w-full bg-zinc-50 py-4 backdrop-blur-md dark:bg-zinc-800/75 lg:sticky lg:top-0">
           <div className="container mx-auto flex flex-col gap-6 px-6 md:flex-row md:justify-between">
@@ -252,6 +271,16 @@ export default function Home({
               <ChangeView />
             </div>
           </div>
+        </div>
+
+        <div className="fixed bottom-6 left-1/2 z-20 -translate-x-1/2 transform">
+          <Button
+            className={showTopBtn ? "opacity-100" : "invisible opacity-0"}
+            intent="secondary"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            Lên đầu trang <BsArrowUp />
+          </Button>
         </div>
 
         <Releases
