@@ -126,6 +126,7 @@ const Covers = ({ data }: SerieEntries) => (
             loader={imageLoader}
             width={300}
             height={450}
+            className="aspect-[2/3] object-cover"
             sizes="(max-width: 768px) 40vw, 200px"
           />
         </Card>
