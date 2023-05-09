@@ -89,14 +89,16 @@ export default async function SerieOG(req: NextRequest) {
                   ? "Đã ra mắt"
                   : "Đã hoàn thành"}
               </span>
-              <span
-                tw="px-3 py-1.5 rounded-full text-base"
-                style={{
-                  color: "#ffffff",
-                  backgroundColor: "#f8b60b",
-                }}
-              >
-                {type}
+              <span>
+                <span
+                  tw="px-3 py-1.5 rounded-full text-base"
+                  style={{
+                    color: "#ffffff",
+                    backgroundColor: "#f8b60b",
+                  }}
+                >
+                  {type}
+                </span>
               </span>
             </div>
           </div>

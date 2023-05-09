@@ -244,7 +244,7 @@ export default function Serie({
                   data.status
                 }${
                   data.image_url
-                    ? `&image_url=${imageEndpoint}${data.image_url}`
+                    ? `&image_url=${imageEndpoint}/${data.image_url}`
                     : ""
                 }`
               ),
