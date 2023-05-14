@@ -34,7 +34,7 @@ export interface Database {
       }
       publication: {
         Row: {
-          date: string
+          date: string | null
           edition: string | null
           id: string
           image_url: string[] | null
@@ -44,7 +44,7 @@ export interface Database {
           serie_id: number | null
         }
         Insert: {
-          date: string
+          date?: string | null
           edition?: string | null
           id?: string
           image_url?: string[] | null
@@ -54,7 +54,7 @@ export interface Database {
           serie_id?: number | null
         }
         Update: {
-          date?: string
+          date?: string | null
           edition?: string | null
           id?: string
           image_url?: string[] | null

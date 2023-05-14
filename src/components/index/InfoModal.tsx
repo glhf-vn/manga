@@ -34,9 +34,13 @@ const InfoModal = ({ isOpen, onClose, data }: InfoModalProps) => {
                   {data.name}
                 </Dialog.Title>
                 <Dialog.Description>
-                  <b>Ngày phát hành</b>:{" "}
-                  {DateTime.fromISO(data.date).toLocaleString(
-                    DateTime.DATE_SHORT
+                  {data.date && (
+                    <span>
+                      <b>Ngày phát hành</b>:{" "}
+                      {DateTime.fromISO(data.date).toLocaleString(
+                        DateTime.DATE_SHORT
+                      )}
+                    </span>
                   )}
                   <br />
                   {data.edition && (

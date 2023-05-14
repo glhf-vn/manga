@@ -87,7 +87,7 @@ const Slideshow = ({ data }: SliderProps) => {
                   <span className="hidden sm:inline">Phát hành </span>
                   <span className="text-xl sm:text-base">
                     <span className="capitalize">
-                      {DateTime.fromISO(release.date).toFormat("EEEE, D")}
+                      {DateTime.fromISO(release.date!).toFormat("EEEE, D")}
                     </span>
                   </span>
                   <h2 className="mt-3 mb-6 hidden font-kanit text-4xl font-bold sm:block">

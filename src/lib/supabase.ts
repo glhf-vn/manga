@@ -77,10 +77,10 @@ export async function getEntriesByGroup(
   const events = await getEntries(start, end, filter, order);
 
   const groupedEvents = events.reduce((events, event) => {
-    if (!events[event.date]) {
-      events[event.date] = [];
+    if (!events[event.date!]) {
+      events[event.date!] = [];
     }
-    events[event.date].push(event);
+    events[event.date!].push(event);
 
     return events;
   }, {} as groups);

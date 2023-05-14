@@ -1,4 +1,5 @@
 import type { GetStaticPropsContext, InferGetStaticPropsType } from "next";
+import type { Database } from "@data/database.types";
 
 import { getSerie, getSeriesId } from "@lib/supabase";
 
@@ -36,14 +37,10 @@ import lgZoom from "lightgallery/plugins/zoom";
 
 interface SerieEntries {
   data:
-    | {
-        id: string;
-        name: string;
-        date: string;
-        edition: string | null;
-        price: number;
-        image_url: string[] | null;
-      }[]
+    | Omit<
+        Database["public"]["Tables"]["publication"]["Row"],
+        "publisher" | "serie_id"
+      >[]
     | null;
 }
 
@@ -60,7 +57,8 @@ const Schedule = ({ data }: SerieEntries) => (
         </thead>
         <tbody>
           {data?.map((entry) => {
-            const date = DateTime.fromISO(entry.date);
+            const date =
+              entry.date != null ? DateTime.fromISO(entry.date) : null;
             const today = DateTime.now();
 
             return (
@@ -79,9 +77,15 @@ const Schedule = ({ data }: SerieEntries) => (
                   </div>
                 </td>
                 <td className="whitespace-nowrap p-3 text-center font-bold">
-                  <span>{date.toFormat("dd/MM/yyyy")}</span>
-                  {date < today && (
-                    <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-200" />
+                  {date != null ? (
+                    <>
+                      <span>{date.toFormat("dd/MM/yyyy")}</span>
+                      {date < today && (
+                        <BsCalendar2CheckFill className="ml-3 inline-block align-baseline text-green-200" />
+                      )}
+                    </>
+                  ) : (
+                    <span>Chưa cập nhật</span>
                   )}
                 </td>
                 <td className="whitespace-nowrap p-3 text-center">
