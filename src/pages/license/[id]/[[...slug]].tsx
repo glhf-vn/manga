@@ -74,6 +74,14 @@ const Schedule = ({ data }: SerieEntries) => (
                         {entry.edition}
                       </Badge>
                     )}
+                    {entry.digital && (
+                      <Badge
+                        className="ml-3 bg-rose-200/75 backdrop-blur-md"
+                        intent="none"
+                      >
+                        Digital
+                      </Badge>
+                    )}
                   </div>
                 </td>
                 <td className="whitespace-nowrap p-3 text-center font-bold">

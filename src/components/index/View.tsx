@@ -72,6 +72,14 @@ export const GridView = ({ releases, isLoading, options }: ReleasesView) => {
                       {release.edition}
                     </Badge>
                   )}
+                  {release.digital && (
+                    <Badge
+                      className="absolute top-2 right-2 bg-rose-200/75 backdrop-blur-md"
+                      intent="none"
+                    >
+                      Digital
+                    </Badge>
+                  )}
                   <Cover
                     entry={release}
                     sizes="(max-width: 768px) 40vw, 200px"
@@ -185,6 +193,14 @@ export const ListView = ({ releases, isLoading, options }: ReleasesView) => {
                               intent="none"
                             >
                               {release.edition}
+                            </Badge>
+                          )}
+                          {release.digital && (
+                            <Badge
+                              className="bg-rose-200/75 backdrop-blur-md"
+                              intent="none"
+                            >
+                              Digital
                             </Badge>
                           )}
                           <BsBoxArrowUpRight className="inline-block text-zinc-400" />

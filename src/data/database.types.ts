@@ -31,10 +31,19 @@ export interface Database {
           source?: string | null
           timestamp?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "licensed_id_fkey"
+            columns: ["id"]
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       publication: {
         Row: {
           date: string | null
+          digital: boolean
           edition: string | null
           id: string
           image_url: string[] | null
@@ -45,6 +54,7 @@ export interface Database {
         }
         Insert: {
           date?: string | null
+          digital?: boolean
           edition?: string | null
           id?: string
           image_url?: string[] | null
@@ -55,6 +65,7 @@ export interface Database {
         }
         Update: {
           date?: string | null
+          digital?: boolean
           edition?: string | null
           id?: string
           image_url?: string[] | null
@@ -63,6 +74,20 @@ export interface Database {
           publisher?: string
           serie_id?: number | null
         }
+        Relationships: [
+          {
+            foreignKeyName: "publication_publisher_fkey"
+            columns: ["publisher"]
+            referencedRelation: "publisher"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "publication_serie_id_fkey"
+            columns: ["serie_id"]
+            referencedRelation: "series"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       publisher: {
         Row: {
@@ -80,6 +105,7 @@ export interface Database {
           id?: string
           name?: string
         }
+        Relationships: []
       }
       series: {
         Row: {
@@ -106,6 +132,20 @@ export interface Database {
           status?: Database["public"]["Enums"]["status"]
           type?: string
         }
+        Relationships: [
+          {
+            foreignKeyName: "series_publisher_fkey"
+            columns: ["publisher"]
+            referencedRelation: "publisher"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "series_type_fkey"
+            columns: ["type"]
+            referencedRelation: "type"
+            referencedColumns: ["id"]
+          }
+        ]
       }
       type: {
         Row: {
@@ -123,6 +163,7 @@ export interface Database {
           id?: string
           name?: string
         }
+        Relationships: []
       }
     }
     Views: {

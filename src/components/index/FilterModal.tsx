@@ -45,7 +45,7 @@ const FilterModal = ({ values, checkedValues, handler }: FilterModalProps) => {
               hoverable={false}
               onClick={() => setCurrentValues([])}
             >
-              Bỏ chọn tất cả
+              Bỏ chọn
             </Button>
             {values.map((value) => (
               <div key={value.id} className="flex items-center">

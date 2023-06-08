@@ -23,6 +23,7 @@ export type ReleasesProps = {
   date: DateObj;
   filters: {
     publishers: string[];
+    digital: boolean;
   };
   order: boolean;
   options: ModalMethods & {
