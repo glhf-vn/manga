@@ -12,11 +12,14 @@ export default async function Releases(
       end = DateTime.now().endOf("month").toISODate(),
       publisher,
       order,
+      digital,
     },
     method,
   } = req;
 
   let parsedOrder = order === "descending" ? false : true;
+
+  let parsedDigital = digital != undefined ? digital === "true" : undefined;
 
   switch (method) {
     case "GET":
@@ -25,6 +28,7 @@ export default async function Releases(
         end as string,
         {
           publishers: publisher,
+          digital: parsedDigital,
         },
         parsedOrder
       );

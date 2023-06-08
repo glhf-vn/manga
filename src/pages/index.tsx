@@ -9,7 +9,13 @@ import { DateTime } from "luxon";
 import useSWR from "swr";
 
 import { NextSeo } from "next-seo";
-import { BsArrowDownShort, BsArrowUp, BsArrowUpShort } from "react-icons/bs";
+import {
+  BsArrowDownShort,
+  BsArrowUp,
+  BsArrowUpShort,
+  BsFileRichtext,
+  BsFileX,
+} from "react-icons/bs";
 
 import Layout from "@layouts/Layout";
 
@@ -30,20 +36,21 @@ const useReleases = (
   year = DateTime.now().year,
   month = DateTime.now().month,
   order: boolean,
+  digital?: boolean,
   publishers?: string[]
 ) => {
   const { data, error, isLoading } = useSWR(
-    { url: `/api/releases`, args: { year, month, order, publishers } },
+    { url: `/api/releases`, args: { year, month, order, publishers, digital } },
     async ({ url, args }) => {
-      const { year, month, publishers, order } = args;
+      const { year, month, publishers, digital, order } = args;
       const dateObj = DateTime.fromObject({ year, month });
 
       return await fetch(
         `${url}?start=${dateObj.startOf("month").toISODate()}&end=${dateObj
           .endOf("month")
-          .toISODate()}&order=${order ? "ascending" : "descending"}&${publishers
-          ?.map((publisher) => `publisher=${publisher}`)
-          .join("&")}`
+          .toISODate()}&order=${order ? "ascending" : "descending"}${
+          digital != undefined && digital == false ? `&digital=${digital}` : ""
+        }${publishers?.map((publisher) => `publisher=${publisher}`).join("&")}`
       ).then((res) => res.json());
     }
   );
@@ -59,13 +66,14 @@ const Releases = ({ date, filters, order, options }: ReleasesProps) => {
   const view = useContext(ViewContext);
 
   const { year, month } = date;
-  const { publishers } = filters;
+  const { publishers, digital } = filters;
   const { setNearest } = options;
 
   const { releases, isLoading, isError } = useReleases(
     year,
     month,
     order,
+    digital,
     publishers
   );
 
@@ -169,6 +177,7 @@ export default function Home({
   const [modalData, setModalData] = useState<Publication | undefined>();
 
   const [filterPublishers, changeFilterPublishers] = useState<string[]>([]);
+  const [filterDigital, setFilterDigital] = useState(true);
 
   // order states
   const [currentOrder, setCurrentOrder] = useState(true); // true = ascending, false = descending
@@ -178,6 +187,9 @@ export default function Home({
   useEffect(() => {
     const order = window.localStorage.getItem("RELEASES_ORDER");
     if (order !== null) setCurrentOrder(JSON.parse(order));
+
+    const filterDigital = window.localStorage.getItem("RELEASES_DIGITAL");
+    if (filterDigital !== null) setFilterDigital(JSON.parse(filterDigital));
 
     window.addEventListener("scroll", () => {
       if (
@@ -196,7 +208,11 @@ export default function Home({
   // save to browser
   useEffect(() => {
     window.localStorage.setItem("RELEASES_ORDER", JSON.stringify(currentOrder));
-  }, [currentOrder]);
+    window.localStorage.setItem(
+      "RELEASES_DIGITAL",
+      JSON.stringify(filterDigital)
+    );
+  }, [currentOrder, filterDigital]);
 
   const jumpToNearest = () => {
     if (currentDate.year != now.year || currentDate.month != now.month)
@@ -254,6 +270,20 @@ export default function Home({
               >
                 Gần nhất
               </button>
+
+              <Button
+                className="h-full flex-1 text-2xl"
+                onClick={() => setFilterDigital((digital) => !digital)}
+                aria-label="Lọc sách điện tử"
+                role="button"
+                intent={filterDigital ? "secondary" : "primary"}
+              >
+                {filterDigital ? (
+                  <BsFileRichtext className="h-5" />
+                ) : (
+                  <BsFileX className="h-5" />
+                )}
+              </Button>
               <Button
                 className="flex-1 text-2xl"
                 onClick={() => setCurrentOrder((order) => !order)}
@@ -285,7 +315,7 @@ export default function Home({
 
         <Releases
           date={currentDate}
-          filters={{ publishers: filterPublishers }}
+          filters={{ publishers: filterPublishers, digital: filterDigital }}
           order={currentOrder}
           options={{ setModalOpen, setModalData, setNearest }}
         />

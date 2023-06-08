@@ -25,6 +25,7 @@ export async function getEntries(
   end: string = lastDay,
   filter?: {
     publishers?: string | string[];
+    digital?: boolean;
   },
   order: boolean = true
 ) {
@@ -50,6 +51,10 @@ export async function getEntries(
     query = query.in("publisher", [filter.publishers]);
   }
 
+  if (filter?.digital != undefined) {
+    query = query.is("digital", filter.digital);
+  }
+
   const { data, error } = await query;
 
   if (error) {
@@ -67,6 +72,7 @@ export async function getEntriesByGroup(
   end: string = lastDay,
   filter?: {
     publishers?: string | string[];
+    digital?: boolean;
   },
   order?: boolean
 ) {
@@ -155,7 +161,7 @@ export async function getSerie(id: number) {
       anilist,
       type(*),
       publisher(*),
-      publication(id,name,edition,price,image_url,date),
+      publication(id,name,edition,price,image_url,date,digital),
       licensed(source,image_url,timestamp),
       status
       `
