@@ -46,19 +46,6 @@ export default function Donate() {
             />
             MoMo
           </Button>
-          <Button
-            href="https://social.zalopay.vn/mt-gateway/v1/private-qr?note=&receiver_id=190126000002776"
-            className="text-bold mr-3 border border-[#efefef] bg-white text-zinc-800 dark:bg-white"
-          >
-            <Image
-              alt="ZaloPay logo"
-              src="/img/zalopay-logo.png"
-              width={20}
-              height={20}
-            />
-            ZaloPay
-          </Button>
-          <Button>Chuyển khoản</Button>
         </div>
         <p className="mb-6">
           <Link href="/" className="font-bold text-primary">
