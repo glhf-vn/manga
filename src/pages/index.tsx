@@ -141,7 +141,10 @@ export const getStaticProps = async () => {
 
   const upcoming = await getEntries(
     now.toISODate(),
-    now.plus({ days: 3 }).toISODate()
+    now.plus({ days: 3 }).toISODate(),
+    {
+      digital: false,
+    }
   );
 
   const publishers = await getPublishers();

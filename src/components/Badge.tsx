@@ -2,7 +2,7 @@ import type { HTMLProps, ReactNode } from "react";
 import { cva, type VariantProps } from "class-variance-authority";
 
 const buttonStyles = cva(
-  "block rounded-lg py-0.5 px-1.5 text-xs text-zinc-800 w-fit",
+  "block rounded-lg py-0.5 px-1.5 text-xs text-zinc-800 w-fit font-bold",
   {
     variants: {
       intent: {
