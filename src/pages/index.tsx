@@ -50,7 +50,7 @@ const useReleases = (
           .endOf("month")
           .toISODate()}&order=${order ? "ascending" : "descending"}${
           digital != undefined && digital == false ? `&digital=${digital}` : ""
-        }${publishers?.map((publisher) => `publisher=${publisher}`).join("&")}`
+        }&${publishers?.map((publisher) => `publisher=${publisher}`).join("&")}`
       ).then((res) => res.json());
     }
   );
