@@ -167,8 +167,7 @@ export async function getSerie(id: number) {
       `
     )
     .eq("id", id)
-    .order("date", { foreignTable: "publication", ascending: true })
-    .order("name", { foreignTable: "publication", ascending: true })
+    .order("volume", { foreignTable: "publication", ascending: true })
     .order("edition", {
       foreignTable: "publication",
       ascending: false,
@@ -241,7 +240,7 @@ export async function getSeries(filter?: {
     .order("status", { ascending: true })
     .order("publisher", { ascending: true })
     .order("name", { ascending: true })
-    .order("name", { ascending: true, foreignTable: "publication" });
+    .order("volume", { ascending: true, foreignTable: "publication" });
 
   if (filter?.publishers) {
     query = query.in("publisher", [filter.publishers]);
