@@ -132,7 +132,7 @@ const DesktopMenu = () => {
   const router = useRouter();
 
   return (
-    <div className="absolute top-6 right-6 z-10 hidden sm:block">
+    <div className="absolute top-16 right-6 z-10 hidden sm:block">
       <ul className="flex font-bold text-zinc-500">
         <li>
           <Link

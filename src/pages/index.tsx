@@ -31,6 +31,7 @@ import FilterModal from "@components/index/FilterModal";
 import InfoModal from "@components/index/InfoModal";
 
 import Button from "@components/Button";
+import { MovingAlert } from "@components/index/MovingAlert";
 
 const useReleases = (
   year = DateTime.now().year,
@@ -252,6 +253,10 @@ export default function Home({
       />
 
       <Slideshow data={upcoming} />
+
+      <div className="container mx-auto my-6 px-6">
+        <MovingAlert />
+      </div>
 
       <span id="scrollCatcher" />
 
