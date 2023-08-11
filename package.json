@@ -45,7 +45,7 @@
     "postcss": "^8.4.21",
     "postcss-100vh-fix": "^1.0.2",
     "prettier": "^2.8.4",
-    "prettier-plugin-tailwindcss": "^0.3.0",
+    "prettier-plugin-tailwindcss": "^0.5.0",
     "sass": "^1.58.3",
     "supabase": "^1.40.1",
     "tailwindcss": "^3.2.7",
